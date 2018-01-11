@@ -7,27 +7,35 @@
 
 package org.usfirst.frc.team1155.robot;
 
+import java.io.File;
+import java.io.IOException;
+
+import api.Path;
 import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
+ * functions corresponding to each mode, as described in the IterativeRobot
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the build.properties file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends IterativeRobot {
 	public static OI m_oi;
 
 	public static DriveSubsystem driveSubsystem;
-
+	public static ADXRS450_Gyro Gyro;
+	public static File file;
+	public static Path path;
+	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -40,6 +48,13 @@ public class Robot extends TimedRobot {
 		m_oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
+		Gyro = new ADXRS450_Gyro();
+		file = new File("test.path");
+		try {
+			path = new Path(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
