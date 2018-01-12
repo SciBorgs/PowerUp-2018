@@ -17,7 +17,10 @@ public class AutoPointToPointCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.driveSubsystem.followPath(Robot.path);
+		for (int i = 0; i < Robot.path.size(); i++) {
+			Robot.driveSubsystem.moveDegrees(Robot.driveSubsystem.calculatesAngleToTurnTo(Robot.path.get(i)));
+			Robot.driveSubsystem.moveToPoint(Robot.path.get(i));
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

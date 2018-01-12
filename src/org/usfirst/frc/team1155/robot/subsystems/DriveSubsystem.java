@@ -50,12 +50,12 @@ public class DriveSubsystem extends Subsystem {
 	 * degrees that need to be added to get a degree that would match with
 	 * the gyro
 	 */
-	public double calculatesAngleToTurnTo(Path path, int i) {
+	public double calculatesAngleToTurnTo(int[] coordArr) {
 		double currentGyroAngle = Robot.Gyro.getAngle() % 360;
 		double x = Robot.plane.getX();
 		double y = Robot.plane.getY();
-		double nextX = 0.0508 * path.get(i)[0] - x;
-		double nextY = 0.0508 * path.get(i)[1] - y;
+		double nextX = 0.0127 * coordArr[0] - x;
+		double nextY = 0.0127 * coordArr[1] - y;
 		if (nextX > 0 && nextY > 0) {
 			return Math.toDegrees(Math.atan(nextY/nextX));
 		} else if (nextX > 0 && nextY < 0) {
@@ -83,22 +83,15 @@ public class DriveSubsystem extends Subsystem {
 		backRightMotor.set(ControlMode.PercentOutput, xVal + yVal);
 	}	
 	
-	public void moveToPoint(Path path, int i) {
-		while (!(Robot.plane.getX() > path.get(i)[0] - 0.0508 && Robot.plane.getX() < path.get(i)[0] + 0.0508
-		&& Robot.plane.getY() > path.get(i)[1] - 0.0508 && Robot.plane.getY() < path.get(i)[1] + 0.0508)) {
+	public void moveToPoint(int[] coordArr) {
+		while (!(Robot.plane.getX() > coordArr[0] - 0.0508 && Robot.plane.getX() < coordArr[0] + 0.0508
+		&& Robot.plane.getY() > coordArr[1] - 0.0508 && Robot.plane.getY() < coordArr[1] + 0.0508)) {
 			frontRightMotor.set(ControlMode.PercentOutput, 1);
 			frontLeftMotor.set(ControlMode.PercentOutput, 1);
-			middleRightmotor.set(ControlMode.PercentOutput, 1);
-			middleLeftMotor.set(ControlMode.PercentOutput, 1);
+			//middleRightmotor.set(ControlMode.PercentOutput, 1);
+			//middleLeftMotor.set(ControlMode.PercentOutput, 1);
 			backRightMotor.set(ControlMode.PercentOutput, 1);
 			backLeftMotor.set(ControlMode.PercentOutput, 1);
-		}
-	}
-	
-	public void followPath(Path path) {
-		for (int i = 0; i < path.size(); i++) {
-			moveDegrees(calculatesAngleToTurnTo(path, i));
-			moveToPoint(path, i);
 		}
 	}
 }

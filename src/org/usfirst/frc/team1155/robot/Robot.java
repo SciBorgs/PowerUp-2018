@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -35,6 +36,13 @@ public class Robot extends IterativeRobot {
 	public static ADXRS450_Gyro Gyro;
 	public static File file;
 	public static Path path;
+	public static int PointTwoMeters[];
+	
+	public static BuiltInAccelerometer accel;
+	
+	public static Timer timer;
+	public static DesCartesianPlane plane;
+	
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -46,6 +54,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
+		driveSubsystem = new DriveSubsystem();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		Gyro = new ADXRS450_Gyro();
@@ -55,6 +64,12 @@ public class Robot extends IterativeRobot {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		timer = new Timer();
+		accel = new BuiltInAccelerometer();
+		plane = new DesCartesianPlane(timer, accel);
+		PointTwoMeters = new int[2];
+		PointTwoMeters[0] = 0;
+		PointTwoMeters[1] = 4;
 	}
 
 	/**
@@ -106,6 +121,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		plane.updatePosition();
+		driveSubsystem.moveToPoint(PointTwoMeters);
 	}
 
 	@Override
@@ -125,6 +142,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		plane.updatePosition();
 	}
 
 	/**
