@@ -17,6 +17,10 @@ public class DriveSubsystem extends Subsystem {
 					backRightMotor, backLeftMotor,
 					middleRightmotor, middleLeftMotor;
 
+	public static double SPEED_CORRECTION = .15;
+	public static double ANGLE_BUFFER = 2;
+	public static double speed = .5;
+	
 	public void initDefaultCommand() {
 
 		frontLeftMotor = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
@@ -86,14 +90,22 @@ public class DriveSubsystem extends Subsystem {
 	public void moveToPoint(int[] coordArr) {
 		while (!(Robot.plane.getX() > coordArr[0] - 0.0508 && Robot.plane.getX() < coordArr[0] + 0.0508
 		&& Robot.plane.getY() > coordArr[1] - 0.0508 && Robot.plane.getY() < coordArr[1] + 0.0508)) {
+	    	double targetAngle = calculatesAngleToTurnTo(coordArr);
 			
-			moveDegrees(calculatesAngleToTurnTo(coordArr));
+			if (Robot.Gyro.getAngle() - targetAngle > ANGLE_BUFFER){ //rotating counter-clockwise
+	    		Robot.driveSubsystem.setSpeed(speed + SPEED_CORRECTION, speed);
+	    	}else if (targetAngle - Robot.Gyro.getAngle() > ANGLE_BUFFER){ //rotating -clockwise 
+	    		Robot.driveSubsystem.setSpeed(speed, speed + SPEED_CORRECTION);
+	    	}else {
+	        	Robot.driveSubsystem.setSpeed(speed, speed);
+	}
+	/*		moveDegrees(calculatesAngleToTurnTo(coordArr));
 			frontRightMotor.set(ControlMode.PercentOutput, .4);
 			frontLeftMotor.set(ControlMode.PercentOutput, .5);
 			//middleRightmotor.set(ControlMode.PercentOutput, 1);
 			//middleLeftMotor.set(ControlMode.PercentOutput, 1);
 			backRightMotor.set(ControlMode.PercentOutput, -.4);
-			backLeftMotor.set(ControlMode.PercentOutput, -.5);
+			backLeftMotor.set(ControlMode.PercentOutput, -.5); */
 		}
 	}
 }
