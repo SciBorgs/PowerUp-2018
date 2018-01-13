@@ -2,6 +2,7 @@ package org.usfirst.frc.team1155.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
 /**
@@ -12,6 +13,8 @@ public class OI {
 
 	public static Joystick leftJoystick = new Joystick(PortMap.JOYSTICK_LEFT);
 	public static Joystick rightJoystick = new Joystick(PortMap.JOYSTICK_RIGHT);
+	public static Button descendClimb = new JoystickButton(leftJoystick, 3);
+	public static Button ascendClimb = new JoystickButton(leftJoystick, 4);
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.

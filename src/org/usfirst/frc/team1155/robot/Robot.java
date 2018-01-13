@@ -13,7 +13,9 @@ import java.io.IOException;
 import api.Path;
 import api.Client;
 
+import org.usfirst.frc.team1155.robot.commands.CascadeClimbCommand;
 import org.usfirst.frc.team1155.robot.commands.WestCoastDriveCommand;
+import org.usfirst.frc.team1155.robot.subsystems.ClimbSubsystem;
 import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -48,6 +50,8 @@ public class Robot extends IterativeRobot {
 
 	public static Client client;
 
+	public static ClimbSubsystem climbSubsystem;
+
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -60,6 +64,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		m_oi = new OI();
 		driveSubsystem = new DriveSubsystem();
+		climbSubsystem = new ClimbSubsystem();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		Gyro = new ADXRS450_Gyro();
@@ -152,6 +157,7 @@ public class Robot extends IterativeRobot {
 		}
 		System.out.println(plane.getX() + ", " + plane.getY());
 		new WestCoastDriveCommand().start();
+		new CascadeClimbCommand().start();
 	}
 
 	/**

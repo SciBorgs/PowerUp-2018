@@ -16,4 +16,8 @@ public class PortMap {
 //	public static final int DRIVE_MIDDLE_RIGHT_TALON = 5;
 	public static final int DRIVE_BACK_RIGHT_TALON = 2;
 
+	//*******************CLIMB*******************//	
+	
+	public static final int CLIMB_LEFT_TALON = 8;
+	public static final int CLIMB_RIGHT_TALON = 9;
 }
