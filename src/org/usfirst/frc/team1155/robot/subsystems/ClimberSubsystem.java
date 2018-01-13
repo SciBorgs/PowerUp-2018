@@ -2,7 +2,7 @@ package org.usfirst.frc.team1155.robot.subsystems;
 import org.usfirst.frc.team1155.robot.PortMap;
 import edu.wpi.first.wpilibj.TalonSRX;
 
-public class ClimberSubsytem {
+public class ClimberSubsytem extends Subsystem {
 	
 	public TalonSRX leftTalon, rightTalon, angleTalon;
 	
@@ -23,4 +23,3 @@ public class ClimberSubsytem {
 		angleTalon.set(ControlMode.PrecentOutput,speedAngle * direction);
 	}
 }
-

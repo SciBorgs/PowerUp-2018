@@ -41,6 +41,7 @@ public class Robot extends IterativeRobot {
 
 	public static DriveSubsystem driveSubsystem;
 	public static LiftSubsystem liftSubsystem;
+	public static ClimberSubsytem climberSubsystem;
 	public static CarriageSubsystem carriageSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static ADXRS450_Gyro Gyro;
@@ -70,6 +71,7 @@ public class Robot extends IterativeRobot {
 		m_oi = new OI();
 		driveSubsystem = new DriveSubsystem();
 		liftSubsystem = new LiftSubsystem();
+		climberSubsystem = new ClimberSubsystem();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		Gyro = new ADXRS450_Gyro();
