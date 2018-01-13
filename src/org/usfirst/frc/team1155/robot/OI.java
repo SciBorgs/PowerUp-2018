@@ -13,8 +13,19 @@ public class OI {
 
 	public static Joystick leftJoystick = new Joystick(PortMap.JOYSTICK_LEFT);
 	public static Joystick rightJoystick = new Joystick(PortMap.JOYSTICK_RIGHT);
-	public static Button descendClimb = new JoystickButton(leftJoystick, 3);
-	public static Button ascendClimb = new JoystickButton(leftJoystick, 4);
+	
+	public static Button descendLift = new JoystickButton(leftJoystick, 3);
+	public static Button ascendLift = new JoystickButton(leftJoystick, 4);
+	
+	public static Button extendCarriage = new JoystickButton(rightJoystick, 5);
+	public static Button retractCarriage = new JoystickButton(rightJoystick, 6);
+	public static Button activateCarriageMotor = new JoystickButton(rightJoystick, 10);
+	public static Button deactivateCarriageMotor = new JoystickButton(rightJoystick, 9);
+
+	public static Button extendIntake = new JoystickButton(leftJoystick, 5);
+	public static Button retractIntake = new JoystickButton(leftJoystick, 6);
+	public static Button activateIntakeMotor = new JoystickButton(leftJoystick, 10);
+	public static Button deactivateIntakeMotor = new JoystickButton(leftJoystick, 9);
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.

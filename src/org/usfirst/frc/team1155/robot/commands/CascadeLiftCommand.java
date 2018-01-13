@@ -1,12 +1,16 @@
 package org.usfirst.frc.team1155.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.Robot;
 
-public class AutoPointToPointCommand extends Command {
-	public AutoPointToPointCommand() {
+/**
+ *
+ */
+public class CascadeLiftCommand extends Command {
+	public CascadeLiftCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.driveSubsystem);
+		requires(Robot.liftSubsystem);
 	}
 
 	// Called just before this Command runs the first time
@@ -14,13 +18,15 @@ public class AutoPointToPointCommand extends Command {
 	protected void initialize() {
 	}
 
-	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		for (int i = 0; i < Robot.path.size(); i++) {
-			Robot.driveSubsystem.moveDegrees(Robot.driveSubsystem.calculatesAngleToTurnTo(Robot.path.get(i)));
-			Robot.driveSubsystem.moveToPoint(Robot.path.get(i));
+		if (OI.ascendLift.get()) {
+			Robot.liftSubsystem.setSpeed(1);
+		} else if (OI.descendLift.get()) {
+			Robot.liftSubsystem.setSpeed(1);			
+		} else {
+			Robot.liftSubsystem.setSpeed(0);
 		}
 	}
 
@@ -33,11 +39,13 @@ public class AutoPointToPointCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Robot.liftSubsystem.setSpeed(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		Robot.liftSubsystem.setSpeed(0);
 	}
 }

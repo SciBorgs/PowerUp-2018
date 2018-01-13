@@ -1,16 +1,14 @@
 package org.usfirst.frc.team1155.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.Robot;
 
-/**
- *
- */
-public class CascadeClimbCommand extends Command {
-	public CascadeClimbCommand() {
+import edu.wpi.first.wpilibj.command.Command;
+
+public class IntakeCommand extends Command{
+	public IntakeCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.climbSubsystem);
+		requires(Robot.intakeSubsystem);
 	}
 
 	// Called just before this Command runs the first time
@@ -21,12 +19,17 @@ public class CascadeClimbCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (OI.ascendClimb.get()) {
-			Robot.climbSubsystem.setSpeed(1);
-		} else if (OI.descendClimb.get()) {
-			Robot.climbSubsystem.setSpeed(1);			
+		if (OI.extendIntake.get()) {
+			Robot.intakeSubsystem.extendPiston();
+		} else if (OI.retractIntake.get()) {
+			Robot.intakeSubsystem.retractPiston();			
+		} else {}
+		if (OI.activateIntakeMotor.get()) {
+			Robot.intakeSubsystem.setSpeed(1);
+		} else if (OI.deactivateIntakeMotor.get()) {
+			Robot.intakeSubsystem.setSpeed(-1);
 		} else {
-			Robot.climbSubsystem.setSpeed(0);
+			Robot.intakeSubsystem.setSpeed(0);
 		}
 	}
 
@@ -39,13 +42,15 @@ public class CascadeClimbCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.driveSubsystem.setSpeed(0,0);
+		Robot.intakeSubsystem.setSpeed(0);
+		Robot.intakeSubsystem.retractPiston();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.driveSubsystem.setSpeed(0,0);
+		Robot.intakeSubsystem.setSpeed(0);
+		Robot.intakeSubsystem.retractPiston();
 	}
 }

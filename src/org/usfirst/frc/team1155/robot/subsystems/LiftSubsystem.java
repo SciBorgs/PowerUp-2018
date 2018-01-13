@@ -6,14 +6,14 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class ClimbSubsystem extends Subsystem{
+public class LiftSubsystem extends Subsystem{
 
-	public TalonSRX leftClimbMotor, rightClimbMotor;
+	public TalonSRX leftLiftMotor, rightLiftMotor;
 	
 	public void initDefaultCommand() {
 
-		leftClimbMotor = new TalonSRX(PortMap.CLIMB_LEFT_TALON);
-		rightClimbMotor = new TalonSRX(PortMap.CLIMB_RIGHT_TALON);
+		leftLiftMotor = new TalonSRX(PortMap.LIFT_LEFT_TALON);
+		rightLiftMotor = new TalonSRX(PortMap.LIFT_RIGHT_TALON);
 
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
@@ -21,12 +21,12 @@ public class ClimbSubsystem extends Subsystem{
 	}	
 	
 	public void stop() {
-		leftClimbMotor.set(ControlMode.PercentOutput, 0);
-		rightClimbMotor.set(ControlMode.PercentOutput, 0);
+		leftLiftMotor.set(ControlMode.PercentOutput, 0);
+		rightLiftMotor.set(ControlMode.PercentOutput, 0);
 	}
 	
 	public void setSpeed(double speed){
-		leftClimbMotor.set(ControlMode.PercentOutput, speed);
-		rightClimbMotor.set(ControlMode.PercentOutput, speed);
+		leftLiftMotor.set(ControlMode.PercentOutput, speed);
+		rightLiftMotor.set(ControlMode.PercentOutput, speed);
 	}
 }

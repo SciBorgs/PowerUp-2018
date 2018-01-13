@@ -13,10 +13,12 @@ import java.io.IOException;
 import api.Path;
 import api.Client;
 
-import org.usfirst.frc.team1155.robot.commands.CascadeClimbCommand;
+import org.usfirst.frc.team1155.robot.commands.CascadeLiftCommand;
 import org.usfirst.frc.team1155.robot.commands.WestCoastDriveCommand;
-import org.usfirst.frc.team1155.robot.subsystems.ClimbSubsystem;
+import org.usfirst.frc.team1155.robot.subsystems.LiftSubsystem;
+import org.usfirst.frc.team1155.robot.subsystems.CarriageSubsystem;
 import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team1155.robot.subsystems.IntakeSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -38,6 +40,9 @@ public class Robot extends IterativeRobot {
 	public static OI m_oi;
 
 	public static DriveSubsystem driveSubsystem;
+	public static LiftSubsystem liftSubsystem;
+	public static CarriageSubsystem carriageSubsystem;
+	public static IntakeSubsystem intakeSubsystem;
 	public static ADXRS450_Gyro Gyro;
 	public static File file;
 	public static Path path;
@@ -50,7 +55,7 @@ public class Robot extends IterativeRobot {
 
 	public static Client client;
 
-	public static ClimbSubsystem climbSubsystem;
+
 
 	
 	Command m_autonomousCommand;
@@ -64,7 +69,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		m_oi = new OI();
 		driveSubsystem = new DriveSubsystem();
-		climbSubsystem = new ClimbSubsystem();
+		liftSubsystem = new LiftSubsystem();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		Gyro = new ADXRS450_Gyro();
@@ -157,7 +162,7 @@ public class Robot extends IterativeRobot {
 		}
 		System.out.println(plane.getX() + ", " + plane.getY());
 		new WestCoastDriveCommand().start();
-		new CascadeClimbCommand().start();
+		new CascadeLiftCommand().start();
 	}
 
 	/**
