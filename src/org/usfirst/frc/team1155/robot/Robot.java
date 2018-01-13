@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 import api.Path;
+import auto_gui.realtime.Client;
 import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -42,6 +43,8 @@ public class Robot extends IterativeRobot {
 	
 	public static Timer timer;
 	public static DesCartesianPlane plane;
+
+	public static auto_gui.realtime.Client client;
 	
 	
 	Command m_autonomousCommand;
@@ -58,6 +61,11 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		Gyro = new ADXRS450_Gyro();
+        try {
+            client = new Client();
+        } catch (IOException e) {
+            System.out.println("could not start client");
+        }
 	/*	file = new File("test.path");
 		try {
 			path = new Path(file);

@@ -2,6 +2,11 @@ package org.usfirst.frc.team1155.robot;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 
+import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class DesCartesianPlane {
 	Timer timer;
     private double x = 0;
@@ -14,9 +19,19 @@ public class DesCartesianPlane {
     private double prevAy = 0;
     private BuiltInAccelerometer accelerometer;
 
+    ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+
     DesCartesianPlane(Timer t, BuiltInAccelerometer a) {
         timer = t;
         accelerometer = a;
+        scheduledExecutorService.scheduleAtFixedRate(() -> {
+            Robot.client.setCoordinates(new int[]{(int)x, (int)y});
+            try {
+                Robot.client.sendCoordinates();
+            } catch (IOException e) {
+                System.out.println("error sending coordinates");
+            }
+        }, 0, 500, TimeUnit.MILLISECONDS);
     }
 
     public void updatePosition() {
