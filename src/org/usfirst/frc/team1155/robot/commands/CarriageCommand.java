@@ -21,15 +21,15 @@ public class CarriageCommand extends Command{
 	protected void execute() {
 		if (OI.extendCarriage.get()) {
 			Robot.carriageSubsystem.extendPiston();
-		} else if (OI.retractCarriage.get()) {
+		}
+		if (OI.retractCarriage.get()) {
 			Robot.carriageSubsystem.retractPiston();			
-		} else {}
+		}
 		if (OI.activateCarriageMotor.get()) {
 			Robot.carriageSubsystem.setSpeed(1);
-		} else if (OI.deactivateCarriageMotor.get()) {
+		}
+		if (OI.deactivateCarriageMotor.get()) {
 			Robot.carriageSubsystem.setSpeed(-1);
-		} else {
-			Robot.carriageSubsystem.setSpeed(0);
 		}
 	}
 

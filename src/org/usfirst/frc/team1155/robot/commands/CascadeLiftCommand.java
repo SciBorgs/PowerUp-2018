@@ -23,10 +23,9 @@ public class CascadeLiftCommand extends Command {
 	protected void execute() {
 		if (OI.ascendLift.get()) {
 			Robot.liftSubsystem.setSpeed(1);
-		} else if (OI.descendLift.get()) {
-			Robot.liftSubsystem.setSpeed(1);			
-		} else {
-			Robot.liftSubsystem.setSpeed(0);
+		}
+		if (OI.descendLift.get()) {
+			Robot.liftSubsystem.setSpeed(-1);			
 		}
 	}
 

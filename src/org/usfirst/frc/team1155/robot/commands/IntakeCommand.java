@@ -21,15 +21,15 @@ public class IntakeCommand extends Command{
 	protected void execute() {
 		if (OI.extendIntake.get()) {
 			Robot.intakeSubsystem.extendPiston();
-		} else if (OI.retractIntake.get()) {
+		}
+		if(OI.retractIntake.get()) {
 			Robot.intakeSubsystem.retractPiston();			
-		} else {}
+		}
 		if (OI.activateIntakeMotor.get()) {
 			Robot.intakeSubsystem.setSpeed(1);
-		} else if (OI.deactivateIntakeMotor.get()) {
+		}
+		if (OI.deactivateIntakeMotor.get()) {
 			Robot.intakeSubsystem.setSpeed(-1);
-		} else {
-			Robot.intakeSubsystem.setSpeed(0);
 		}
 	}
 

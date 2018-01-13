@@ -10,22 +10,17 @@ package org.usfirst.frc.team1155.robot;
 import java.io.File;
 import java.io.IOException;
 
-import api.Path;
-import api.Client;
-
 import org.usfirst.frc.team1155.robot.commands.CascadeLiftCommand;
 import org.usfirst.frc.team1155.robot.commands.WestCoastDriveCommand;
-import org.usfirst.frc.team1155.robot.subsystems.LiftSubsystem;
-import org.usfirst.frc.team1155.robot.subsystems.CarriageSubsystem;
-import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team1155.robot.subsystems.IntakeSubsystem;
+import org.usfirst.frc.team1155.robot.subsystems.*;
 
+import api.Client;
+import api.Path;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -41,7 +36,7 @@ public class Robot extends IterativeRobot {
 
 	public static DriveSubsystem driveSubsystem;
 	public static LiftSubsystem liftSubsystem;
-	public static ClimberSubsytem climberSubsystem;
+	public static ClimbSubsystem climbSubsystem;
 	public static CarriageSubsystem carriageSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static ADXRS450_Gyro Gyro;
@@ -71,7 +66,7 @@ public class Robot extends IterativeRobot {
 		m_oi = new OI();
 		driveSubsystem = new DriveSubsystem();
 		liftSubsystem = new LiftSubsystem();
-		climberSubsystem = new ClimberSubsystem();
+		climbSubsystem = new ClimbSubsystem();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		Gyro = new ADXRS450_Gyro();
