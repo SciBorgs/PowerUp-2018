@@ -22,8 +22,8 @@ public class DriveSubsystem extends Subsystem {
 		frontLeftMotor = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
 		frontRightMotor = new TalonSRX(PortMap.DRIVE_FRONT_RIGHT_TALON);
 
-		middleLeftMotor = new TalonSRX(PortMap.DRIVE_MIDDLE_LEFT_TALON);
-		middleRightmotor = new TalonSRX(PortMap.DRIVE_MIDDLE_RIGHT_TALON);
+//		middleLeftMotor = new TalonSRX(PortMap.DRIVE_MIDDLE_LEFT_TALON);
+//		middleRightmotor = new TalonSRX(PortMap.DRIVE_MIDDLE_RIGHT_TALON);
 
 		backLeftMotor = new TalonSRX(PortMap.DRIVE_BACK_LEFT_TALON);
 		backRightMotor = new TalonSRX(PortMap.DRIVE_BACK_RIGHT_TALON);
@@ -75,7 +75,7 @@ public class DriveSubsystem extends Subsystem {
 		double xVal = -Math.cos(degrees * conversionFactor);
 		double yVal = Math.sin(degrees * conversionFactor);
 		
-		System.out.println(xVal + " " + yVal + " " + degrees);
+		//System.out.println(xVal + " " + yVal + " " + degrees);
 		
 		frontLeftMotor.set(ControlMode.PercentOutput, -xVal - yVal);
 		frontRightMotor.set(ControlMode.PercentOutput, -xVal + yVal);
@@ -86,12 +86,14 @@ public class DriveSubsystem extends Subsystem {
 	public void moveToPoint(int[] coordArr) {
 		while (!(Robot.plane.getX() > coordArr[0] - 0.0508 && Robot.plane.getX() < coordArr[0] + 0.0508
 		&& Robot.plane.getY() > coordArr[1] - 0.0508 && Robot.plane.getY() < coordArr[1] + 0.0508)) {
-			frontRightMotor.set(ControlMode.PercentOutput, 1);
-			frontLeftMotor.set(ControlMode.PercentOutput, 1);
+			
+			moveDegrees(calculatesAngleToTurnTo(coordArr));
+			frontRightMotor.set(ControlMode.PercentOutput, .4);
+			frontLeftMotor.set(ControlMode.PercentOutput, .5);
 			//middleRightmotor.set(ControlMode.PercentOutput, 1);
 			//middleLeftMotor.set(ControlMode.PercentOutput, 1);
-			backRightMotor.set(ControlMode.PercentOutput, 1);
-			backLeftMotor.set(ControlMode.PercentOutput, 1);
+			backRightMotor.set(ControlMode.PercentOutput, -.4);
+			backLeftMotor.set(ControlMode.PercentOutput, -.5);
 		}
 	}
 }

@@ -58,18 +58,20 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		Gyro = new ADXRS450_Gyro();
-		file = new File("test.path");
+	/*	file = new File("test.path");
 		try {
 			path = new Path(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		*/ 
 		timer = new Timer();
 		accel = new BuiltInAccelerometer();
 		plane = new DesCartesianPlane(timer, accel);
 		PointTwoMeters = new int[2];
 		PointTwoMeters[0] = 0;
-		PointTwoMeters[1] = 4;
+		PointTwoMeters[1] = 80;
+		System.out.println(plane.getX() + ", " + plane.getY());
 	}
 
 	/**
@@ -79,7 +81,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
 	}
 
 	@Override
@@ -113,6 +114,7 @@ public class Robot extends IterativeRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
+		System.out.println(plane.getX() + ", " + plane.getY());
 	}
 
 	/**
@@ -120,9 +122,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
-		plane.updatePosition();
-		driveSubsystem.moveToPoint(PointTwoMeters);
+	//	Scheduler.getInstance().run();
+		//plane.updatePosition();
+		System.out.print("DESCARTES");
+		//driveSubsystem.moveToPoint(PointTwoMeters);
+		//System.out.println(plane.getX() + ", " + plane.getY());
+		
 	}
 
 	@Override
@@ -134,6 +139,7 @@ public class Robot extends IterativeRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		System.out.println(plane.getX() + ", " + plane.getY());
 	}
 
 	/**
@@ -143,6 +149,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		plane.updatePosition();
+		System.out.println(plane.getX() + ", " + plane.getY());
 	}
 
 	/**
@@ -150,5 +157,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		System.out.println(plane.getX() + ", " + plane.getY());
 	}
 }

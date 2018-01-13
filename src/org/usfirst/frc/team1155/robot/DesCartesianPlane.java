@@ -14,20 +14,20 @@ public class DesCartesianPlane {
     private double prevAy = 0;
     private BuiltInAccelerometer accelerometer;
 
-    DesCartesianPlane(Timer timer, BuiltInAccelerometer accelerometer) {
-        this.timer = timer;
-        this.accelerometer = accelerometer;
+    DesCartesianPlane(Timer t, BuiltInAccelerometer a) {
+        timer = t;
+        accelerometer = a;
     }
 
     public void updatePosition() {
         double ax = accelerometer.getX() * 9.80665;
         double ay = accelerometer.getX() * 9.80665;
         double dt = (timer.getTimeDifference() / 1000);
-        vx += 0.5 * dt * (prevAx + ax);
-        vy += 0.5 * dt * (prevAy + ay);
+        vx += (0.5 * dt * (prevAx + ax));
+        vy += (0.5 * dt * (prevAy + ay));
 
-        x += 0.5 * dt * (prevVx + vx);
-        y += 0.5 * dt * (prevVy + vy);
+        x += (0.5 * dt * (prevVx + vx));
+        y += (0.5 * dt * (prevVy + vy));
 
         prevAx = ax;
         prevAy = ay;
