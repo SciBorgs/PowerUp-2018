@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 import api.Path;
-import auto_gui.realtime.Client;
+import api.Client;
 
 import org.usfirst.frc.team1155.robot.commands.WestCoastDriveCommand;
 import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem;
@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot {
 	public static Timer timer;
 	public static DesCartesianPlane plane;
 
-	public static auto_gui.realtime.Client client;
+	public static Client client;
 
 	
 	Command m_autonomousCommand;
@@ -161,7 +161,12 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		plane.updatePosition();
-		System.out.println(plane.getX() + ", " + plane.getY());
+		SmartDashboard.putNumber("Xceleration", plane.getAx());
+		SmartDashboard.putNumber("Yceleration", plane.getAy());
+		SmartDashboard.putNumber("Xvelocity", plane.getVx());
+		SmartDashboard.putNumber("Yvelocity", plane.getVy());
+		SmartDashboard.putNumber("Xposition", plane.getX());
+		SmartDashboard.putNumber("Yposition", plane.getY());
 	}
 
 	/**

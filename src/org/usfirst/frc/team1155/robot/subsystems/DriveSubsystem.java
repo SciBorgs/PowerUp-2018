@@ -17,9 +17,9 @@ public class DriveSubsystem extends Subsystem {
 					backRightMotor, backLeftMotor,
 					middleRightmotor, middleLeftMotor;
 
-	public static double SPEED_CORRECTION = .15;
+	public static double SPEED_CORRECTION = -.1;
 	public static double ANGLE_BUFFER = 2;
-	public static double speed = .5;
+	public static double speed = -.2;
 	
 	public void initDefaultCommand() {
 
@@ -33,16 +33,24 @@ public class DriveSubsystem extends Subsystem {
 		backRightMotor = new TalonSRX(PortMap.DRIVE_BACK_RIGHT_TALON);
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
+		stop();
+	}
+	
+	public void stop() {
+		backLeftMotor.set(ControlMode.PercentOutput, 0);
+		backRightMotor.set(ControlMode.PercentOutput, 0);
+		frontLeftMotor.set(ControlMode.PercentOutput, 0);
+		frontRightMotor.set(ControlMode.PercentOutput, 0);
 	}
 
 	public void setSpeed(double leftVal, double rightVal){
-		frontRightMotor.set(ControlMode.PercentOutput, rightVal);
+		frontRightMotor.set(ControlMode.PercentOutput, -rightVal);
 		frontLeftMotor.set(ControlMode.PercentOutput, leftVal);
 
-		middleRightmotor.set(ControlMode.PercentOutput, rightVal);
-		middleLeftMotor.set(ControlMode.PercentOutput, leftVal);
+//		middleRightmotor.set(ControlMode.PercentOutput, rightVal);
+//		middleLeftMotor.set(ControlMode.PercentOutput, leftVal);
 		
-		backRightMotor.set(ControlMode.PercentOutput, rightVal);
+		backRightMotor.set(ControlMode.PercentOutput, -rightVal);
 		backLeftMotor.set(ControlMode.PercentOutput, leftVal);
 	}
 	

@@ -1,4 +1,4 @@
-package auto_gui.realtime;
+package api;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.net.SocketException;
 
 public class Client {
-    private static final String SERVER_IP_ADDRESS = "127.0.0.1"; // set to drive computer static ip/network name
+    private static final String SERVER_IP_ADDRESS = "server3"; // set to drive computer static ip/network name
     private static final int SERVER_PORT = 7777;
     private static Socket socket;
     private static ObjectOutputStream objectOutputStream;

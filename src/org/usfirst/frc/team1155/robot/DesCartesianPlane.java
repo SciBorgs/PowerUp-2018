@@ -17,6 +17,8 @@ public class DesCartesianPlane {
     private double vy = 0;
     private double prevAx = 0;
     private double prevAy = 0;
+    private final double mpsps = 9.80665;
+    private final double ftpsps = 32.185039370079;
     private BuiltInAccelerometer accelerometer;
 
     ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
@@ -35,8 +37,20 @@ public class DesCartesianPlane {
     }
 
     public void updatePosition() {
-        double ax = accelerometer.getX() * 9.80665;
-        double ay = accelerometer.getX() * 9.80665;
+        double ax = accelerometer.getX() * ftpsps;
+        double ay = accelerometer.getY() * ftpsps;
+        
+        if (Math.abs(ax) <= 0.06*mpsps)
+        	ax = 0;
+        if (Math.abs(ay) <= 0.06*mpsps)
+        	ay = 0;
+        
+        if(prevAx == 0 && ax == 0)
+        	vx = 0;
+
+        if(prevAy == 0 && ay == 0)
+        	vy = 0;
+        
         double dt = (timer.getTimeDifference() / 1000);
         vx += (0.5 * dt * (prevAx + ax));
         vy += (0.5 * dt * (prevAy + ay));
@@ -49,9 +63,24 @@ public class DesCartesianPlane {
 
         prevVx = vx;
         prevVy = vy;
-
     }
-
+    
+    public double getAx() {
+    	return prevAx;
+    }
+    
+    public double getAy() {
+    	return prevAy;
+    }
+    
+    public double getVy() {
+    	return prevVy;
+    }
+    
+    public double getVx() {
+    	return prevVx;
+    }
+    
     public double getX() {
         return x;
     }
