@@ -12,6 +12,8 @@ import java.io.IOException;
 
 import api.Path;
 import auto_gui.realtime.Client;
+
+import org.usfirst.frc.team1155.robot.commands.WestCoastDriveCommand;
 import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -45,7 +47,7 @@ public class Robot extends IterativeRobot {
 	public static DesCartesianPlane plane;
 
 	public static auto_gui.realtime.Client client;
-	
+
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -110,6 +112,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
+		driveSubsystem.moveToPoint(PointTwoMeters);
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -133,7 +136,7 @@ public class Robot extends IterativeRobot {
 	//	Scheduler.getInstance().run();
 		//plane.updatePosition();
 		System.out.print("DESCARTES");
-		//driveSubsystem.moveToPoint(PointTwoMeters);
+
 		//System.out.println(plane.getX() + ", " + plane.getY());
 		
 	}
@@ -148,6 +151,7 @@ public class Robot extends IterativeRobot {
 			m_autonomousCommand.cancel();
 		}
 		System.out.println(plane.getX() + ", " + plane.getY());
+		new WestCoastDriveCommand().start();
 	}
 
 	/**
