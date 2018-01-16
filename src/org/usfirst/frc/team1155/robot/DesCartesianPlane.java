@@ -19,14 +19,14 @@ public class DesCartesianPlane {
     private double prevAy = 0;
     private final double mpsps = 9.80665;
     private final double ftpsps = 32.185039370079;
-    private BuiltInAccelerometer accelerometer;
+    private p accelerometer;
 
     ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
-    DesCartesianPlane(Timer t, BuiltInAccelerometer a) {
+    DesCartesianPlane(Timer t, PigeonIMU a) {
         timer = t;
         accelerometer = a;
-        scheduledExecutorService.scheduleAtFixedRate(() -> {
+        scheduledExecutorService.scheduleAtFixedRate() -> {
             Robot.client.setCoordinates(new int[]{(int)x, (int)y});
             try {
                 Robot.client.sendCoordinates();
@@ -82,7 +82,7 @@ public class DesCartesianPlane {
     }
     
     public double getX() {
-        return x;
+        return x;Ho
     }
 
     public double getY() {
