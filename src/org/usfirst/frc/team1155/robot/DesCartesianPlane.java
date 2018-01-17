@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1155.robot;
 
-import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import com.ctre.phoenix.sensors.PigeonIMU;
 
 import java.io.IOException;
 import java.util.concurrent.Executors;
@@ -19,7 +19,7 @@ public class DesCartesianPlane {
     private double prevAy = 0;
     private final double mpsps = 9.80665;
     private final double ftpsps = 32.185039370079;
-    private p accelerometer;
+    private PigeonIMU accelerometer;
 
     ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
@@ -40,9 +40,9 @@ public class DesCartesianPlane {
         double ax = accelerometer.getX() * ftpsps;
         double ay = accelerometer.getY() * ftpsps;
         
-        if (Math.abs(ax) <= 0.06*mpsps)
+        if (Math.abs(ax) <= 0.06)
         	ax = 0;
-        if (Math.abs(ay) <= 0.06*mpsps)
+        if (Math.abs(ay) <= 0.06)
         	ay = 0;
         
         if(prevAx == 0 && ax == 0)
@@ -82,7 +82,7 @@ public class DesCartesianPlane {
     }
     
     public double getX() {
-        return x;Ho
+        return x;
     }
 
     public double getY() {
