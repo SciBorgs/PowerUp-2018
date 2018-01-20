@@ -23,6 +23,8 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import api.Client;
 import api.Path;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -50,12 +52,8 @@ public class Robot extends IterativeRobot {
 	public static Path path;
 	public static int PointTwoMeters[];
 	
-<<<<<<< HEAD
 	public static PigeonIMU pigeon;
 	public static BuiltInAccelerometer accel;
-=======
-	public static PigeonIMU accel;
->>>>>>> b2932340e1d9a989824c6f3cc6b34d75d923aa46
 	
 	public static Timer timer;
 	public static DesCartesianPlane plane;
@@ -95,12 +93,8 @@ public class Robot extends IterativeRobot {
 		}
 		*/ 
 		timer = new Timer();
-<<<<<<< HEAD
 		accel = new BuiltInAccelerometer();
-		pigeon = new PigeonIMU(7);
-=======
-		accel = new PigeonIMU(driveSubsystem.frontRightMotor);
->>>>>>> b2932340e1d9a989824c6f3cc6b34d75d923aa46
+		pigeon = new PigeonIMU(driveSubsystem.frontRightMotor);
 		plane = new DesCartesianPlane(timer, accel);
 		PointTwoMeters = new int[2];
 		shortArr = new short[3];

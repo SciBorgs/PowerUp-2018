@@ -3,6 +3,7 @@ package org.usfirst.frc.team1155.robot.commands;
 import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.Robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class IntakeArmCommand extends Command{
@@ -19,7 +20,7 @@ public class IntakeArmCommand extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.intakeSubsystem.intakePistonOne.get() == DoubleSolenoid.Value.kForward) {
+		if (Robot.intakeSubsystem.intakePistonFirst.get() == DoubleSolenoid.Value.kForward) {
 			Robot.intakeSubsystem.retractPiston();
 		} else {
 			Robot.intakeSubsystem.extendPiston();

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class IntakeSubsystem extends Subsystem{
 
 	public TalonSRX leftIntakeMotor, rightIntakeMotor;
-	public DoubleSolenoid intakePiston;
+	public DoubleSolenoid intakePistonFirst, intakePistonSecond;
 	
 	public void initDefaultCommand() {
 
