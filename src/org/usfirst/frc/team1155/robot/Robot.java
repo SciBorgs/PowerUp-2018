@@ -10,9 +10,15 @@ package org.usfirst.frc.team1155.robot;
 import java.io.File;
 import java.io.IOException;
 
-import org.usfirst.frc.team1155.robot.commands.CascadeLiftCommand;
+import org.usfirst.frc.team1155.robot.commands.IntakeCommand;
 import org.usfirst.frc.team1155.robot.commands.WestCoastDriveCommand;
-import org.usfirst.frc.team1155.robot.subsystems.*;
+import org.usfirst.frc.team1155.robot.subsystems.CarriageSubsystem;
+import org.usfirst.frc.team1155.robot.subsystems.ClimbSubsystem;
+import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team1155.robot.subsystems.IntakeSubsystem;
+import org.usfirst.frc.team1155.robot.subsystems.LiftSubsystem;
+
+import com.ctre.phoenix.sensors.PigeonIMU;
 
 import api.Client;
 import api.Path;
@@ -44,6 +50,7 @@ public class Robot extends IterativeRobot {
 	public static Path path;
 	public static int PointTwoMeters[];
 	
+	public static PigeonIMU pigeon;
 	public static BuiltInAccelerometer accel;
 	
 	public static Timer timer;
@@ -51,7 +58,7 @@ public class Robot extends IterativeRobot {
 
 	public static Client client;
 
-
+	public static short[] shortArr;
 
 	
 	Command m_autonomousCommand;
@@ -67,6 +74,7 @@ public class Robot extends IterativeRobot {
 		driveSubsystem = new DriveSubsystem();
 		liftSubsystem = new LiftSubsystem();
 		climbSubsystem = new ClimbSubsystem();
+		intakeSubsystem = new IntakeSubsystem();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		Gyro = new ADXRS450_Gyro();
@@ -84,8 +92,10 @@ public class Robot extends IterativeRobot {
 		*/ 
 		timer = new Timer();
 		accel = new BuiltInAccelerometer();
+		pigeon = new PigeonIMU(7);
 		plane = new DesCartesianPlane(timer, accel);
 		PointTwoMeters = new int[2];
+		shortArr = new short[3];
 		PointTwoMeters[0] = 0;
 		PointTwoMeters[1] = 80;
 		System.out.println(plane.getX() + ", " + plane.getY());
@@ -158,8 +168,8 @@ public class Robot extends IterativeRobot {
 			m_autonomousCommand.cancel();
 		}
 		System.out.println(plane.getX() + ", " + plane.getY());
-		new WestCoastDriveCommand().start();
-		new CascadeLiftCommand().start();
+		//new WestCoastDriveCommand().start();
+		new IntakeCommand().start();
 	}
 
 	/**
@@ -175,6 +185,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Yvelocity", plane.getVy());
 		SmartDashboard.putNumber("Xposition", plane.getX());
 		SmartDashboard.putNumber("Yposition", plane.getY());
+		
+		SmartDashboard.putNumber("shortArr[0]", shortArr[0]);
+		SmartDashboard.putNumber("shortArr[1]", shortArr[1]);
+		SmartDashboard.putNumber("shortArr[2]", shortArr[2]);
 	}
 
 	/**

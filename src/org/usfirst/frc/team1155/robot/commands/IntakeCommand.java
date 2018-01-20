@@ -19,18 +19,20 @@ public class IntakeCommand extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (OI.extendIntake.get()) {
+	/*	if (OI.extendIntake.get()) {
 			Robot.intakeSubsystem.extendPiston();
 		}
 		if(OI.retractIntake.get()) {
 			Robot.intakeSubsystem.retractPiston();			
+		} */
+		if (OI.rightJoystick.getPOV() == 180) {
+			Robot.intakeSubsystem.setSpeed(.3);
 		}
-		if (OI.activateIntakeMotor.get()) {
-			Robot.intakeSubsystem.setSpeed(1);
+		if (OI.rightJoystick.getPOV() == 0) {
+			Robot.intakeSubsystem.setSpeed(-.3);
 		}
-		if (OI.deactivateIntakeMotor.get()) {
-			Robot.intakeSubsystem.setSpeed(-1);
-		}
+		if (OI.rightJoystick.getPOV() == -1)
+			Robot.intakeSubsystem.setSpeed(0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

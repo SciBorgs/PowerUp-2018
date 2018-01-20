@@ -33,16 +33,16 @@ public class PortMap {
 
 	//*****************INTAKE*******************//	
 	
-	public static final int INTAKE_LEFT_TALON = 10;
-	public static final int INTAKE_RIGHT_TALON = 11;
+	public static final int INTAKE_LEFT_TALON = 7;
+	public static final int INTAKE_RIGHT_TALON = 6;
 	
 	public static final int INTAKE_SOLENOID_LEFT = 5;
 	public static final int INTAKE_SOLENOID_RIGHT = 6;
 	
 	//*****************CLIMBER******************//	
 	
-	public static final int LEFT_CLIMB_TALON = 12;
-	public static final int RIGHT_CLIMB_TALON = 13;
+	public static final int LEFT_CLIMB_TALON = 7;
+	public static final int RIGHT_CLIMB_TALON = 6;
 	public static final int ANGLE_CLIMB_TALON = 14;
 
 }

@@ -19,6 +19,7 @@ public class OI {
 	
 	public static Button extendClimber = new JoystickButton(rightJoystick, 3);
 	public static Button retractClimber = new JoystickButton(rightJoystick, 4);
+	public static Button stopClimber = new JoystickButton(rightJoystick, 2);
 	public static Button rotateClimberLeft = new JoystickButton(leftJoystick, 1);
 	public static Button rotateClimberRight = new JoystickButton(rightJoystick, 1);
 

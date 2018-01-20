@@ -16,7 +16,7 @@ public class IntakeSubsystem extends Subsystem{
 		leftIntakeMotor = new TalonSRX(PortMap.INTAKE_LEFT_TALON);
 		rightIntakeMotor = new TalonSRX(PortMap.INTAKE_RIGHT_TALON);
 
-		intakePiston = new DoubleSolenoid(PortMap.INTAKE_SOLENOID_LEFT, PortMap.INTAKE_SOLENOID_RIGHT);
+		//intakePiston = new DoubleSolenoid(PortMap.INTAKE_SOLENOID_LEFT, PortMap.INTAKE_SOLENOID_RIGHT);
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 		stop();
@@ -29,14 +29,14 @@ public class IntakeSubsystem extends Subsystem{
 	
 	public void setSpeed(double speed){
 		leftIntakeMotor.set(ControlMode.PercentOutput, speed);
-		rightIntakeMotor.set(ControlMode.PercentOutput, speed);
+		rightIntakeMotor.set(ControlMode.PercentOutput, -speed);
 	}
 	public void extendPiston() {
-		intakePiston.set(DoubleSolenoid.Value.kForward);
+		//intakePiston.set(DoubleSolenoid.Value.kForward);
 	}
 
 	public void retractPiston() {
-		intakePiston.set(DoubleSolenoid.Value.kReverse);
+		//intakePiston.set(DoubleSolenoid.Value.kReverse);
 	}	
 	
 }

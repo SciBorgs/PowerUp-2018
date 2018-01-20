@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1155.robot;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.Encoder;
 
 import java.io.IOException;
 import java.util.concurrent.Executors;
@@ -17,6 +18,7 @@ public class DesCartesianPlane {
     private double vy = 0;
     private double prevAx = 0;
     private double prevAy = 0;
+    private double ax,ay,dt;
     private final double mpsps = 9.80665;
     private final double ftpsps = 32.185039370079;
     private BuiltInAccelerometer accelerometer;
@@ -37,8 +39,8 @@ public class DesCartesianPlane {
     }
 
     public void updatePosition() {
-        double ax = accelerometer.getX() * ftpsps;
-        double ay = accelerometer.getY() * ftpsps;
+        ax = accelerometer.getX() * ftpsps;
+        ay = accelerometer.getY() * ftpsps;
         
         if (Math.abs(ax) <= 0.06*mpsps)
         	ax = 0;
@@ -51,7 +53,7 @@ public class DesCartesianPlane {
         if(prevAy == 0 && ay == 0)
         	vy = 0;
         
-        double dt = (timer.getTimeDifference() / 1000);
+        dt = (timer.getTimeDifference() / 1000);
         vx += (0.5 * dt * (prevAx + ax));
         vy += (0.5 * dt * (prevAy + ay));
 
