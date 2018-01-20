@@ -36,8 +36,8 @@ public class PortMap {
 	public static final int INTAKE_LEFT_TALON = 7;
 	public static final int INTAKE_RIGHT_TALON = 6;
 	
-	public static final int INTAKE_SOLENOID_LEFT = 5;
-	public static final int INTAKE_SOLENOID_RIGHT = 6;
+	public static final int[] INTAKE_SOLENOID_LEFT = {0, 7};
+	public static final int[] INTAKE_SOLENOID_RIGHT = {2, 5};
 	
 	//*****************CLIMBER******************//	
 	

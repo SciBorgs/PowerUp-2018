@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1155.robot;
 
+import org.usfirst.frc.team1155.robot.commands.IntakeArmCommand;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -29,8 +31,7 @@ public class OI {
 	public static Button activateCarriageMotor = new JoystickButton(rightJoystick, 10);
 	public static Button deactivateCarriageMotor = new JoystickButton(rightJoystick, 9);
 
-	public static Button extendIntake = new JoystickButton(leftJoystick, 5);
-	public static Button retractIntake = new JoystickButton(leftJoystick, 6);
+	public static Button intakeArmControl = new JoystickButton(rightJoystick, 2);
 	public static Button activateIntakeMotor = new JoystickButton(leftJoystick, 10);
 	public static Button deactivateIntakeMotor = new JoystickButton(leftJoystick, 9);
 	//// CREATING BUTTONS
@@ -60,4 +61,8 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
+	
+	public OI () {
+		intakeArmControl.toggleWhenPressed(new IntakeArmCommand());
+	}
 }
