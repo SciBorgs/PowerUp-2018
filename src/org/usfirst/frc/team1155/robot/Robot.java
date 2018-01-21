@@ -52,7 +52,7 @@ public class Robot extends IterativeRobot {
 	public static Path path;
 	public static int PointTwoMeters[];
 	
-	public static PigeonIMU pigeon;
+	//public static PigeonIMU pigeon;
 	public static BuiltInAccelerometer accel;
 	
 	public static Timer timer;
@@ -94,7 +94,7 @@ public class Robot extends IterativeRobot {
 		*/ 
 		timer = new Timer();
 		accel = new BuiltInAccelerometer();
-		pigeon = new PigeonIMU(driveSubsystem.frontRightMotor);
+//		pigeon = new PigeonIMU(driveSubsystem.frontRightMotor);
 		plane = new DesCartesianPlane(timer, accel);
 		PointTwoMeters = new int[2];
 		shortArr = new short[3];

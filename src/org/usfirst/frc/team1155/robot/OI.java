@@ -37,7 +37,7 @@ public class OI {
 
 	public OI () {
 		intakeArmControl.toggleWhenPressed(new IntakeArmCommand());
-	
+	}
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
@@ -63,7 +63,7 @@ public class OI {
 	// button.whileHeld(new ExampleCommand());
 
 	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
+	// until it is finished as determined by it's isFinished method.g
 	// button.whenReleased(new ExampleCommand());
-	}
+	
 }
