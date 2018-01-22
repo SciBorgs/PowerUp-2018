@@ -30,7 +30,7 @@ public class IntakeSubsystem extends Subsystem{
 	
 	public void setSpeed(double speed){
 		leftIntakeMotor.set(ControlMode.PercentOutput, speed);
-		rightIntakeMotor.set(ControlMode.PercentOutput, -speed);
+		rightIntakeMotor.set(ControlMode.PercentOutput, speed);
 	}
 	public void extendPiston() {
 		intakePistonFirst.set(DoubleSolenoid.Value.kForward);
