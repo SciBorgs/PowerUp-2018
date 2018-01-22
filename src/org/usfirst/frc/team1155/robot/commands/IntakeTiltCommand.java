@@ -3,12 +3,13 @@ package org.usfirst.frc.team1155.robot.commands;
 import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.Robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class CarriageCommand extends Command{
-	public CarriageCommand() {
+public class IntakeTiltCommand extends Command{
+	public IntakeTiltCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.carriageSubsystem);
+		//requires(Robot.intakeSubsystem);
 	}
 
 	// Called just before this Command runs the first time
@@ -19,38 +20,27 @@ public class CarriageCommand extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (OI.extendCarriage.get()) {
-			Robot.carriageSubsystem.extendPiston();
-		}
-		if (OI.retractCarriage.get()) {
-			Robot.carriageSubsystem.retractPiston();			
-		}
-		if (OI.activateCarriageMotor.get()) {
-			Robot.carriageSubsystem.setSpeed(1);
-		}
-		if (OI.deactivateCarriageMotor.get()) {
-			Robot.carriageSubsystem.setSpeed(-1);
+		if (Robot.intakeSubsystem.tiltSolenoid.get() == DoubleSolenoid.Value.kForward) {
+			Robot.intakeSubsystem.retractTiltPiston();
+		} else {
+			Robot.intakeSubsystem.extendTiltPiston();
 		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.carriageSubsystem.setSpeed(0);
-		Robot.carriageSubsystem.retractPiston();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.carriageSubsystem.setSpeed(0);
-		Robot.carriageSubsystem.retractPiston();
 	}
 }

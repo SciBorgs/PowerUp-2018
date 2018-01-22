@@ -12,11 +12,7 @@ import java.io.IOException;
 
 import org.usfirst.frc.team1155.robot.commands.IntakeCommand;
 import org.usfirst.frc.team1155.robot.commands.WestCoastDriveCommand;
-import org.usfirst.frc.team1155.robot.subsystems.CarriageSubsystem;
-import org.usfirst.frc.team1155.robot.subsystems.ClimbSubsystem;
-import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team1155.robot.subsystems.IntakeSubsystem;
-import org.usfirst.frc.team1155.robot.subsystems.LiftSubsystem;
+import org.usfirst.frc.team1155.robot.subsystems.*;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 
@@ -45,7 +41,6 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSubsystem;
 	public static LiftSubsystem liftSubsystem;
 	public static ClimbSubsystem climbSubsystem;
-	public static CarriageSubsystem carriageSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static ADXRS450_Gyro Gyro;
 	public static File file;

@@ -24,16 +24,13 @@ public class OI {
 	public static Button stopClimber = new JoystickButton(rightJoystick, 2);
 	public static Button rotateClimberLeft = new JoystickButton(leftJoystick, 1);
 	public static Button rotateClimberRight = new JoystickButton(rightJoystick, 1);
-
 	
 	public static Button extendCarriage = new JoystickButton(rightJoystick, 5);
 	public static Button retractCarriage = new JoystickButton(rightJoystick, 6);
 	public static Button activateCarriageMotor = new JoystickButton(rightJoystick, 10);
 	public static Button deactivateCarriageMotor = new JoystickButton(rightJoystick, 9);
 
-	public static Button intakeArmControl = new JoystickButton(rightJoystick, 2);
-	public static Button activateIntakeMotor = new JoystickButton(leftJoystick, 10);
-	public static Button deactivateIntakeMotor = new JoystickButton(leftJoystick, 9);
+	public static Button intakeArmControl = new JoystickButton(rightJoystick, 3);
 
 	public OI () {
 		intakeArmControl.toggleWhenPressed(new IntakeArmCommand());

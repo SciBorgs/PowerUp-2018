@@ -26,7 +26,7 @@ public class IntakeCommand extends Command{
 			Robot.intakeSubsystem.setSpeed(-.3);
 		}
 		if (OI.rightJoystick.getPOV() == -1)
-			Robot.intakeSubsystem.setSpeed(0);
+			Robot.intakeSubsystem.stop();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -39,7 +39,6 @@ public class IntakeCommand extends Command{
 	@Override
 	protected void end() {
 		Robot.intakeSubsystem.setSpeed(0);
-		Robot.intakeSubsystem.retractPiston();
 	}
 
 	// Called when another command which requires one or more of the same
@@ -47,6 +46,5 @@ public class IntakeCommand extends Command{
 	@Override
 	protected void interrupted() {
 		Robot.intakeSubsystem.setSpeed(0);
-		Robot.intakeSubsystem.retractPiston();
 	}
 }

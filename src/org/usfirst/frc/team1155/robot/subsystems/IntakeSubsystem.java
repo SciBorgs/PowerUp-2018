@@ -8,16 +8,18 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class IntakeSubsystem extends Subsystem{
 
-	public TalonSRX leftIntakeMotor, rightIntakeMotor;
-	public DoubleSolenoid intakePistonFirst, intakePistonSecond;
+	public TalonSRX leftIntakeMotor, rightIntakeMotor, leftIntakeMotor2, rightIntakeMotor2;
+	public DoubleSolenoid armSolenoid, tiltSolenoid;
 	
 	public void initDefaultCommand() {
 
-		leftIntakeMotor = new TalonSRX(PortMap.INTAKE_LEFT_TALON);
-		rightIntakeMotor = new TalonSRX(PortMap.INTAKE_RIGHT_TALON);
+		leftIntakeMotor = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
+		rightIntakeMotor = new TalonSRX(PortMap.DRIVE_FRONT_RIGHT_TALON);
+		leftIntakeMotor2 = new TalonSRX(PortMap.DRIVE_BACK_LEFT_TALON);
+		rightIntakeMotor2 = new TalonSRX(PortMap.DRIVE_BACK_RIGHT_TALON);
 
-		intakePistonFirst = new DoubleSolenoid(PortMap.INTAKE_SOLENOID_LEFT[0], PortMap.INTAKE_SOLENOID_LEFT[1]);
-		intakePistonSecond = new DoubleSolenoid(PortMap.INTAKE_SOLENOID_RIGHT[0], PortMap.INTAKE_SOLENOID_RIGHT[1]);
+		armSolenoid = new DoubleSolenoid(PortMap.INTAKE_SOLENOID_LEFT[0], PortMap.INTAKE_SOLENOID_LEFT[1]);
+		tiltSolenoid = new DoubleSolenoid(PortMap.INTAKE_SOLENOID_RIGHT[0], PortMap.INTAKE_SOLENOID_RIGHT[1]);
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 		stop();
@@ -26,20 +28,29 @@ public class IntakeSubsystem extends Subsystem{
 	public void stop() {
 		leftIntakeMotor.set(ControlMode.PercentOutput, 0);
 		rightIntakeMotor.set(ControlMode.PercentOutput, 0);
+		leftIntakeMotor2.set(ControlMode.PercentOutput, 0);
+		rightIntakeMotor2.set(ControlMode.PercentOutput, 0);
 	}
 	
 	public void setSpeed(double speed){
-		leftIntakeMotor.set(ControlMode.PercentOutput, speed);
-		rightIntakeMotor.set(ControlMode.PercentOutput, speed);
+		leftIntakeMotor.set(ControlMode.PercentOutput, -speed);
+		rightIntakeMotor.set(ControlMode.PercentOutput, -speed);
+		leftIntakeMotor2.set(ControlMode.PercentOutput, speed);
+		rightIntakeMotor2.set(ControlMode.PercentOutput, speed);
 	}
-	public void extendPiston() {
-		intakePistonFirst.set(DoubleSolenoid.Value.kForward);
-		intakePistonSecond.set(DoubleSolenoid.Value.kForward);
+	public void extendArmPiston() {
+		armSolenoid.set(DoubleSolenoid.Value.kForward);
 	}
 
-	public void retractPiston() {
-		intakePistonFirst.set(DoubleSolenoid.Value.kReverse);
-		intakePistonSecond.set(DoubleSolenoid.Value.kReverse);
-	}	
+	public void retractArmPiston() {
+		armSolenoid.set(DoubleSolenoid.Value.kReverse);
+	}
+	public void extendTiltPiston() {
+		tiltSolenoid.set(DoubleSolenoid.Value.kForward);
+	}
+
+	public void retractTiltPiston() {
+		tiltSolenoid.set(DoubleSolenoid.Value.kReverse);
+	}		
 	
 }

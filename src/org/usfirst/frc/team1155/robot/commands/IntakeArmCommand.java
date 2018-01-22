@@ -20,10 +20,10 @@ public class IntakeArmCommand extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.intakeSubsystem.intakePistonFirst.get() == DoubleSolenoid.Value.kForward) {
-			Robot.intakeSubsystem.retractPiston();
+		if (Robot.intakeSubsystem.armSolenoid.get() == DoubleSolenoid.Value.kForward) {
+			Robot.intakeSubsystem.retractArmPiston();
 		} else {
-			Robot.intakeSubsystem.extendPiston();
+			Robot.intakeSubsystem.extendArmPiston();
 		}
 	}
 
