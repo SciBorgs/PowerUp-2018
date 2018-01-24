@@ -34,9 +34,9 @@ public class IntakeSubsystem extends Subsystem{
 	}
 	
 	public void setSpeed(double speed){
-		leftIntakeMotor.set(ControlMode.PercentOutput, -speed);
+		leftIntakeMotor.set(ControlMode.PercentOutput, speed);
 		rightIntakeMotor.set(ControlMode.PercentOutput, -speed);
-		leftArmMotor.set(ControlMode.PercentOutput, speed);
+		leftArmMotor.set(ControlMode.PercentOutput, -speed);
 		rightArmMotor.set(ControlMode.PercentOutput, speed);
 	}
 	
