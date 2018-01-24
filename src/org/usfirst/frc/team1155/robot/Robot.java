@@ -165,7 +165,7 @@ public class Robot extends IterativeRobot {
 		}
 		System.out.println(plane.getX() + ", " + plane.getY());
 		//new WestCoastDriveCommand().start();
-		new ClimbCommand().start();
+		new PlaceCommand().start();
 	}
 
 	/**

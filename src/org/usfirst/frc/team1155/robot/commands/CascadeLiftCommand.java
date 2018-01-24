@@ -21,11 +21,14 @@ public class CascadeLiftCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (OI.ascendLift.get()) {
+		if (OI.leftJoystick.getPOV() == 0 && Robot.liftSubsystem.liftEncoder.get() <= Robot.liftSubsystem.tickToTop) {
 			Robot.liftSubsystem.setSpeed(1);
 		}
-		if (OI.descendLift.get()) {
+		if (OI.leftJoystick.getPOV() == 180) {
 			Robot.liftSubsystem.setSpeed(-1);			
+		}
+		if (OI.leftJoystick.getPOV() == -1) {
+			Robot.liftSubsystem.stop();			
 		}
 	}
 
