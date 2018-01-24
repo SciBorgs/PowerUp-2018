@@ -8,15 +8,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class IntakeSubsystem extends Subsystem{
 
-	public TalonSRX leftIntakeMotor, rightIntakeMotor, leftIntakeMotor2, rightIntakeMotor2;
+	public TalonSRX leftIntakeMotor, rightIntakeMotor, leftArmMotor, rightArmMotor;
 	public DoubleSolenoid armSolenoid, tiltSolenoid;
+	public int counter;
 	
 	public void initDefaultCommand() {
 
 		leftIntakeMotor = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
 		rightIntakeMotor = new TalonSRX(PortMap.DRIVE_FRONT_RIGHT_TALON);
-		leftIntakeMotor2 = new TalonSRX(PortMap.DRIVE_BACK_LEFT_TALON);
-		rightIntakeMotor2 = new TalonSRX(PortMap.DRIVE_BACK_RIGHT_TALON);
+		leftArmMotor = new TalonSRX(PortMap.DRIVE_BACK_LEFT_TALON);
+		rightArmMotor = new TalonSRX(PortMap.DRIVE_BACK_RIGHT_TALON);
 
 		armSolenoid = new DoubleSolenoid(PortMap.INTAKE_SOLENOID_LEFT[0], PortMap.INTAKE_SOLENOID_LEFT[1]);
 		tiltSolenoid = new DoubleSolenoid(PortMap.INTAKE_SOLENOID_RIGHT[0], PortMap.INTAKE_SOLENOID_RIGHT[1]);
@@ -28,16 +29,30 @@ public class IntakeSubsystem extends Subsystem{
 	public void stop() {
 		leftIntakeMotor.set(ControlMode.PercentOutput, 0);
 		rightIntakeMotor.set(ControlMode.PercentOutput, 0);
-		leftIntakeMotor2.set(ControlMode.PercentOutput, 0);
-		rightIntakeMotor2.set(ControlMode.PercentOutput, 0);
+		leftArmMotor.set(ControlMode.PercentOutput, 0);
+		rightArmMotor.set(ControlMode.PercentOutput, 0);
 	}
 	
 	public void setSpeed(double speed){
 		leftIntakeMotor.set(ControlMode.PercentOutput, -speed);
 		rightIntakeMotor.set(ControlMode.PercentOutput, -speed);
-		leftIntakeMotor2.set(ControlMode.PercentOutput, speed);
-		rightIntakeMotor2.set(ControlMode.PercentOutput, speed);
+		leftArmMotor.set(ControlMode.PercentOutput, speed);
+		rightArmMotor.set(ControlMode.PercentOutput, speed);
 	}
+	
+	public void setArmSpeed(double speed) {
+		leftArmMotor.set(ControlMode.PercentOutput, speed);
+		rightArmMotor.set(ControlMode.PercentOutput, speed);
+	}
+	
+	public void setCounter(int set) {
+		counter = set;
+	}
+	
+	public void incrementCounter(int incr) {
+		counter += incr;
+	}
+	
 	public void extendArmPiston() {
 		armSolenoid.set(DoubleSolenoid.Value.kForward);
 	}

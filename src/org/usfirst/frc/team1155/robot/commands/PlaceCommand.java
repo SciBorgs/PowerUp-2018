@@ -5,10 +5,10 @@ import org.usfirst.frc.team1155.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakeCommand extends Command{
-	public IntakeCommand() {
+public class PlaceCommand extends Command{
+	public PlaceCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.intakeSubsystem);
+		// requires(Robot.intakeSubsystem);
 	}
 
 	// Called just before this Command runs the first time
@@ -20,10 +20,10 @@ public class IntakeCommand extends Command{
 	@Override
 	protected void execute() {
 		if (OI.rightJoystick.getPOV() == 180) {
-			Robot.intakeSubsystem.setSpeed(.3);
+			new PlaceIntakeCommand().start();
 		}
 		if (OI.rightJoystick.getPOV() == 0) {
-			Robot.intakeSubsystem.setSpeed(-.3);
+			new PlaceOutputCommand().start();
 		}
 		if (OI.rightJoystick.getPOV() == -1)
 			Robot.intakeSubsystem.stop();

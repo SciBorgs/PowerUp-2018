@@ -4,8 +4,8 @@ import org.usfirst.frc.team1155.robot.Robot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShootCommand extends Command{
-	public ShootCommand() {
+public class PlaceOutputCommand extends Command{
+	public PlaceOutputCommand() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.intakeSubsystem);
 	}
@@ -14,19 +14,14 @@ public class ShootCommand extends Command{
 	@Override
 	protected void initialize() {
 		Robot.intakeSubsystem.setCounter(0);
-		Robot.intakeSubsystem.extendTiltPiston();
+		Robot.intakeSubsystem.retractTiltPiston();
+		Robot.intakeSubsystem.retractArmPiston();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.intakeSubsystem.counter >= (1 / (20 / 1000))) {
-			Robot.intakeSubsystem.retractArmPiston();
-			Robot.intakeSubsystem.setSpeed(1);
-		} else {
-			Robot.intakeSubsystem.setArmSpeed(1);
-			Robot.intakeSubsystem.incrementCounter(1);
-		}
+		Robot.intakeSubsystem.setSpeed(1);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

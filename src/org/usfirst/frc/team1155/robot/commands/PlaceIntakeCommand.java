@@ -1,30 +1,27 @@
 package org.usfirst.frc.team1155.robot.commands;
 
-import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.Robot;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakeTiltCommand extends Command{
-	public IntakeTiltCommand() {
+public class PlaceIntakeCommand extends Command{
+	public PlaceIntakeCommand() {
 		// Use requires() here to declare subsystem dependencies
-		//requires(Robot.intakeSubsystem);
+		requires(Robot.intakeSubsystem);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		Robot.intakeSubsystem.setCounter(0);
+		Robot.intakeSubsystem.retractTiltPiston();
+		Robot.intakeSubsystem.retractArmPiston();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.intakeSubsystem.tiltSolenoid.get() == DoubleSolenoid.Value.kForward) {
-			Robot.intakeSubsystem.retractTiltPiston();
-		} else {
-			Robot.intakeSubsystem.extendTiltPiston();
-		}
+		Robot.intakeSubsystem.setSpeed(-1);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

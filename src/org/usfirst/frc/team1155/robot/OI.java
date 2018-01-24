@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1155.robot;
 
-import org.usfirst.frc.team1155.robot.commands.IntakeArmCommand;
-
+import org.usfirst.frc.team1155.robot.commands.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -33,7 +32,7 @@ public class OI {
 	public static Button intakeArmControl = new JoystickButton(rightJoystick, 3);
 
 	public OI () {
-		intakeArmControl.toggleWhenPressed(new IntakeArmCommand());
+		intakeArmControl.toggleWhenPressed(new ToggleArmCommand());
 	}
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a

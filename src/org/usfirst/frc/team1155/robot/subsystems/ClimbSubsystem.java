@@ -14,14 +14,17 @@ public class ClimbSubsystem extends Subsystem {
 	public double speedAngle = 1.0;
 	
 	public void initDefaultCommand() {
-		leftClimbTalon = new TalonSRX(PortMap.LEFT_CLIMB_TALON);
-		rightClimbTalon = new TalonSRX(PortMap.RIGHT_CLIMB_TALON);
+		leftClimbTalon = new TalonSRX(PortMap.DRIVE_BACK_LEFT_TALON);
+		rightClimbTalon = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
 		angleClimbTalon = new TalonSRX(PortMap.ANGLE_CLIMB_TALON);
 	}
 	
 	public void setExtensionSpeed(double speed) {
-		leftClimbTalon.set(ControlMode.PercentOutput,speed);
-		rightClimbTalon.set(ControlMode.PercentOutput,speed);
+		leftClimbTalon.set(ControlMode.PercentOutput, -speed);
+		rightClimbTalon.set(ControlMode.PercentOutput, -speed);
+		System.out.println("current 1 " +  rightClimbTalon.getOutputCurrent());
+		System.out.println("current 2 "  + leftClimbTalon.getOutputCurrent());
+		
 	}
 	
 	public void turnClimber(double speed) {

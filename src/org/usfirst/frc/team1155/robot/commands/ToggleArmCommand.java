@@ -6,8 +6,8 @@ import org.usfirst.frc.team1155.robot.Robot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakeArmCommand extends Command{
-	public IntakeArmCommand() {
+public class ToggleArmCommand extends Command{
+	public ToggleArmCommand() {
 		// Use requires() here to declare subsystem dependencies
 		//requires(Robot.intakeSubsystem);
 	}

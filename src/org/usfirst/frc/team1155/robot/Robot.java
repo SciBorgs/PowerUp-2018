@@ -10,8 +10,7 @@ package org.usfirst.frc.team1155.robot;
 import java.io.File;
 import java.io.IOException;
 
-import org.usfirst.frc.team1155.robot.commands.IntakeCommand;
-import org.usfirst.frc.team1155.robot.commands.WestCoastDriveCommand;
+import org.usfirst.frc.team1155.robot.commands.*;
 import org.usfirst.frc.team1155.robot.subsystems.*;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
@@ -37,7 +36,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	public static OI m_oi;
-
+	
 	public static DriveSubsystem driveSubsystem;
 	public static LiftSubsystem liftSubsystem;
 	public static ClimbSubsystem climbSubsystem;
@@ -166,7 +165,7 @@ public class Robot extends IterativeRobot {
 		}
 		System.out.println(plane.getX() + ", " + plane.getY());
 		//new WestCoastDriveCommand().start();
-		new IntakeCommand().start();
+		new ClimbCommand().start();
 	}
 
 	/**
