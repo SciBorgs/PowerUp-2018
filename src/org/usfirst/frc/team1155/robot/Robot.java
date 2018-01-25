@@ -67,7 +67,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		driveSubsystem = new DriveSubsystem();
+		driveSubsystem = new DriveSubsystem(0.1, 0, 0.1);
 		liftSubsystem = new LiftSubsystem();
 		climbSubsystem = new ClimbSubsystem();
 		intakeSubsystem = new IntakeSubsystem();

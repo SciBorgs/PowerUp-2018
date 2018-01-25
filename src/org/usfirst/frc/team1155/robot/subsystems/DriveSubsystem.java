@@ -5,11 +5,17 @@ import org.usfirst.frc.team1155.robot.Robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import api.Path;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class DriveSubsystem extends Subsystem {
+public class DriveSubsystem extends PIDSubsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
+
+	public DriveSubsystem(double p, double i, double d) {
+		super(p, i, d);
+		// TODO Auto-generated constructor stub
+	}
 
 	public TalonSRX frontLeftMotor, frontRightMotor, 
 					backRightMotor, backLeftMotor,
@@ -114,5 +120,36 @@ public class DriveSubsystem extends Subsystem {
 			backRightMotor.set(ControlMode.PercentOutput, -.4);
 			backLeftMotor.set(ControlMode.PercentOutput, -.5); */
 		}
+	}
+	
+	public void startAdjustment(double current, double setPoint) {
+		setPoint %= 360;
+		setSetpoint((int) (((current - setPoint >= 0 ? 180 : -180) + current - setPoint) / 360) * 360 + setPoint);
+		enable();
+	}
+	
+	public void resetEncoders() {
+		frontLeftMotor.getSensorCollection().setQuadraturePosition(0, 10);
+		frontRightMotor.getSensorCollection().setQuadraturePosition(0, 10);
+	}
+	
+	public void endAdjustment() {
+		getPIDController().disable();
+	}
+	
+	public double getEncDistance() {
+		return -frontLeftMotor.getSensorCollection().getQuadraturePosition() / 1023 * Math.PI * 2;
+	}
+
+	@Override
+	protected double returnPIDInput() {
+		// TODO Auto-generated method stub
+		return Robot.Gyro.getAngle();
+	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+		output *= 0.5;
+		
 	}
 }
