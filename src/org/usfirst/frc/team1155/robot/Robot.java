@@ -20,7 +20,6 @@ import api.Path;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 
-import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -46,7 +45,7 @@ public class Robot extends IterativeRobot {
 	public static Path path;
 	public static int PointTwoMeters[];
 	
-	//public static PigeonIMU pigeon;
+//	public static PigeonIMU pigeon;
 	public static BuiltInAccelerometer accel;
 	
 	public static Timer timer;
@@ -55,6 +54,7 @@ public class Robot extends IterativeRobot {
 	public static Client client;
 
 	public static short[] shortArr;
+	public static double[] anglesYPR;
 
 	
 	Command m_autonomousCommand;
@@ -88,13 +88,15 @@ public class Robot extends IterativeRobot {
 		*/ 
 		timer = new Timer();
 		accel = new BuiltInAccelerometer();
-//		pigeon = new PigeonIMU(driveSubsystem.frontRightMotor);
+//		pigeon = new PigeonIMU(driveSubsystem.frontLeftMotor);
 		plane = new DesCartesianPlane(timer, accel);
 		PointTwoMeters = new int[2];
 		shortArr = new short[3];
+		anglesYPR = new double[3];
 		PointTwoMeters[0] = 0;
 		PointTwoMeters[1] = 80;
 		System.out.println(plane.getX() + ", " + plane.getY());
+		//pigeon.enterCalibrationMode(CalibrationMode.BootTareGyroAccel, 3000);
 	}
 
 	/**
@@ -174,6 +176,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+//		pigeon.getYawPitchRoll(anglesYPR);
 		plane.updatePosition();
 		SmartDashboard.putNumber("Xceleration", plane.getAx());
 		SmartDashboard.putNumber("Yceleration", plane.getAy());
@@ -181,6 +184,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Yvelocity", plane.getVy());
 		SmartDashboard.putNumber("Xposition", plane.getX());
 		SmartDashboard.putNumber("Yposition", plane.getY());
+		
+		SmartDashboard.putNumber("Yawwwww", anglesYPR[0]);
 		
 		SmartDashboard.putNumber("shortArr[0]", shortArr[0]);
 		SmartDashboard.putNumber("shortArr[1]", shortArr[1]);

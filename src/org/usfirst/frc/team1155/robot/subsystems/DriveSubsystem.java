@@ -82,15 +82,16 @@ public class DriveSubsystem extends Subsystem {
 	public void moveDegrees(double degrees) {
 		double conversionFactor = Math.PI/180;
 		
-		double xVal = -Math.cos(degrees * conversionFactor);
-		double yVal = Math.sin(degrees * conversionFactor);
+		double xVal = -Math.cos(degrees * conversionFactor) + .05;
+		double yVal = Math.sin(degrees * conversionFactor) + .05;
 		
 		//System.out.println(xVal + " " + yVal + " " + degrees);
-		
-		frontLeftMotor.set(ControlMode.PercentOutput, -xVal - yVal);
-		frontRightMotor.set(ControlMode.PercentOutput, -xVal + yVal);
-		backLeftMotor.set(ControlMode.PercentOutput, xVal - yVal);
-		backRightMotor.set(ControlMode.PercentOutput, xVal + yVal);
+		//while (Robot.Gyro.getAngle() - degrees > ANGLE_BUFFER || degrees - Robot.Gyro.getAngle() > ANGLE_BUFFER) {
+			frontLeftMotor.set(ControlMode.PercentOutput, -xVal - yVal);
+			frontRightMotor.set(ControlMode.PercentOutput, -xVal + yVal);
+			backLeftMotor.set(ControlMode.PercentOutput, xVal - yVal);
+			backRightMotor.set(ControlMode.PercentOutput, xVal + yVal);
+		//}
 	}	
 	
 	public void moveToPoint(int[] coordArr) {
