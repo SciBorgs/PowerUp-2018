@@ -5,6 +5,7 @@ import org.usfirst.frc.team1155.robot.Robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import api.Path;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -21,6 +22,8 @@ public class DriveSubsystem extends PIDSubsystem {
 					backRightMotor, backLeftMotor,
 					middleRightmotor, middleLeftMotor;
 
+	public DoubleSolenoid gearShifter;
+	
 	public static double SPEED_CORRECTION = -.1;
 	public static double ANGLE_BUFFER = 2;
 	public static double speed = -.2;
@@ -35,6 +38,8 @@ public class DriveSubsystem extends PIDSubsystem {
 
 		backLeftMotor = new TalonSRX(PortMap.DRIVE_BACK_LEFT_TALON);
 		backRightMotor = new TalonSRX(PortMap.DRIVE_BACK_RIGHT_TALON);
+
+		gearShifter = new DoubleSolenoid(PortMap.GEAR_SHIFTER_SOLENOID[0], PortMap.GEAR_SHIFTER_SOLENOID[1]);
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 		stop();
@@ -45,6 +50,15 @@ public class DriveSubsystem extends PIDSubsystem {
 		backRightMotor.set(ControlMode.PercentOutput, 0);
 		frontLeftMotor.set(ControlMode.PercentOutput, 0);
 		frontRightMotor.set(ControlMode.PercentOutput, 0);
+		gearShifter.set(DoubleSolenoid.Value.kReverse);
+	}
+	
+	public void shiftUp() {
+		gearShifter.set(DoubleSolenoid.Value.kForward);
+	}
+	
+	public void shiftDown() {
+		gearShifter.set(DoubleSolenoid.Value.kReverse);
 	}
 
 	public void setSpeed(double leftVal, double rightVal){

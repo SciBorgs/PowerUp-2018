@@ -15,6 +15,8 @@ public class PortMap {
 	public static final int DRIVE_FRONT_RIGHT_TALON = 1;
 //	public static final int DRIVE_MIDDLE_RIGHT_TALON = 5;
 	public static final int DRIVE_BACK_RIGHT_TALON = 2;
+	
+	public static final int[] GEAR_SHIFTER_SOLENOID = {3,4};
 
 	//*******************LIFT********************//	
 	
