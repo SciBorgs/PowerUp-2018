@@ -20,17 +20,18 @@ public class OI {
 	
 	public static Button extendClimber = new JoystickButton(leftJoystick, 3);
 	public static Button stopClimber = new JoystickButton(leftJoystick, 2);
-	public static Button rotateClimberLeft = new JoystickButton(leftJoystick, 1);
-	public static Button rotateClimberRight = new JoystickButton(rightJoystick, 1);
 	
 	public static Button gearShifter = new JoystickButton(rightJoystick, 2);
+
+	public static Button tiltClimb = new JoystickButton(rightJoystick, 1);
 
 	public static Button intakeArmControl = new JoystickButton(rightJoystick, 3);
 	
 
-	public OI () {
+	public OI() {
 		intakeArmControl.toggleWhenPressed(new ToggleArmCommand());
 		gearShifter.toggleWhenPressed(new ToggleArmCommand());
+		tiltClimb.toggleWhenPressed(new ToggleClimbCommand());
 	}
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a

@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ClimbSubsystem extends Subsystem {
 	
 	public TalonSRX leftClimbTalon, rightClimbTalon, angleClimbTalon;
+	public Servo servo;
 	
 	public double speedAngle = 1.0;
 	
@@ -17,6 +18,7 @@ public class ClimbSubsystem extends Subsystem {
 		leftClimbTalon = new TalonSRX(PortMap.DRIVE_BACK_LEFT_TALON);
 		rightClimbTalon = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
 		angleClimbTalon = new TalonSRX(PortMap.ANGLE_CLIMB_TALON);
+		servo = new Servo(PortMap.TILT_CLIMB_SERVO);
 	}
 	
 	public void setExtensionSpeed(double speed) {
@@ -33,5 +35,13 @@ public class ClimbSubsystem extends Subsystem {
 	
 	public void resetAngle() {
 		angleClimbTalon.set(ControlMode.Position, 0);
+	}
+	
+	public void fullLeft() {
+		servo.set(0);
+	}
+	
+	public void fullRight() {
+		servo.set(1);
 	}
 }
