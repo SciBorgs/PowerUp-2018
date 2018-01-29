@@ -19,11 +19,11 @@ public class ToggleClimbCommand extends Command{
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
-	protected void execute() {
-		if (Robot.climbSubsystem.servo.get() == 0.0) {
-			Robot.climbSubsystem.fullRight();
-		} else {
-			Robot.climbSubsystem.fullLeft();
+	protected void execute() {		
+		if(Robot.climbSubsystem.servo.getPosition() == 0.0)
+			Robot.climbSubsystem.extend();
+		else {
+			Robot.climbSubsystem.retract();
 		}
 	}
 

@@ -1,24 +1,25 @@
 package org.usfirst.frc.team1155.robot.subsystems;
-import org.usfirst.frc.team1155.robot.OI;
-import org.usfirst.frc.team1155.robot.PortMap;
 
+import org.usfirst.frc.team1155.robot.PortMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.PWM;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ClimbSubsystem extends Subsystem {
 	
-	public TalonSRX leftClimbTalon, rightClimbTalon, angleClimbTalon;
-	public Servo servo;
+	public TalonSRX leftClimbTalon, rightClimbTalon;
+	public PWM servo;
 	
 	public double speedAngle = 1.0;
 	
 	public void initDefaultCommand() {
 		leftClimbTalon = new TalonSRX(PortMap.DRIVE_BACK_LEFT_TALON);
 		rightClimbTalon = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
-		angleClimbTalon = new TalonSRX(PortMap.ANGLE_CLIMB_TALON);
-		servo = new Servo(PortMap.TILT_CLIMB_SERVO);
+		servo = new PWM(PortMap.TILT_CLIMB_SERVO);
+		servo.setBounds(2, 2, 1,1, 1);
 	}
 	
 	public void setExtensionSpeed(double speed) {
@@ -29,19 +30,11 @@ public class ClimbSubsystem extends Subsystem {
 		
 	}
 	
-	public void turnClimber(double speed) {
-		angleClimbTalon.set(ControlMode.PercentOutput, speed);
+	public void retract() {
+		servo.setPosition(0);
 	}
 	
-	public void resetAngle() {
-		angleClimbTalon.set(ControlMode.Position, 0);
-	}
-	
-	public void fullLeft() {
-		servo.set(0);
-	}
-	
-	public void fullRight() {
-		servo.set(1);
+	public void extend() {
+		servo.setPosition(1);
 	}
 }

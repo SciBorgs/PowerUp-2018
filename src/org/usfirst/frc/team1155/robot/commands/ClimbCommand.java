@@ -13,22 +13,17 @@ public class ClimbCommand extends Command {
 	@Override
 	protected void initialize() {
 		Robot.climbSubsystem.setExtensionSpeed(0);
-		Robot.climbSubsystem.turnClimber(0);
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (OI.retractClimber.get())
-			Robot.climbSubsystem.setExtensionSpeed(-.5);
+		//if (OI.retractClimber.get())
+			//Robot.climbSubsystem.setExtensionSpeed(-.5);
 		if (OI.extendClimber.get())
 			Robot.climbSubsystem.setExtensionSpeed(1);
 		if (OI.stopClimber.get())
 			Robot.climbSubsystem.setExtensionSpeed(0);
-		if (OI.rotateClimberLeft.get())
-			Robot.climbSubsystem.turnClimber(0.2);
-		if (OI.rotateClimberRight.get())
-			Robot.climbSubsystem.turnClimber(-0.2);
 	}
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
@@ -39,7 +34,6 @@ public class ClimbCommand extends Command {
 	@Override
 	protected void end() {
 		Robot.climbSubsystem.setExtensionSpeed(0);
-		Robot.climbSubsystem.resetAngle();
 	}
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
