@@ -67,7 +67,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		driveSubsystem = new DriveSubsystem(0.1, 0, 0.1);
+		driveSubsystem = new DriveSubsystem();
 		liftSubsystem = new LiftSubsystem();
 		climbSubsystem = new ClimbSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
@@ -127,8 +127,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
-		driveSubsystem.moveToPoint(PointTwoMeters);
-
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -166,8 +165,8 @@ public class Robot extends IterativeRobot {
 			m_autonomousCommand.cancel();
 		}
 		System.out.println(plane.getX() + ", " + plane.getY());
-		//new WestCoastDriveCommand().start();
-		new PlaceCommand().start();
+		new WestCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
+		//new PlaceCommand().start();
 	}
 
 	/**

@@ -10,13 +10,13 @@ public class PortMap {
 	//*******************DRIVE*******************//
 	
 	public static final int DRIVE_FRONT_LEFT_TALON = 3;
-//	public static final int DRIVE_MIDDLE_LEFT_TALON = 2;
+	public static final int DRIVE_MIDDLE_LEFT_TALON = 2;
 	public static final int DRIVE_BACK_LEFT_TALON = 4;
 	public static final int DRIVE_FRONT_RIGHT_TALON = 1;
-//	public static final int DRIVE_MIDDLE_RIGHT_TALON = 5;
+	public static final int DRIVE_MIDDLE_RIGHT_TALON = 5;
 	public static final int DRIVE_BACK_RIGHT_TALON = 2;
 	
-	public static final int[] GEAR_SHIFTER_SOLENOID = {3,4};
+	public static final int[] GEAR_SHIFTER_SOLENOID = {0,1};
 
 	//*******************LIFT********************//	
 	

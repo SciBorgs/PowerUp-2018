@@ -2,74 +2,125 @@ package org.usfirst.frc.team1155.robot.subsystems;
 
 import org.usfirst.frc.team1155.robot.PortMap;
 import org.usfirst.frc.team1155.robot.Robot;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import api.Path;
+
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 
+/**
+ *
+ */
 public class DriveSubsystem extends PIDSubsystem {
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
 
-	public DriveSubsystem(double p, double i, double d) {
-		super(p, i, d);
-		// TODO Auto-generated constructor stub
+	public TalonSRX frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor;
+	public Gyro gyro;
+	public DoubleSolenoid gearShifter;
+
+	public static enum PIDMode {
+		TurnDegree, DriveStraight, DriveDistance;
 	}
 
-	public TalonSRX frontLeftMotor, frontRightMotor, 
-					backRightMotor, backLeftMotor,
-					middleRightmotor, middleLeftMotor;
+	public PIDMode pidMode;
 
-	public DoubleSolenoid gearShifter;
-	
-	public static double SPEED_CORRECTION = -.1;
-	public static double ANGLE_BUFFER = 2;
-	public static double speed = -.2;
-	
-	public void initDefaultCommand() {
+	// Initialize your subsystem here
+	public DriveSubsystem() {
+		super("Drive", 0.1, 0, 0.1);
+		pidMode = PIDMode.TurnDegree;
 
-		frontLeftMotor = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
-		frontRightMotor = new TalonSRX(PortMap.DRIVE_FRONT_RIGHT_TALON);
-
-//		middleLeftMotor = new TalonSRX(PortMap.DRIVE_MIDDLE_LEFT_TALON);
-//		middleRightmotor = new TalonSRX(PortMap.DRIVE_MIDDLE_RIGHT_TALON);
-
-		backLeftMotor = new TalonSRX(PortMap.DRIVE_BACK_LEFT_TALON);
-		backRightMotor = new TalonSRX(PortMap.DRIVE_BACK_RIGHT_TALON);
+		frontLeftMotor = new TalonSRX(3);
+		frontRightMotor = new TalonSRX(1);
+		backLeftMotor = new TalonSRX(4);
+		backRightMotor = new TalonSRX(2);
+		backRightMotor.set(ControlMode.Follower, frontRightMotor.getDeviceID());
+		backLeftMotor.set(ControlMode.Follower, frontLeftMotor.getDeviceID());
 
 		gearShifter = new DoubleSolenoid(PortMap.GEAR_SHIFTER_SOLENOID[0], PortMap.GEAR_SHIFTER_SOLENOID[1]);
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
-		stop();
+		
+		getPIDController().setContinuous(false);
+
+		gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+		gyro.reset();
 	}
 	
-	public void stop() {
-		backLeftMotor.set(ControlMode.PercentOutput, 0);
-		backRightMotor.set(ControlMode.PercentOutput, 0);
-		frontLeftMotor.set(ControlMode.PercentOutput, 0);
-		frontRightMotor.set(ControlMode.PercentOutput, 0);
+	public void shiftDown() {
 		gearShifter.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	public void shiftUp() {
 		gearShifter.set(DoubleSolenoid.Value.kForward);
 	}
-	
-	public void shiftDown() {
-		gearShifter.set(DoubleSolenoid.Value.kReverse);
+	protected void initDefaultCommand() {
+
 	}
 
-	public void setSpeed(double leftVal, double rightVal){
-		frontRightMotor.set(ControlMode.PercentOutput, -rightVal);
-		frontLeftMotor.set(ControlMode.PercentOutput, leftVal);
+	protected double returnPIDInput() {
+		switch (pidMode) {
+		case TurnDegree:
+		case DriveStraight:
+			return gyro.getAngle();
+		case DriveDistance:
+			return getEncPosition();
+		default:
+			return 0;
+		}
+	}
 
-//		middleRightmotor.set(ControlMode.PercentOutput, rightVal);
-//		middleLeftMotor.set(ControlMode.PercentOutput, leftVal);
-		
-		backRightMotor.set(ControlMode.PercentOutput, -rightVal);
-		backLeftMotor.set(ControlMode.PercentOutput, leftVal);
+	protected void usePIDOutput(double output) {
+		switch (pidMode) {
+		// For reference, a CW gyro correction is positive by default
+		// TODO: Check if the robot goes in the right direction.
+		// If it doesn't, flip the negations on the outputs.
+		case TurnDegree:
+			output *= 0.5;
+			setSpeed(output, -output);
+			break;
+		case DriveStraight:
+			output *= 0.1;
+			correctSpeed(output);
+			break;
+		case DriveDistance:
+			output *= -0.5;
+			setSpeed(output, output);
+		default:
+			setSpeed(0, 0);
+			break;
+		}
+	}
+
+	public void setSpeed(double leftSpeed, double rightSpeed) {
+		frontLeftMotor.set(ControlMode.PercentOutput, leftSpeed);
+		frontRightMotor.set(ControlMode.PercentOutput, rightSpeed);
+	}
+
+	public void correctSpeed(double offset) {
+		double rightOutput = frontRightMotor.getMotorOutputPercent();
+		double leftOutput = frontLeftMotor.getMotorOutputPercent();
+		frontLeftMotor.set(ControlMode.PercentOutput, leftOutput + ((rightOutput >= 0) ? offset : -offset));
+
+	}
+
+	public void startAdjustment(double current, double setPoint) {
+		switch (pidMode) {
+		case TurnDegree:
+			getPIDController().setPercentTolerance(5.0);
+			setPoint %= 360;
+			setSetpoint((int) (((current - setPoint >= 0 ? 180 : -180) + current - setPoint) / 360) * 360 + setPoint);
+			break;
+		case DriveStraight:
+		case DriveDistance:
+			getPIDController().setPercentTolerance(0.5);
+			setSetpoint(setPoint);
+			break;
+		default:
+			setSetpoint(setPoint);
+			break;
+		}
+		enable();
 	}
 	
 	/* The Gyro returns between 0-360, after it has been cleaned up
@@ -99,71 +150,17 @@ public class DriveSubsystem extends PIDSubsystem {
 		}
 	}
 	
-	public void moveDegrees(double degrees) {
-		double conversionFactor = Math.PI/180;
-		
-		double xVal = -Math.cos(degrees * conversionFactor) + .05;
-		double yVal = Math.sin(degrees * conversionFactor) + .05;
-		
-		//System.out.println(xVal + " " + yVal + " " + degrees);
-		//while (Robot.Gyro.getAngle() - degrees > ANGLE_BUFFER || degrees - Robot.Gyro.getAngle() > ANGLE_BUFFER) {
-			frontLeftMotor.set(ControlMode.PercentOutput, -xVal - yVal);
-			frontRightMotor.set(ControlMode.PercentOutput, -xVal + yVal);
-			backLeftMotor.set(ControlMode.PercentOutput, xVal - yVal);
-			backRightMotor.set(ControlMode.PercentOutput, xVal + yVal);
-		//}
-	}	
-	
-	public void moveToPoint(int[] coordArr) {
-		while (!(Robot.plane.getX() > coordArr[0] - 0.0508 && Robot.plane.getX() < coordArr[0] + 0.0508
-		&& Robot.plane.getY() > coordArr[1] - 0.0508 && Robot.plane.getY() < coordArr[1] + 0.0508)) {
-	    	double targetAngle = calculatesAngleToTurnTo(coordArr);
-			
-			if (Robot.Gyro.getAngle() - targetAngle > ANGLE_BUFFER){ //rotating counter-clockwise
-	    		Robot.driveSubsystem.setSpeed(speed + SPEED_CORRECTION, speed);
-	    	}else if (targetAngle - Robot.Gyro.getAngle() > ANGLE_BUFFER){ //rotating -clockwise 
-	    		Robot.driveSubsystem.setSpeed(speed, speed + SPEED_CORRECTION);
-	    	}else {
-	        	Robot.driveSubsystem.setSpeed(speed, speed);
-	}
-	/*		moveDegrees(calculatesAngleToTurnTo(coordArr));
-			frontRightMotor.set(ControlMode.PercentOutput, .4);
-			frontLeftMotor.set(ControlMode.PercentOutput, .5);
-			//middleRightmotor.set(ControlMode.PercentOutput, 1);
-			//middleLeftMotor.set(ControlMode.PercentOutput, 1);
-			backRightMotor.set(ControlMode.PercentOutput, -.4);
-			backLeftMotor.set(ControlMode.PercentOutput, -.5); */
-		}
-	}
-	
-	public void startAdjustment(double current, double setPoint) {
-		setPoint %= 360;
-		setSetpoint((int) (((current - setPoint >= 0 ? 180 : -180) + current - setPoint) / 360) * 360 + setPoint);
-		enable();
-	}
-	
-	public void resetEncoders() {
-		frontLeftMotor.getSensorCollection().setQuadraturePosition(0, 10);
-		frontRightMotor.getSensorCollection().setQuadraturePosition(0, 10);
-	}
-	
 	public void endAdjustment() {
 		getPIDController().disable();
 	}
 	
-	public double getEncDistance() {
-		return -frontLeftMotor.getSensorCollection().getQuadraturePosition() / 1023 * Math.PI * 2;
+	public void resetGyro() {
+		gyro.reset();
 	}
-
-	@Override
-	protected double returnPIDInput() {
-		// TODO Auto-generated method stub
-		return Robot.Gyro.getAngle();
+	
+	public double getEncPosition() {
+		// TODO: Find Gear Ratio and use to convert sensor position into actual distance.
+		return frontLeftMotor.getSensorCollection().getQuadraturePosition();
 	}
-
-	@Override
-	protected void usePIDOutput(double output) {
-		output *= 0.5;
-		
-	}
+	
 }

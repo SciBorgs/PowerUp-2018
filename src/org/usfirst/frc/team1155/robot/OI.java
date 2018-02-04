@@ -26,7 +26,7 @@ public class OI {
 	public static Button tiltClimb = new JoystickButton(rightJoystick, 1);
 
 	public static Button intakeArmControl = new JoystickButton(rightJoystick, 3);
-	
+	public static Button driveStraightButton = new JoystickButton(rightJoystick, 4);
 
 	public OI() {
 		intakeArmControl.toggleWhenPressed(new ToggleArmCommand());
