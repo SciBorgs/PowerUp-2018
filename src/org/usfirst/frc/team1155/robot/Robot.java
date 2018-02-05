@@ -19,6 +19,7 @@ import api.Client;
 import api.Path;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.DriverStation;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -40,6 +41,7 @@ public class Robot extends IterativeRobot {
 	public static LiftSubsystem liftSubsystem;
 	public static ClimbSubsystem climbSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
+	public static AutonomousSubsystem autonomousSubsystem;
 	public static ADXRS450_Gyro Gyro;
 	public static File file;
 	public static Path path;
@@ -71,7 +73,14 @@ public class Robot extends IterativeRobot {
 		liftSubsystem = new LiftSubsystem();
 		climbSubsystem = new ClimbSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		
+		String gameData;
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		autonomousSubsystem = new AutonomousSubsystem(gameData);
+		m_chooser.addObject("Auto Position 1", new AutonomousCommand(1));
+		m_chooser.addObject("Auto Position 2", new AutonomousCommand(2));
+		m_chooser.addObject("Auto Position 3", new AutonomousCommand(3));
+
 		SmartDashboard.putData("Auto mode", m_chooser);
 		Gyro = new ADXRS450_Gyro();
         try {
