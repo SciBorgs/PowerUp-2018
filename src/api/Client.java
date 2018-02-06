@@ -11,16 +11,16 @@ public class Client {
     private static Socket socket;
     private static ObjectOutputStream objectOutputStream;
 
-    private int[] coordinates = new int[]{0, 0};
+    private Position position = new Position();
 
     public Client() throws IOException {
         socket = new Socket(SERVER_IP_ADDRESS, SERVER_PORT);
         objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
     }
 
-    public boolean sendCoordinates() throws IOException {
+    public boolean sendPosition() throws IOException {
         try {
-            objectOutputStream.writeObject(coordinates);
+            objectOutputStream.writeObject(position);
             return true;
         } catch (SocketException e) {
             System.out.println("Robot disconnected from server, reconnecting...");
@@ -31,7 +31,7 @@ public class Client {
         }
     }
 
-    public void setCoordinates(int[] coordinates) {
-        this.coordinates = coordinates;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 }
