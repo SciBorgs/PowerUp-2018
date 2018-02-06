@@ -5,6 +5,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.Ultrasonic;
+
 
 public class IntakeSubsystem extends Subsystem{
 
@@ -12,6 +14,9 @@ public class IntakeSubsystem extends Subsystem{
 	public DoubleSolenoid armSolenoid, tiltSolenoid;
 	public int counter;
 	public boolean isStopped = true;
+	public Ultrasonic ultrasonic = new Ultrasonic(1,1);
+	public final double MIN_INCHES_FROM_ULTRA_TO_BOX = 4.0;
+	public final double MAX_INCHES_FROM_ULTRA_TO_BOX = 24.5;
 	
 	public void initDefaultCommand() {
 
@@ -22,6 +27,7 @@ public class IntakeSubsystem extends Subsystem{
 
 		armSolenoid = new DoubleSolenoid(PortMap.INTAKE_SOLENOID_LEFT[0], PortMap.INTAKE_SOLENOID_LEFT[1]);
 		tiltSolenoid = new DoubleSolenoid(PortMap.INTAKE_SOLENOID_RIGHT[0], PortMap.INTAKE_SOLENOID_RIGHT[1]);
+		ultrasonic.setAutomaticMode(true);
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 		stop();

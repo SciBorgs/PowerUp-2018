@@ -6,6 +6,9 @@ import org.usfirst.frc.team1155.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class PlaceCommand extends Command{
+	
+	
+	
 	public PlaceCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// requires(Robot.intakeSubsystem);
@@ -19,14 +22,17 @@ public class PlaceCommand extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		
+		
 		if (OI.rightJoystick.getPOV() == 180) {
 			new PlaceIntakeCommand().start();
 		}
 		if (OI.rightJoystick.getPOV() == 0) {
 			new PlaceOutputCommand().start();
 		}
-		if (OI.rightJoystick.getPOV() == -1)
+		if (OI.rightJoystick.getPOV() == -1){
 			Robot.intakeSubsystem.stop();
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -45,6 +51,6 @@ public class PlaceCommand extends Command{
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.intakeSubsystem.setSpeed(0);
+		end();
 	}
 }

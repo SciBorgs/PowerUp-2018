@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	
+	//TODO: change joystick button numbers
 
 	public static Joystick leftJoystick = new Joystick(PortMap.JOYSTICK_LEFT);
 	public static Joystick rightJoystick = new Joystick(PortMap.JOYSTICK_RIGHT);
@@ -27,11 +29,20 @@ public class OI {
 
 	public static Button intakeArmControl = new JoystickButton(rightJoystick, 3);
 	public static Button driveStraightButton = new JoystickButton(rightJoystick, 4);
-
+	
+	public static Button intakeCube = new JoystickButton(leftJoystick, 3);
+	public static Button placeOutCube = new JoystickButton(leftJoystick, 3);
+	public static Button shootOutCube = new JoystickButton(leftJoystick, 3);
+	
 	public OI() {
 		intakeArmControl.toggleWhenPressed(new ToggleArmCommand());
 		gearShifter.toggleWhenPressed(new ToggleArmCommand());
 		tiltClimb.toggleWhenPressed(new ToggleClimbCommand());
+		descendLift.toggleWhenPressed(new LowerLiftCommand());
+		ascendLift.toggleWhenPressed(new RaiseLiftCommand());
+		intakeCube.whileActive(new PlaceIntakeCommand());
+		placeOutCube.whileActive(new PlaceOutputCommand());
+		shootOutCube.toggleWhenPressed(new ShootCommand());
 	}
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a

@@ -18,7 +18,7 @@ public class AutonomousSubsystem extends Subsystem {
 		gameInfo = gi;
 	}
 	
-	public void configurePath(){
+	public Path configurePath(String gameInfo, int pos){
 		switch(position){
 		case 1:
 			switch(gameInfo){
@@ -59,6 +59,7 @@ public class AutonomousSubsystem extends Subsystem {
 		default:
 			break;
 		}
+		return new Path();
 	}
 	
     public void initDefaultCommand() {
