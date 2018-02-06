@@ -6,18 +6,20 @@ import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem.PIDMode;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class TurnToDegree extends Command{
+public class TurnToDegreeCommand extends Command{
 
-	public TurnToDegree() {
+	double angleToTurn;
+	
+	public TurnToDegreeCommand(double angle) {
 		requires(Robot.driveSubsystem);
 		setInterruptible(true);
-		
+		angleToTurn = angle;
 	}
 	@Override
 	protected void initialize() {
 		// Calibrates the turn angle
     	Robot.driveSubsystem.pidMode = PIDMode.TurnDegree;
-		Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.gyro.getAngle(), SmartDashboard.getNumber("TurnAngle", 0));
+		Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.gyro.getAngle(), angleToTurn);
 	}
 
 	@Override

@@ -9,18 +9,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveDistance extends Command {
+public class DriveDistanceCommand extends Command {
 
-    public DriveDistance() {
+	double distanceToDrive;
+	
+    public DriveDistanceCommand(double dist) {
     	requires(Robot.driveSubsystem);
     	setInterruptible(true);
+    	distanceToDrive = dist;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveSubsystem.pidMode = PIDMode.DriveDistance;
     	// TODO: Complete getEncPosition so that it returns actual distance.
-    	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getEncPosition(), SmartDashboard.getNumber("DriveDistance", 0));
+    	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getEncPosition(), distanceToDrive);
     }
 
     // Called repeatedly when this Command is scheduled to run

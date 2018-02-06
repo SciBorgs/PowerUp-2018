@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot {
 
 	
 	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	SendableChooser<Integer> m_chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -77,9 +77,9 @@ public class Robot extends IterativeRobot {
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		autonomousSubsystem = new AutonomousSubsystem(gameData);
-		m_chooser.addObject("Auto Position 1", new AutonomousCommand(1));
-		m_chooser.addObject("Auto Position 2", new AutonomousCommand(2));
-		m_chooser.addObject("Auto Position 3", new AutonomousCommand(3));
+		m_chooser.addDefault("Auto Position 1", 1);
+		m_chooser.addObject("Auto Position 2", 2);
+		m_chooser.addObject("Auto Position 3", 3);
 
 		SmartDashboard.putData("Auto mode", m_chooser);
 		Gyro = new ADXRS450_Gyro();
@@ -135,7 +135,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
+		m_autonomousCommand = new AutonomousCommand(m_chooser.getSelected());
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1155.robot.commands;
 
+import org.usfirst.frc.team1155.robot.AutoActionType;
 import org.usfirst.frc.team1155.robot.MovingType;
 import org.usfirst.frc.team1155.robot.Robot;
 
@@ -30,15 +31,39 @@ public class AutonomousCommand extends Command {
     protected void execute() {
     	if(movingType == MovingType.TURNING){
     		if(Robot.driveSubsystem.getPIDController().onTarget()){
-    			new DriveDistance(Robot.autonomousSubsystem.currentPath.getDistance(counter, counter + 1));
+    			DriveDistanceCommand driveDist = new DriveDistanceCommand(Robot.autonomousSubsystem.currentPath.getDistance(counter, counter + 1));
+    			driveDist.start();
     			movingType = MovingType.MOVING;
     		}
     	}else if(movingType == MovingType.MOVING){
-    		if((Math.abs(Robot.position[0] - Robot.autonomousSubsystem.currentPath.get(counter)[0]) > 0.5) && (Math.abs(Robot.position[1] - Robot.autonomousSubsystem.currentPath.get(counter)[1]) > 0.5)){
-    			if(counter == Robot.autonomousSubsystem.currentPath.size()){
+    		if(Robot.driveSubsystem.getPIDController().onTarget()){
+    			if(counter == Robot.autonomousSubsystem.currentPath.size() - 1){
     				finished = true;
+    			}else if (Robot.autonomousSubsystem.currentPath.hasAction(counter)){
+    				switch(Robot.autonomousSubsystem.currentPath.actionAt(counter)){
+    				case AutoActionType.PICKUP_CUBE:
+    					break;
+    				case AutoActionType.PLACE_CUBE_ON_SCALE:
+    					break;
+    				case AutoActionType.PLACE_CUBE_ON_SWITCH:
+    					break;
+    				}
+    				movingType = MovingType.PERFORMING_ACTION;
+    			}else{
+    				counter++;
+    				TurnToDegreeCommand turn = new TurnToDegreeCommand(Robot.driveSubsystem.calculatesAngleToTurnTo(Robot.autonomousSubsystem.currentPath.get(counter)));
+    				turn.start();
+    				movingType = MovingType.TURNING;
     			}
     		}
+    	}else if(movingType == MovingType.PERFORMING_ACTION){
+    		 if(Robot.intakeSubsystem.isStopped){
+    			 if(counter == Robot.autonomousSubsystem.currentPath.size() - 1){
+    				 finished = true;
+    			 }else{
+        			 counter++;
+    			 }
+    		 }
     	}
     }
 
