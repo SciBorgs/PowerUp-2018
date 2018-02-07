@@ -1,28 +1,25 @@
 package api;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 import java.io.*;
 import java.util.ArrayList;
 
 /**
  * A class for holding sequences of coordinates including methods for getting data about these coordinates.
- * <p>
+ *
  * Imported from the original Java Autonomous GUI repository
- * @see <a href="https://github.com/BxSciborgs/JavaAutonomousGUI">Original Repository</a>
  *
  * @author Alejandro Ramos
+ * @see <a href="https://github.com/BxSciborgs/JavaAutonomousGUI">Original Repository</a>
  */
 public class AutonomousRoutine implements Serializable {
-    public enum AutonomousAction {
-        PLACE_CUBE_ON_SWITCH, PLACE_CUBE_ON_SCALE, PICKUP_CUBE
-    }
-
     private static final long serialVersionUID = 1;
-
     private ArrayList<Integer> x = new ArrayList<>();
     private ArrayList<Integer> y = new ArrayList<>();
     private ArrayList<AutonomousAction> autonomousActions = new ArrayList<>();
+
+    public enum AutonomousAction {
+        PLACE_CUBE_ON_SWITCH, PLACE_CUBE_ON_SCALE, PICKUP_CUBE
+    }
 
     /**
      * Creates a new, empty AutonomousRoutine.
@@ -33,7 +30,6 @@ public class AutonomousRoutine implements Serializable {
     /**
      * Sets this AutonomousRoutine to the given AutonomousRoutine.
      *
-     * <p>
      * If the given AutonomousRoutine is <code>null</code>, this constructor creates an empty AutonomousRoutine.
      *
      * @param autonomousRoutine the AutonomousRoutine to set this AutonomousRoutine to
@@ -137,7 +133,6 @@ public class AutonomousRoutine implements Serializable {
     /**
      * Gets the coordinate at the given index.
      *
-     * <p>
      * If the index is out of the bounds of this AutonomousRoutine, this method returns <code>null</code>.
      *
      * @param index the index of the coordinate to getCoordinate
@@ -166,7 +161,6 @@ public class AutonomousRoutine implements Serializable {
     /**
      * Removes the coordinate at the specified index.
      *
-     * <p>
      * If the given index is out of the bounds of the current AutonomousRoutine, this command does nothing.
      *
      * @param index the index of the coordinate to remove
@@ -182,7 +176,6 @@ public class AutonomousRoutine implements Serializable {
     /**
      * Sets this AutonomousRoutine to the given AutonomousRoutine.
      *
-     * <p>
      * If the given AutonomousRoutine is <code>null</code>, this method does nothing.
      *
      * @param autonomousRoutine the AutonomousRoutine to set this AutonomousRoutine to
@@ -267,7 +260,7 @@ public class AutonomousRoutine implements Serializable {
      * Gets the distance from one coordinate to another.
      *
      * @param start the first coordinate
-     * @param end the second coordinate
+     * @param end   the second coordinate
      * @return the distance between the first and second coordinates
      */
     public double getDistance(int start, int end) {
@@ -277,9 +270,9 @@ public class AutonomousRoutine implements Serializable {
     /**
      * Gets the angle between three coordinates at the point of the second coordinate.
      *
-     * @param start the first coordinate
+     * @param start     the first coordinate
      * @param connector the second coordinate
-     * @param end the third coordinate
+     * @param end       the third coordinate
      * @return the angle between the three coordinates at the point of the second coordinate
      */
     public double getAngle(int start, int connector, int end) {
@@ -290,7 +283,7 @@ public class AutonomousRoutine implements Serializable {
      * Gets the slope of a line constructed from two given coordinates.
      *
      * @param start the first coordinate
-     * @param end the second coordinate
+     * @param end   the second coordinate
      * @return the slope of a line constructed from two given coordinates
      */
     public double getSlope(int start, int end) {
