@@ -1,13 +1,13 @@
-package org.usfirst.frc.team1155.robot.commands;
+package org.usfirst.frc.team1155.robot.commands.autoCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class LowerLiftCommand extends Command {
+public class AutoIntakeCubeCommand extends Command {
 
-    public LowerLiftCommand() {
+    public AutoIntakeCubeCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

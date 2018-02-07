@@ -20,7 +20,7 @@ public class ShootCommand extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.intakeSubsystem.counter >= (1 / (20 / 1000))) {
+		if (Robot.intakeSubsystem.counter >= (1.0 / (20.0 / 1000.0))) {
 			Robot.intakeSubsystem.retractArmPiston();
 			Robot.intakeSubsystem.setSpeed(1);
 		} else {

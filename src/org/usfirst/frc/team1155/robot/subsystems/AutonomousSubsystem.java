@@ -9,17 +9,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class AutonomousSubsystem extends Subsystem {
 
 	
-	public Path currentPath;
-	public int position;
-	public String gameInfo;
-	public final double POSITION_TOLERANCE = 2;
 	
-	public AutonomousSubsystem(String gi){
-		gameInfo = gi;
-	}
 	
 	public Path configurePath(String gameInfo, int pos){
-		switch(position){
+		switch(pos){
 		case 1:
 			switch(gameInfo){
 			case "LLL":

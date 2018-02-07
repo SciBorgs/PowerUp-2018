@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 
 import org.usfirst.frc.team1155.robot.commands.*;
+import org.usfirst.frc.team1155.robot.commands.autoCommands.AutonomousCommand;
+import org.usfirst.frc.team1155.robot.commands.autoCommands.AutonomousCommandGroup;
 import org.usfirst.frc.team1155.robot.subsystems.*;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
@@ -42,6 +44,7 @@ public class Robot extends IterativeRobot {
 	public static ClimbSubsystem climbSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static AutonomousSubsystem autonomousSubsystem;
+	public static VisionSubsystem visionSubsystem;
 	public static ADXRS450_Gyro Gyro;
 	public static File file;
 	public static Path path;
@@ -73,10 +76,8 @@ public class Robot extends IterativeRobot {
 		liftSubsystem = new LiftSubsystem();
 		climbSubsystem = new ClimbSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
-		
-		String gameData;
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		autonomousSubsystem = new AutonomousSubsystem(gameData);
+		visionSubsystem = new VisionSubsystem();
+		autonomousSubsystem = new AutonomousSubsystem();
 		m_chooser.addDefault("Auto Position 1", 1);
 		m_chooser.addObject("Auto Position 2", 2);
 		m_chooser.addObject("Auto Position 3", 3);
@@ -135,7 +136,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = new AutonomousCommand(m_chooser.getSelected());
+		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+
+		m_autonomousCommand = new AutonomousCommandGroup(gameData, m_chooser.getSelected());
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

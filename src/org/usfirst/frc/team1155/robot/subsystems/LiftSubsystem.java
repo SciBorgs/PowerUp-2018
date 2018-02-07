@@ -10,15 +10,16 @@ public class LiftSubsystem extends Subsystem{
 
 	public TalonSRX leftLiftMotor, rightLiftMotor, leftReverseLiftMotor, rightReverseLiftMotor;
 	public Encoder liftEncoder;
-	public double tickToTop;
-	
+	public final double TICKS_TO_TOP = 100;
+	public final double TICKS_TO_SWITCH_HEIGHT = 20;
+	public final double TICKS_AT_BOTTOM = 0;
+
 	public void initDefaultCommand() {
 
 		leftLiftMotor = new TalonSRX(PortMap.LIFT_LEFT_TALON);
 		rightLiftMotor = new TalonSRX(PortMap.LIFT_RIGHT_TALON);
 		leftReverseLiftMotor = new TalonSRX(PortMap.LIFT_REVERSE_LEFT_TALON);
 		rightReverseLiftMotor = new TalonSRX(PortMap.LIFT_REVERSE_RIGHT_TALON);
-		tickToTop = 100;
 		liftEncoder = new Encoder(1,2);
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());

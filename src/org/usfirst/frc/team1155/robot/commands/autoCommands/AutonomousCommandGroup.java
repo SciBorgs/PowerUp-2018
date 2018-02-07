@@ -1,9 +1,12 @@
-package org.usfirst.frc.team1155.robot.commands;
+package org.usfirst.frc.team1155.robot.commands.autoCommands;
 
 import api.Path;
 
 import org.usfirst.frc.team1155.robot.AutoActionType;
 import org.usfirst.frc.team1155.robot.Robot;
+import org.usfirst.frc.team1155.robot.commands.DriveDistanceCommand;
+import org.usfirst.frc.team1155.robot.commands.PlaceIntakeCommand;
+import org.usfirst.frc.team1155.robot.commands.TurnToDegreeCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -41,7 +44,8 @@ public class AutonomousCommandGroup extends CommandGroup {
     		if(path.hasAction(i)){
     			switch(path.actionAt(i)){
     			case AutoActionType.PLACE_CUBE_ON_SWITCH:
-    				//addSequential();
+    				addSequential(new AutoRaiseLiftToSwitchCommand());
+    				addSequential
     				break;
     			case AutoActionType.PLACE_CUBE_ON_SCALE:
     				break;
