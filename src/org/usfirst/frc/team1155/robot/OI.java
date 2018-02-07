@@ -38,11 +38,11 @@ public class OI {
 		intakeArmControl.toggleWhenPressed(new ToggleArmCommand());
 		gearShifter.toggleWhenPressed(new ToggleArmCommand());
 		tiltClimb.toggleWhenPressed(new ToggleClimbCommand());
-		descendLift.toggleWhenPressed(new LowerLiftCommand());
-		ascendLift.toggleWhenPressed(new RaiseLiftCommand());
-		intakeCube.whileActive(new PlaceIntakeCommand());
-		placeOutCube.whileActive(new PlaceOutputCommand());
-		shootOutCube.toggleWhenPressed(new ShootCommand());
+//		descendLift.toggleWhenPressed(new LowerLiftCommand());
+//		ascendLift.toggleWhenPressed(new RaiseLiftCommand());
+//		intakeCube.whileActive(new PlaceIntakeCommand());
+//		placeOutCube.whileActive(new PlaceOutputCommand());
+//		shootOutCube.toggleWhenPressed(new ShootCommand());
 	}
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
