@@ -17,6 +17,7 @@ public class IntakeSubsystem extends Subsystem{
 	public Ultrasonic ultrasonic = new Ultrasonic(1,1);
 	public final double MIN_INCHES_FROM_ULTRA_TO_BOX = 4.0;
 	public final double MAX_INCHES_FROM_ULTRA_TO_BOX = 24.5;
+	public final double REV_AMOUNT = 50.0;
 	
 	public void initDefaultCommand() {
 
