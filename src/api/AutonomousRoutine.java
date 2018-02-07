@@ -1,5 +1,7 @@
 package api;
 
+import edu.wpi.first.wpilibj.command.Command;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -11,66 +13,71 @@ import java.util.ArrayList;
  *
  * @author Alejandro Ramos
  */
-public class Path implements Serializable {
+public class AutonomousRoutine implements Serializable {
+    public enum AutonomousAction {
+        PLACE_CUBE_ON_SWITCH, PLACE_CUBE_ON_SCALE, PICKUP_CUBE
+    }
+
     private static final long serialVersionUID = 1;
 
     private ArrayList<Integer> x = new ArrayList<>();
     private ArrayList<Integer> y = new ArrayList<>();
+    private ArrayList<AutonomousAction> autonomousActions = new ArrayList<>();
 
     /**
-     * Creates a new, empty Path.
+     * Creates a new, empty AutonomousRoutine.
      */
-    public Path() {
+    public AutonomousRoutine() {
     }
 
     /**
-     * Sets this Path to the given Path.
+     * Sets this AutonomousRoutine to the given AutonomousRoutine.
      *
      * <p>
-     * If the given Path is <code>null</code>, this constructor creates an empty Path.
+     * If the given AutonomousRoutine is <code>null</code>, this constructor creates an empty AutonomousRoutine.
      *
-     * @param path the Path to set this Path to
+     * @param autonomousRoutine the AutonomousRoutine to set this AutonomousRoutine to
      */
-    public Path(Path path) {
-        set(path);
+    public AutonomousRoutine(AutonomousRoutine autonomousRoutine) {
+        set(autonomousRoutine);
     }
 
     /**
-     * Creates a new Path with the given coordinate.
+     * Creates a new AutonomousRoutine with the given coordinate.
      *
      * @param x the first x coordinate
      * @param y the first y coordinate
      */
-    public Path(int x, int y) {
-        add(x, y);
+    public AutonomousRoutine(int x, int y, AutonomousAction autonomousAction) {
+        add(x, y, autonomousAction);
     }
 
     /**
-     * Creates a new Path with the given coordinate array.
+     * Creates a new AutonomousRoutine with the given coordinate array.
      *
      * @param xy a coordinate array in which xy[0] has the x coordinates and xy[1] has the y coordinates
      */
-    public Path(int[][] xy) {
-        add(xy);
+    public AutonomousRoutine(int[][] xy, AutonomousAction[] autonomousAction) {
+        add(xy, autonomousAction);
     }
 
     /**
-     * Creates a new Path from a Path file.
+     * Creates a new AutonomousRoutine from a AutonomousRoutine file.
      *
-     * @param file Path file
-     * @throws IOException if the Path could not be loaded from the file
+     * @param file AutonomousRoutine file
+     * @throws IOException if the AutonomousRoutine could not be loaded from the file
      */
-    public Path(File file) throws IOException {
+    public AutonomousRoutine(File file) throws IOException {
         if (!this.load(file)) {
             throw new IOException();
         }
     }
 
     /**
-     * Returns a {@link String} representation of this Path in an easily readable way.
+     * Returns a {@link String} representation of this AutonomousRoutine in an easily readable way.
      * The String is split into two lines to easily compare the x and y values of each coordinate.
      *
-     * @return String representation of this Path
+     * @return String representation of this AutonomousRoutine
      */
     @Override
     public String toString() {
@@ -105,24 +112,25 @@ public class Path implements Serializable {
     }
 
     /**
-     * Adds the given coordinate to this Path.
+     * Adds the given coordinate to this AutonomousRoutine.
      *
      * @param x the x coordinate value
      * @param y the y coordinate value
      */
-    public void add(int x, int y) {
+    public void add(int x, int y, AutonomousAction autonomousAction) {
         this.x.add(x);
         this.y.add(y);
+        this.autonomousActions.add(autonomousAction);
     }
 
     /**
-     * Adds the given coordinates to this Path.
+     * Adds the given coordinates to this AutonomousRoutine.
      *
      * @param xy a coordinate array in which xy[0] has the x coordinates and xy[1] has the y coordinates
      */
-    public void add(int[][] xy) {
+    public void add(int[][] xy, AutonomousAction[] autonomousAction) {
         for (int i = 0; i < xy.length; i++) {
-            this.add(xy[i][0], xy[i][1]);
+            this.add(xy[i][0], xy[i][1], autonomousAction[i]);
         }
     }
 
@@ -130,12 +138,12 @@ public class Path implements Serializable {
      * Gets the coordinate at the given index.
      *
      * <p>
-     * If the index is out of the bounds of this Path, this method returns <code>null</code>.
+     * If the index is out of the bounds of this AutonomousRoutine, this method returns <code>null</code>.
      *
-     * @param index the index of the coordinate to get
+     * @param index the index of the coordinate to getCoordinate
      * @return a <code>int[]</code> coordinate value in which [0] is the x value and [1] is the y value
      */
-    public int[] get(int index) {
+    public int[] getCoordinate(int index) {
         if (index < x.size() && index >= 0) {
             return new int[]{x.get(index), y.get(index)};
         } else {
@@ -143,30 +151,23 @@ public class Path implements Serializable {
         }
     }
 
-    /**
-     * Returns the last coordinate in this Path.
-     *
-     * <p>
-     * The coordinate is given in a <code>int[]</code> where the 0th index is the x value, and the 1st index is the y value.
-     *
-     * <p>
-     * If there are no coordinates in this Path, returns <code>null</code>.
-     *
-     * @return the last coordinate in this Path
-     */
-    public int[] getLast() {
-        if (this.size() > 0) {
-            return get(this.size() - 1);
+    public AutonomousAction getAutonomousAction(int index) {
+        if (index < autonomousActions.size() && index >= 0) {
+            return autonomousActions.get(index);
         } else {
             return null;
         }
+    }
+
+    public boolean hasAutonomousAction(int index) {
+        return autonomousActions.get(index) != null;
     }
 
     /**
      * Removes the coordinate at the specified index.
      *
      * <p>
-     * If the given index is out of the bounds of the current Path, this command does nothing.
+     * If the given index is out of the bounds of the current AutonomousRoutine, this command does nothing.
      *
      * @param index the index of the coordinate to remove
      */
@@ -174,30 +175,31 @@ public class Path implements Serializable {
         if (index >= 0 && x.size() > 0) {
             x.remove(index);
             y.remove(index);
+            autonomousActions.remove(index);
         }
     }
 
     /**
-     * Sets this Path to the given Path.
+     * Sets this AutonomousRoutine to the given AutonomousRoutine.
      *
      * <p>
-     * If the given Path is <code>null</code>, this method does nothing.
+     * If the given AutonomousRoutine is <code>null</code>, this method does nothing.
      *
-     * @param path the Path to set this Path to
+     * @param autonomousRoutine the AutonomousRoutine to set this AutonomousRoutine to
      */
-    public void set(Path path) {
-        if (path != null) {
+    public void set(AutonomousRoutine autonomousRoutine) {
+        if (autonomousRoutine != null) {
             this.clear();
-            for (int i = 0; i < path.size(); i++) {
-                this.add(path.get(i)[0], path.get(i)[1]);
+            for (int i = 0; i < autonomousRoutine.size(); i++) {
+                this.add(autonomousRoutine.getCoordinate(i)[0], autonomousRoutine.getCoordinate(i)[1], autonomousRoutine.getAutonomousAction(i));
             }
         }
     }
 
     /**
-     * Saves this Path to the specified {@link File}.
+     * Saves this AutonomousRoutine to the specified {@link File}.
      *
-     * @param file the file to save this Path to
+     * @param file the file to save this AutonomousRoutine to
      * @return if the operation was successful or not
      */
     public boolean save(File file) {
@@ -210,17 +212,17 @@ public class Path implements Serializable {
     }
 
     /**
-     * Sets this Path to the Path at the specified {@link File}.
+     * Sets this AutonomousRoutine to the AutonomousRoutine at the specified {@link File}.
      *
-     * @param file the Path file
+     * @param file the AutonomousRoutine file
      * @return if the operation was successful or not
      */
     public boolean load(File file) {
         if (file != null) {
-            Path path;
+            AutonomousRoutine autonomousRoutine;
             try {
-                path = (Path)new ObjectInputStream(new FileInputStream(file)).readObject();
-                this.set(path);
+                autonomousRoutine = (AutonomousRoutine)new ObjectInputStream(new FileInputStream(file)).readObject();
+                this.set(autonomousRoutine);
             } catch (Exception e) {
                 return false;
             }
@@ -231,26 +233,27 @@ public class Path implements Serializable {
     }
 
     /**
-     * Clears this Path of all its coordinates.
+     * Clears this AutonomousRoutine of all its coordinates.
      */
     public void clear() {
         x.clear();
         y.clear();
+        autonomousActions.clear();
     }
 
     /**
-     * Gets the size of this Path.
+     * Gets the size of this AutonomousRoutine.
      *
-     * @return the size of this Path
+     * @return the size of this AutonomousRoutine
      */
     public int size() {
         return x.size();
     }
 
     /**
-     * Gets the length of this Path.
+     * Gets the length of this AutonomousRoutine.
      *
-     * @return the length of this Path
+     * @return the length of this AutonomousRoutine
      */
     public double getLength() {
         double length = 0;
