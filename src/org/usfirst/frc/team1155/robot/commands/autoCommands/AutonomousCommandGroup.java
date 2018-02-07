@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1155.robot.commands.autoCommands;
 
+import api.AutonomousRoutine;
 import api.Path;
 
 import org.usfirst.frc.team1155.robot.AutoActionType;
@@ -33,24 +34,30 @@ public class AutonomousCommandGroup extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	Path path = Robot.autonomousSubsystem.configurePath(gameInfo, pos);
-    	for(int i = 0; i < path.size(); i++){
-    		if(i != path.size() - 1){
-	    		double angle = Robot.driveSubsystem.calculatesAngleToTurnTo(path.get(i));
+    	AutonomousRoutine path = Robot.autonomousSubsystem.configurePath(gameInfo, pos);
+    	int pathSize = path.size();
+    	for(int i = 1; i < pathSize; i++){
+    		if(i != pathSize - 1){
+	    		double angle = Robot.driveSubsystem.calculatesAngleToTurnTo(path.getCoordinate(i));
 	    		addSequential(new TurnToDegreeCommand(angle));
-	    		double distance = path.getDistance(i, i+1);
+	    		double distance = path.getDistance(i-1, i);
 	    		addSequential(new DriveDistanceCommand(distance));
     		}
-    		if(path.hasAction(i)){
-    			switch(path.actionAt(i)){
-    			case AutoActionType.PLACE_CUBE_ON_SWITCH:
+    		if(path.hasAutonomousAction(i)){
+    			switch(path.getAutonomousAction(i)){
+    			case PLACE_CUBE_ON_SWITCH:
     				addSequential(new AutoRaiseLiftToSwitchCommand());
-    				addSequential
+    				addSequential(new AutoPlaceOutputCubeCommand());
+    				addSequential(new AutoLowerLiftCommand());
     				break;
-    			case AutoActionType.PLACE_CUBE_ON_SCALE:
+    			case PLACE_CUBE_ON_SCALE:
+    				addSequential(new AutoRaiseLiftToScaleCommand());
+    				addSequential(new AutoShootCubeCommand());
+    				addSequential(new AutoLowerLiftCommand());
     				break;
-    			case AutoActionType.PICKUP_CUBE:
-    				addSequential(new PlaceIntakeCommand());
+    			case PICKUP_CUBE:
+    				addSequential(new AlignToCubeCommand());
+    				addSequential(new AutoIntakeCubeCommand());
     				break;
     			}
     		}

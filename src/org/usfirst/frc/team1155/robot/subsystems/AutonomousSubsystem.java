@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1155.robot.subsystems;
 
-import api.Path;
+import api.AutonomousRoutine;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -11,7 +11,7 @@ public class AutonomousSubsystem extends Subsystem {
 	
 	
 	
-	public Path configurePath(String gameInfo, int pos){
+	public AutonomousRoutine configurePath(String gameInfo, int pos){
 		switch(pos){
 		case 1:
 			switch(gameInfo){
@@ -52,7 +52,7 @@ public class AutonomousSubsystem extends Subsystem {
 		default:
 			break;
 		}
-		return new Path();
+		return new AutonomousRoutine();
 	}
 	
     public void initDefaultCommand() {
