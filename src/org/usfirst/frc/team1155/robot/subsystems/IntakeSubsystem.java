@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class IntakeSubsystem extends Subsystem{
 
-	public TalonSRX leftIntakeMotor, rightIntakeMotor, leftArmMotor, rightArmMotor;
+	public edu.wpi.first.wpilibj.TalonSRX leftIntakeMotor, rightIntakeMotor, leftArmMotor, rightArmMotor;
 	public DoubleSolenoid armSolenoid, tiltSolenoid;
 	public int counter;
 	public boolean isStopped = true;
@@ -18,6 +18,8 @@ public class IntakeSubsystem extends Subsystem{
 	public final double MIN_INCHES_FROM_ULTRA_TO_BOX = 4.0;
 	public final double MAX_INCHES_FROM_ULTRA_TO_BOX = 24.5;
 	public final double REV_AMOUNT = 50.0;
+	public final double ADJUST_SPEED = 0.5;
+	public final double SECONDS_PER_EXECUTE = 0.02;
 	
 	public void initDefaultCommand() {
 
@@ -79,5 +81,14 @@ public class IntakeSubsystem extends Subsystem{
 	public void retractTiltPiston() {
 		tiltSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}		
+	
+	public void setLeftArmSpeed(double speed){
+		leftArmMotor.set(ControlMode.PercentOutput, speed);
+	}
+	
+	//TODO: Find this value
+	public double adjustTimeForAngle(double angle){
+		return 0;
+	}
 	
 }

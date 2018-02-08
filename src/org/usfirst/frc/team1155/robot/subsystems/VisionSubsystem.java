@@ -19,6 +19,10 @@ public class VisionSubsystem extends Subsystem {
     public double getDistanceToCube(){
     	return SmartDashboard.getNumber("distanceToCube", 0);
     }
+    
+    public double getAngleOfCube(){
+    	return SmartDashboard.getNumber("pnpAngle", 0);
+    }
 
 	@Override
 	protected void initDefaultCommand() {
