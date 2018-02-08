@@ -6,17 +6,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class TalonSRXPositioning {
     private TalonSRX leftTalon, rightTalon;
-    private static final double RATIO = 25/4;
-    private static final double RADIUS = 3;
-    // radius is 3
-    // 4 wheel rotations is 25 encoder rotations
-    // 1 wheel rotation is 6.25 encoder ticks
-    // circumference is 2pi*r
+    private static final double RATIO = 1024; // 1 wheel rotation is 1024 encoder ticks
+    private static final double RADIUS = 3;   // wheel radius is 3 inches
 
-    private AccelerometerPositioning accelerometerPositioning;
     private Position position;
-
-
 
     public TalonSRXPositioning(Position position, TalonSRX leftTalon, TalonSRX rightTalon) {
         this.position = position;
@@ -27,7 +20,7 @@ public class TalonSRXPositioning {
         rightTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
     }
 
-    public void updatePosition() {        // (position / 6.25) * 2 pi r
+    public void updatePosition() {        // (position / 1024) * 2 pi r
         double distance = (((leftTalon.getSelectedSensorPosition(0) + rightTalon.getSelectedSensorPosition(0)) / 2) / RATIO) * (2 * Math.PI * RADIUS);
         leftTalon.getSensorCollection().setPulseWidthPosition(0, 1);
         rightTalon.getSensorCollection().setPulseWidthPosition(0, 1);
