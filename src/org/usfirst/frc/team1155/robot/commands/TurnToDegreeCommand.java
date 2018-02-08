@@ -11,7 +11,7 @@ public class TurnToDegreeCommand extends Command{
 	double angleToTurn;
 	
 	public TurnToDegreeCommand(double angle) {
-		requires(Robot.driveSubsystem);
+		//requires(Robot.driveSubsystem);
 		setInterruptible(true);
 		angleToTurn = angle;
 	}

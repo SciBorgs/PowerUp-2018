@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
  */
 public class DriveSubsystem extends PIDSubsystem {
 
-	public TalonSRX frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor;
+	public TalonSRX frontLeftMotor, middleLeftMotor, frontRightMotor, backLeftMotor, middleRightMotor, backRightMotor;
 	public Gyro gyro;
 	public DoubleSolenoid gearShifter;
 
@@ -32,12 +32,16 @@ public class DriveSubsystem extends PIDSubsystem {
 		super("Drive", 0.1, 0, 0.1);
 		pidMode = PIDMode.TurnDegree;
 
-		frontLeftMotor = new TalonSRX(3);
-		frontRightMotor = new TalonSRX(1);
-		backLeftMotor = new TalonSRX(4);
-		backRightMotor = new TalonSRX(2);
+		frontLeftMotor = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
+		middleRightMotor = new TalonSRX(PortMap.DRIVE_MIDDLE_RIGHT_TALON);
+		frontRightMotor = new TalonSRX(PortMap.DRIVE_FRONT_RIGHT_TALON);
+		backLeftMotor = new TalonSRX(PortMap.DRIVE_BACK_LEFT_TALON);
+		middleLeftMotor = new TalonSRX(PortMap.DRIVE_MIDDLE_LEFT_TALON);
+		backRightMotor = new TalonSRX(PortMap.DRIVE_BACK_RIGHT_TALON);
 		backRightMotor.set(ControlMode.Follower, frontRightMotor.getDeviceID());
 		backLeftMotor.set(ControlMode.Follower, frontLeftMotor.getDeviceID());
+		middleRightMotor.set(ControlMode.Follower, frontRightMotor.getDeviceID());
+		middleLeftMotor.set(ControlMode.Follower, frontLeftMotor.getDeviceID());
 
 		gearShifter = new DoubleSolenoid(PortMap.GEAR_SHIFTER_SOLENOID[0], PortMap.GEAR_SHIFTER_SOLENOID[1]);
 		
@@ -93,7 +97,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	}
 
 	public void setSpeed(double leftSpeed, double rightSpeed) {
-		frontLeftMotor.set(ControlMode.PercentOutput, leftSpeed);
+		frontLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);
 		frontRightMotor.set(ControlMode.PercentOutput, rightSpeed);
 	}
 
@@ -132,22 +136,23 @@ public class DriveSubsystem extends PIDSubsystem {
 	 * the gyro
 	 */
 	public double calculatesAngleToTurnTo(int[] coordArr) {
-		double currentGyroAngle = Robot.Gyro.getAngle() % 360;
-		double x = Robot.position.getX();
-		double y = Robot.position.getY();
-		double nextX = 0.0127 * coordArr[0] - x;
-		double nextY = 0.0127 * coordArr[1] - y;
-		if (nextX > 0 && nextY > 0) {
-			return Math.toDegrees(Math.atan(nextY/nextX));
-		} else if (nextX > 0 && nextY < 0) {
-			return 90 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
-		} else if (nextX < 0 && nextY < 0) {
-			return 180 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
-		} else if (nextX < 0 && nextY > 0) {
-			return 270 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
-		} else {
-			return 0;
-		}
+//		double currentGyroAngle = Robot.Gyro.getAngle() % 360;
+//		double x = Robot.plane.getX();
+//		double y = Robot.plane.getY();
+//		double nextX = 0.0127 * coordArr[0] - x;
+//		double nextY = 0.0127 * coordArr[1] - y;
+//		if (nextX > 0 && nextY > 0) {
+//			return Math.toDegrees(Math.atan(nextY/nextX));
+//		} else if (nextX > 0 && nextY < 0) {
+//			return 90 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
+//		} else if (nextX < 0 && nextY < 0) {
+//			return 180 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
+//		} else if (nextX < 0 && nextY > 0) {
+//			return 270 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
+//		} else {
+//			return 0;
+//		}
+		return 0;
 	}
 	
 	public void endAdjustment() {
@@ -160,7 +165,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	
 	public double getEncPosition() {
 		// TODO: Find Gear Ratio and use to convert sensor position into actual distance.
-		return frontLeftMotor.getSensorCollection().getQuadraturePosition();
+		return frontRightMotor.getSensorCollection().getQuadraturePosition();
 	}
 	
 }

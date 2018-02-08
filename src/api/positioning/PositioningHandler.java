@@ -58,16 +58,16 @@ public class PositioningHandler {
                 ((CimcoderPositioning)this.positioningHandler).updatePosition();
             }
         } else {
-            this.accelerometerPositioning.updatePosition();
+            //this.accelerometerPositioning.updatePosition();
         }
         System.out.println(position);
 
         // Send coordinates to the server
-        Robot.client.setPosition(position);
-        try {
-            Robot.client.sendPosition();
-        } catch (IOException e) {
-            System.out.println("error sending position");
-        }
+        //Robot.client.setPosition(position);
+//        try {
+//           // Robot.client.sendPosition();
+//        } catch (IOException e) {
+//            System.out.println("error sending position");
+//        }
     }
 }

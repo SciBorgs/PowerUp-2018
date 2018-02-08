@@ -18,7 +18,7 @@ public class OI {
 	public static Joystick rightJoystick = new Joystick(PortMap.JOYSTICK_RIGHT);
 	
 	public static Button descendLift = new JoystickButton(leftJoystick, 3);
-	public static Button ascendLift = new JoystickButton(leftJoystick, 4);	
+	public static Button ascendLift = new JoystickButton(leftJoystick, 8);	
 	
 	public static Button extendClimber = new JoystickButton(leftJoystick, 3);
 	public static Button stopClimber = new JoystickButton(leftJoystick, 2);
@@ -29,15 +29,18 @@ public class OI {
 
 	public static Button intakeArmControl = new JoystickButton(rightJoystick, 3);
 	public static Button driveStraightButton = new JoystickButton(rightJoystick, 4);
-	
-	public static Button intakeCube = new JoystickButton(leftJoystick, 3);
-	public static Button placeOutCube = new JoystickButton(leftJoystick, 3);
-	public static Button shootOutCube = new JoystickButton(leftJoystick, 3);
-	
+	public static Button pidAngleTest = new JoystickButton(leftJoystick, 4);
+
+//	public static Button intakeCube = new JoystickButton(leftJoystick, 3);
+//	public static Button placeOutCube = new JoystickButton(leftJoystick, 3);
+//	public static Button shootOutCube = new JoystickButton(leftJoystick, 3);
+//	
 	public OI() {
 		intakeArmControl.toggleWhenPressed(new ToggleArmCommand());
-		gearShifter.toggleWhenPressed(new ToggleArmCommand());
+		gearShifter.toggleWhenPressed(new ToggleGearCommand());
 		tiltClimb.toggleWhenPressed(new ToggleClimbCommand());
+		pidAngleTest.whileHeld(new DriveDistanceCommand(4));
+
 //		descendLift.toggleWhenPressed(new LowerLiftCommand());
 //		ascendLift.toggleWhenPressed(new RaiseLiftCommand());
 //		intakeCube.whileActive(new PlaceIntakeCommand());

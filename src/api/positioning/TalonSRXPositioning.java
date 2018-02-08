@@ -18,15 +18,18 @@ public class TalonSRXPositioning {
 
         leftTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
         rightTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 1);
+    	leftTalon.getSensorCollection().setPulseWidthPosition(0, 1);
+        rightTalon.getSensorCollection().setPulseWidthPosition(0, 1);
+
     }
 
     public void updatePosition() {        // (position / 1024) * 2 pi r
-        double distance = (((leftTalon.getSelectedSensorPosition(0) + rightTalon.getSelectedSensorPosition(0)) / 2) / RATIO) * (2 * Math.PI * RADIUS);
-        leftTalon.getSensorCollection().setPulseWidthPosition(0, 1);
-        rightTalon.getSensorCollection().setPulseWidthPosition(0, 1);
+        //double distance = (((leftTalon.getSelectedSensorPosition(0) + rightTalon.getSelectedSensorPosition(0)) / 2) / RATIO) * (2 * Math.PI * RADIUS);
+        double distance = (rightTalon.getSelectedSensorPosition(0) / RATIO) * (2 * Math.PI * RADIUS);
+
         // have to replace this with the distance values
-        position.setX(position.getX() + distance * Math.cos(Math.toRadians(position.getDirection())));
-        position.setY(position.getY() + distance * Math.sin(Math.toRadians(position.getDirection())));
+        position.setX(position.getX() + distance);// * Math.cos(Math.toRadians(position.getDirection())));
+        position.setY(position.getY() + distance);// * Math.sin(Math.toRadians(position.getDirection())));
         System.out.println(position);
     }
 }

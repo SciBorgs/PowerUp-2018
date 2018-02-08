@@ -83,10 +83,10 @@ public class Robot extends IterativeRobot {
 		m_chooser.addDefault("Auto Position 1", 1);
 		m_chooser.addObject("Auto Position 2", 2);
 		m_chooser.addObject("Auto Position 3", 3);
-		pigeon = new PigeonIMU(1);
+		pigeon = new PigeonIMU(27);
 
 		position = new Position();
-		positioningHandler = new PositioningHandler(position, driveSubsystem.frontLeftMotor, driveSubsystem.frontRightMotor);
+		positioningHandler = new PositioningHandler(position, driveSubsystem.frontRightMotor, driveSubsystem.backLeftMotor);
 
 		SmartDashboard.putData("Auto mode", m_chooser);
 		Gyro = new ADXRS450_Gyro();

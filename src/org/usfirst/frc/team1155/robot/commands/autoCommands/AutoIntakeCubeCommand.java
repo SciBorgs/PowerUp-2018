@@ -30,7 +30,7 @@ public class AutoIntakeCubeCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.intakeSubsystem.ultrasonic.getRangeInches() <= Robot.intakeSubsystem.MIN_INCHES_FROM_ULTRA_TO_BOX;
+        return true;//Robot.intakeSubsystem.ultrasonic.getRangeInches() <= Robot.intakeSubsystem.MIN_INCHES_FROM_ULTRA_TO_BOX;
     }
 
     // Called once after isFinished returns true
