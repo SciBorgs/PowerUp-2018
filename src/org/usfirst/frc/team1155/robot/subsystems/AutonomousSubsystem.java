@@ -17,10 +17,15 @@ public class AutonomousSubsystem extends Subsystem {
 	public AutonomousRoutine configurePath(String gameInfo, int pos){
 		
 		try {
-			return new AutonomousRoutine(new File("/home/lvuser/AutoRoutines/" + pos + "/" + gameInfo));
+			return new AutonomousRoutine(new File("/home/lvuser/AutoRoutines/" + pos + "/" + gameInfo + ".auto"));
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+			try {
+				return new AutonomousRoutine(new File("/home/lvuser/AutoRoutines/testRoutine.auto"))	;
+			} catch (IOException e1) {
+				e1.printStackTrace();
+				return null;
+			}
 		}
 		
 	}
