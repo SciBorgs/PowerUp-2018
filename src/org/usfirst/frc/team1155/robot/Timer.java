@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1155.robot;
 
-class Timer {
+public class Timer {
     private double startTime, previousTime, currentTime, differenceInTime;
 
     // Called During Auto-Init

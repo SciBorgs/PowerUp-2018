@@ -10,15 +10,15 @@ package org.usfirst.frc.team1155.robot;
 import java.io.File;
 import java.io.IOException;
 
+import api.AutonomousRoutine;
+import api.Position;
+import api.positioning.PositioningHandler;
+import com.ctre.phoenix.sensors.PigeonIMU;
 import org.usfirst.frc.team1155.robot.commands.*;
-import org.usfirst.frc.team1155.robot.commands.autoCommands.AutonomousCommand;
 import org.usfirst.frc.team1155.robot.commands.autoCommands.AutonomousCommandGroup;
 import org.usfirst.frc.team1155.robot.subsystems.*;
 
-import com.ctre.phoenix.sensors.PigeonIMU;
-
 import api.Client;
-import api.Path;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -47,19 +47,21 @@ public class Robot extends IterativeRobot {
 	public static VisionSubsystem visionSubsystem;
 	public static ADXRS450_Gyro Gyro;
 	public static File file;
-	public static Path path;
+	public static AutonomousRoutine autonomousRoutine;
 	public static int PointTwoMeters[];
 	
-//	public static PigeonIMU pigeon;
+	public static PigeonIMU pigeon;
 	public static BuiltInAccelerometer accel;
 	
 	public static Timer timer;
-	public static DesCartesianPlane plane;
 
 	public static Client client;
 
 	public static short[] shortArr;
 	public static double[] anglesYPR;
+
+	public static Position position;
+	public static PositioningHandler positioningHandler;
 
 	
 	Command m_autonomousCommand;
@@ -81,6 +83,10 @@ public class Robot extends IterativeRobot {
 		m_chooser.addDefault("Auto Position 1", 1);
 		m_chooser.addObject("Auto Position 2", 2);
 		m_chooser.addObject("Auto Position 3", 3);
+		pigeon = new PigeonIMU(1);
+
+		position = new Position();
+		positioningHandler = new PositioningHandler(position, driveSubsystem.frontLeftMotor, driveSubsystem.frontRightMotor);
 
 		SmartDashboard.putData("Auto mode", m_chooser);
 		Gyro = new ADXRS450_Gyro();
@@ -99,13 +105,11 @@ public class Robot extends IterativeRobot {
 		timer = new Timer();
 		accel = new BuiltInAccelerometer();
 //		pigeon = new PigeonIMU(driveSubsystem.frontLeftMotor);
-		plane = new DesCartesianPlane(timer, accel);
 		PointTwoMeters = new int[2];
 		shortArr = new short[3];
 		anglesYPR = new double[3];
 		PointTwoMeters[0] = 0;
 		PointTwoMeters[1] = 80;
-		System.out.println(plane.getX() + ", " + plane.getY());
 		//pigeon.enterCalibrationMode(CalibrationMode.BootTareGyroAccel, 3000);
 	}
 
@@ -151,7 +155,6 @@ public class Robot extends IterativeRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
-		System.out.println(plane.getX() + ", " + plane.getY());
 	}
 
 	/**
@@ -176,7 +179,7 @@ public class Robot extends IterativeRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		System.out.println(plane.getX() + ", " + plane.getY());
+		System.out.println(position.getX() + ", " + position.getY());
 		new WestCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
 		//new PlaceCommand().start();
 	}
@@ -188,13 +191,13 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 //		pigeon.getYawPitchRoll(anglesYPR);
-		plane.updatePosition();
-		SmartDashboard.putNumber("Xceleration", plane.getAx());
-		SmartDashboard.putNumber("Yceleration", plane.getAy());
-		SmartDashboard.putNumber("Xvelocity", plane.getVx());
-		SmartDashboard.putNumber("Yvelocity", plane.getVy());
-		SmartDashboard.putNumber("Xposition", plane.getX());
-		SmartDashboard.putNumber("Yposition", plane.getY());
+		positioningHandler.updatePosition();
+//		SmartDashboard.putNumber("Xceleration", plane.getAx());
+//		SmartDashboard.putNumber("Yceleration", plane.getAy());
+//		SmartDashboard.putNumber("Xvelocity", plane.getVx());
+//		SmartDashboard.putNumber("Yvelocity", plane.getVy());
+		SmartDashboard.putNumber("Xposition", position.getX());
+		SmartDashboard.putNumber("Yposition", position.getY());
 		
 		SmartDashboard.putNumber("Yawwwww", anglesYPR[0]);
 		
@@ -208,6 +211,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		System.out.println(plane.getX() + ", " + plane.getY());
+		System.out.println(position.getX() + ", " + position.getY());
 	}
 }

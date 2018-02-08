@@ -1,12 +1,9 @@
 package org.usfirst.frc.team1155.robot.commands.autoCommands;
 
 import api.AutonomousRoutine;
-import api.Path;
 
-import org.usfirst.frc.team1155.robot.AutoActionType;
 import org.usfirst.frc.team1155.robot.Robot;
 import org.usfirst.frc.team1155.robot.commands.DriveDistanceCommand;
-import org.usfirst.frc.team1155.robot.commands.PlaceIntakeCommand;
 import org.usfirst.frc.team1155.robot.commands.TurnToDegreeCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;

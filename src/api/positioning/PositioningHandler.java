@@ -29,7 +29,7 @@ public class PositioningHandler {
     }
 
     private PositioningHandler() {
-        this.accelerometerPositioning = new AccelerometerPositioning(Robot.t, Robot.pigeon);
+        this.accelerometerPositioning = new AccelerometerPositioning(Robot.timer, Robot.pigeon);
     }
 
     public PositioningHandler(Position position, TalonSRX leftTalonSRX, TalonSRX rightTalonSRX) {

@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class IntakeSubsystem extends Subsystem{
 
-	public edu.wpi.first.wpilibj.TalonSRX leftIntakeMotor, rightIntakeMotor, leftArmMotor, rightArmMotor;
+	public TalonSRX leftIntakeMotor, rightIntakeMotor, leftArmMotor, rightArmMotor;
 	public DoubleSolenoid armSolenoid, tiltSolenoid;
 	public int counter;
 	public boolean isStopped = true;
@@ -37,7 +37,7 @@ public class IntakeSubsystem extends Subsystem{
 	}	
 	
 	public void stop() {
-		stopped = true;
+		isStopped = true;
 		leftIntakeMotor.set(ControlMode.PercentOutput, 0);
 		rightIntakeMotor.set(ControlMode.PercentOutput, 0);
 		leftArmMotor.set(ControlMode.PercentOutput, 0);
@@ -46,7 +46,7 @@ public class IntakeSubsystem extends Subsystem{
 	
 	public void setSpeed(double speed){
 		if(speed != 0){
-			stopped = false;
+			isStopped = false;
 		}
 		leftIntakeMotor.set(ControlMode.PercentOutput, -speed);
 		rightIntakeMotor.set(ControlMode.PercentOutput, speed);

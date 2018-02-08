@@ -133,8 +133,8 @@ public class DriveSubsystem extends PIDSubsystem {
 	 */
 	public double calculatesAngleToTurnTo(int[] coordArr) {
 		double currentGyroAngle = Robot.Gyro.getAngle() % 360;
-		double x = Robot.plane.getX();
-		double y = Robot.plane.getY();
+		double x = Robot.position.getX();
+		double y = Robot.position.getY();
 		double nextX = 0.0127 * coordArr[0] - x;
 		double nextY = 0.0127 * coordArr[1] - y;
 		if (nextX > 0 && nextY > 0) {
