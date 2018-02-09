@@ -33,6 +33,6 @@ public class TalonSRXPositioning {
         // have to replace this with the distance values
         position.setX(position.getX() + distance);// * Math.cos(Math.toRadians(position.getDirection())));
         position.setY(position.getY() + distance);// * Math.sin(Math.toRadians(position.getDirection())));
-        System.out.println(position);
+       // System.out.println(position);
     }
 }

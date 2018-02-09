@@ -41,6 +41,7 @@ public class OI {
 		gearShifter.toggleWhenPressed(new ToggleGearCommand());
 		tiltClimb.toggleWhenPressed(new ToggleClimbCommand());
 		pidAngleTest.whenPressed(new TurnToDegreeCommand(90));
+		pidAngleTest.whenReleased(new WestCoastDriveCommand(leftJoystick, rightJoystick));
 		driveDistTest.whenPressed(new DriveDistanceCommand(4));
 
 //		descendLift.toggleWhenPressed(new LowerLiftCommand());

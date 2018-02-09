@@ -13,13 +13,17 @@ import java.io.IOException;
 import api.AutonomousRoutine;
 import api.Position;
 import api.positioning.PositioningHandler;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
+
 import org.usfirst.frc.team1155.robot.commands.*;
 import org.usfirst.frc.team1155.robot.commands.autoCommands.AutonomousCommandGroup;
 import org.usfirst.frc.team1155.robot.subsystems.*;
 
 import api.Client;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+//import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.DriverStation;
 
@@ -45,7 +49,7 @@ public class Robot extends IterativeRobot {
 	public static IntakeSubsystem intakeSubsystem;
 	public static AutonomousSubsystem autonomousSubsystem;
 	public static VisionSubsystem visionSubsystem;
-	public static ADXRS450_Gyro Gyro;
+//	public static ADXRS450_Gyro Gyro;
 	public static File file;
 	public static AutonomousRoutine autonomousRoutine;
 	public static int PointTwoMeters[];
@@ -82,13 +86,20 @@ public class Robot extends IterativeRobot {
 		m_chooser.addDefault("Auto Position 1", 1);
 		m_chooser.addObject("Auto Position 2", 2);
 		m_chooser.addObject("Auto Position 3", 3);
-		pigeon = new PigeonIMU(Robot.driveSubsystem.talonWithPigeon);
+		pigeon = new PigeonIMU(driveSubsystem.talonWithPigeon);
+		//System.out.println("entering calibration mode");
+		pigeon.setYaw(0.,0);
 
+		
+		
 		position = new Position();
 		positioningHandler = new PositioningHandler(position, driveSubsystem.frontRightMotor, driveSubsystem.backLeftMotor);
-
+		SmartDashboard.putNumber("angleToTurn", 90);
 		SmartDashboard.putData("Auto mode", m_chooser);
-		Gyro = new ADXRS450_Gyro();
+		SmartDashboard.putNumber("P Value", 0.1);
+		SmartDashboard.putNumber("I Value", 0);
+		SmartDashboard.putNumber("D Value", 0.1);
+		//Gyro = new ADXRS450_Gyro();
         try {
             client = new Client();
         } catch (IOException e) {
@@ -117,6 +128,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		pigeon.setYaw(0.,0);
 	}
 
 	@Override
@@ -164,7 +176,7 @@ public class Robot extends IterativeRobot {
 		System.out.print("DESCARTES");
 
 		//System.out.println(plane.getX() + ", " + plane.getY());
-		
+		intakeSubsystem.leftArmMotor.set(ControlMode.PercentOutput, .2);
 	}
 
 	@Override
@@ -176,9 +188,11 @@ public class Robot extends IterativeRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		pigeon.setYaw(0.,0);
+		Robot.driveSubsystem.resetEncoders();
 		System.out.println(position.getX() + ", " + position.getY());
 		new WestCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
-		//new PlaceCommand().start();
+		new PlaceCommand().start();
 	}
 
 	/**
@@ -193,8 +207,9 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("Yceleration", plane.getAy());
 //		SmartDashboard.putNumber("Xvelocity", plane.getVx());
 //		SmartDashboard.putNumber("Yvelocity", plane.getVy());
-		
-		SmartDashboard.putNumber("PigeonYaw", driveSubsystem.getPigeonRoll());
+		//System.out.println(driveSubsystem.getPigeonRoll());
+		SmartDashboard.putNumber("Left Encoder", Robot.driveSubsystem.getEncPosition());
+		SmartDashboard.putNumber("PigeonRoll", driveSubsystem.getPigeonRoll());
 		
 		SmartDashboard.putNumber("shortArr[0]", shortArr[0]);
 		SmartDashboard.putNumber("shortArr[1]", shortArr[1]);

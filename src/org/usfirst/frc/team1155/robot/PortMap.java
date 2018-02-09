@@ -29,8 +29,8 @@ public class PortMap {
 	
 	public static final int INTAKE_LEFT_TALON = 7;
 	public static final int INTAKE_RIGHT_TALON = 6;
-	public static final int INTAKE_ARM_LEFT_TALON = 7;
-	public static final int INTAKE_ARM_RIGHT_TALON = 6;
+	public static final int INTAKE_ARM_LEFT_TALON = 20;
+	public static final int INTAKE_ARM_RIGHT_TALON = 31;
 	
 	public static final int[] INTAKE_SOLENOID_LEFT = {3, 7};
 	public static final int[] INTAKE_SOLENOID_RIGHT = {2, 5};

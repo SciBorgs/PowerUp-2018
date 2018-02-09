@@ -18,9 +18,11 @@ public class TurnToDegreeCommand extends Command{
 	@Override
 	protected void initialize() {
 		// Calibrates the turn angle
+		System.out.println("turning...");
     	Robot.driveSubsystem.pidMode = PIDMode.TurnDegree;
     	
-		Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonRoll(), angleToTurn);
+		//Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonRoll(), angleToTurn);
+    	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonRoll(), SmartDashboard.getNumber("angleToTurn", 0));
 	}
 
 	@Override

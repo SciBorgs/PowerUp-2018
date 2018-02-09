@@ -23,10 +23,10 @@ public class IntakeSubsystem extends Subsystem{
 	
 	public void initDefaultCommand() {
 
-		leftIntakeMotor = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
-		rightIntakeMotor = new TalonSRX(PortMap.DRIVE_FRONT_RIGHT_TALON);
-		leftArmMotor = new TalonSRX(PortMap.DRIVE_BACK_LEFT_TALON);
-		rightArmMotor = new TalonSRX(PortMap.DRIVE_BACK_RIGHT_TALON);
+		leftIntakeMotor = new TalonSRX(PortMap.INTAKE_LEFT_TALON);
+		rightIntakeMotor = new TalonSRX(PortMap.INTAKE_RIGHT_TALON);
+		leftArmMotor = new TalonSRX(PortMap.INTAKE_ARM_LEFT_TALON);
+		rightArmMotor = new TalonSRX(PortMap.INTAKE_ARM_RIGHT_TALON);
 
 		armSolenoid = new DoubleSolenoid(PortMap.INTAKE_SOLENOID_LEFT[0], PortMap.INTAKE_SOLENOID_LEFT[1]);
 		tiltSolenoid = new DoubleSolenoid(PortMap.INTAKE_SOLENOID_RIGHT[0], PortMap.INTAKE_SOLENOID_RIGHT[1]);
@@ -48,10 +48,10 @@ public class IntakeSubsystem extends Subsystem{
 		if(speed != 0){
 			isStopped = false;
 		}
-		leftIntakeMotor.set(ControlMode.PercentOutput, -speed);
+		leftIntakeMotor.set(ControlMode.PercentOutput, speed);
 		rightIntakeMotor.set(ControlMode.PercentOutput, speed);
 		leftArmMotor.set(ControlMode.PercentOutput, speed);
-		rightArmMotor.set(ControlMode.PercentOutput, -speed);
+		rightArmMotor.set(ControlMode.PercentOutput, speed);
 	}
 	
 	public void setArmSpeed(double speed) {

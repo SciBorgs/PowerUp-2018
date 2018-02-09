@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -33,7 +34,7 @@ public class DriveSubsystem extends PIDSubsystem {
 
 	// Initialize your subsystem here
 	public DriveSubsystem() {
-		super("Drive", 0.1, 0, 0.1);
+		super("Drive", 0.1, 0.01, 0.1);
 		pidMode = PIDMode.TurnDegree;
 
 		frontLeftMotor = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
@@ -47,8 +48,8 @@ public class DriveSubsystem extends PIDSubsystem {
 		middleRightMotor.set(ControlMode.Follower, frontRightMotor.getDeviceID());
 		middleLeftMotor.set(ControlMode.Follower, frontLeftMotor.getDeviceID());
 		
-		talonWithPigeon = frontLeftMotor;
-
+		talonWithPigeon = new TalonSRX(27);
+		
 		gearShifter = new DoubleSolenoid(PortMap.GEAR_SHIFTER_SOLENOID[0], PortMap.GEAR_SHIFTER_SOLENOID[1]);
 		
 		getPIDController().setContinuous(false);
@@ -71,6 +72,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	protected double returnPIDInput() {
 		switch (pidMode) {
 		case TurnDegree:
+			return getPigeonRoll();
 		case DriveStraight:
 			return getPigeonRoll();
 		case DriveDistance:
@@ -86,7 +88,7 @@ public class DriveSubsystem extends PIDSubsystem {
 		// TODO: Check if the robot goes in the right direction.
 		// If it doesn't, flip the negations on the outputs.
 		case TurnDegree:
-			output *= 0.5;
+			output *= -0.5;
 			setSpeed(output, -output);
 			break;
 		case DriveStraight:
@@ -115,9 +117,10 @@ public class DriveSubsystem extends PIDSubsystem {
 	}
 
 	public void startAdjustment(double current, double setPoint) {
+		updatePID();
 		switch (pidMode) {
 		case TurnDegree:
-			getPIDController().setPercentTolerance(5.0);
+			getPIDController().setPercentTolerance(10.0);
 			setPoint %= 360;
 			setSetpoint((int) (((current - setPoint >= 0 ? 180 : -180) + current - setPoint) / 360) * 360 + setPoint);
 			break;
@@ -172,12 +175,23 @@ public class DriveSubsystem extends PIDSubsystem {
 	public double getPigeonRoll(){
 		double[] yawPitchRoll = new double[3];
 		Robot.pigeon.getYawPitchRoll(yawPitchRoll);
-		return yawPitchRoll[2];
+		System.out.println("yaw: " + yawPitchRoll[0] + " pitch: " + yawPitchRoll[1] + " roll: " + yawPitchRoll[2]);
+		return yawPitchRoll[0] % 360.;
 	}
 	
 	public double getEncPosition() {
 		double dist = (frontRightMotor.getSensorCollection().getQuadraturePosition() / TICKS_PER_ROTATION) * ENC_WHEEL_RATIO * (2 * Math.PI * WHEEL_RADIUS);
 		return dist;
+	}
+	
+	public void updatePID() {
+		getPIDController().setP(SmartDashboard.getNumber("P Value", 0.1));
+		getPIDController().setI(SmartDashboard.getNumber("I Value", 0));
+		getPIDController().setD(SmartDashboard.getNumber("D Value", 0.1));
+	}
+	
+	public void resetEncoders() {
+		frontRightMotor.getSensorCollection().setQuadraturePosition(0, 0);
 	}
 	
 }
