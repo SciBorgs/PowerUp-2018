@@ -30,6 +30,7 @@ public class OI {
 	public static Button intakeArmControl = new JoystickButton(rightJoystick, 3);
 	public static Button driveStraightButton = new JoystickButton(rightJoystick, 4);
 	public static Button pidAngleTest = new JoystickButton(leftJoystick, 4);
+	public static Button driveDistTest = new JoystickButton(rightJoystick, 5);
 
 //	public static Button intakeCube = new JoystickButton(leftJoystick, 3);
 //	public static Button placeOutCube = new JoystickButton(leftJoystick, 3);
@@ -39,7 +40,8 @@ public class OI {
 		intakeArmControl.toggleWhenPressed(new ToggleArmCommand());
 		gearShifter.toggleWhenPressed(new ToggleGearCommand());
 		tiltClimb.toggleWhenPressed(new ToggleClimbCommand());
-		pidAngleTest.whileHeld(new DriveDistanceCommand(4));
+		pidAngleTest.whenPressed(new TurnToDegreeCommand(90));
+		driveDistTest.whenPressed(new DriveDistanceCommand(4));
 
 //		descendLift.toggleWhenPressed(new LowerLiftCommand());
 //		ascendLift.toggleWhenPressed(new RaiseLiftCommand());

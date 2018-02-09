@@ -20,6 +20,9 @@ public class DriveSubsystem extends PIDSubsystem {
 	public TalonSRX frontLeftMotor, middleLeftMotor, frontRightMotor, backLeftMotor, middleRightMotor, backRightMotor;
 	public Gyro gyro;
 	public DoubleSolenoid gearShifter;
+	public final double TICKS_PER_ROTATION = 4096;
+	public final double WHEEL_RADIUS = 3./12.; //(0.25) 3 inches over 12 inches is wheel radius in feet
+	public final double ENC_WHEEL_RATIO = 4./25.; //(0.16) 4 rotations of the wheel is 25 rotations of the encoder
 
 	public static enum PIDMode {
 		TurnDegree, DriveStraight, DriveDistance;
@@ -164,8 +167,8 @@ public class DriveSubsystem extends PIDSubsystem {
 	}
 	
 	public double getEncPosition() {
-		// TODO: Find Gear Ratio and use to convert sensor position into actual distance.
-		return frontRightMotor.getSensorCollection().getQuadraturePosition();
+		double dist = (frontRightMotor.getSensorCollection().getQuadraturePosition() / TICKS_PER_ROTATION) * ENC_WHEEL_RATIO * (2 * Math.PI * WHEEL_RADIUS);
+		return dist;
 	}
 	
 }
