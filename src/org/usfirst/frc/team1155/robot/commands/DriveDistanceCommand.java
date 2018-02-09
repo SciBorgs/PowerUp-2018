@@ -14,7 +14,7 @@ public class DriveDistanceCommand extends Command {
 	double distanceToDrive;
 	
     public DriveDistanceCommand(double dist) {
-    	//requires(Robot.driveSubsystem);
+    	requires(Robot.driveSubsystem);
     	setInterruptible(true);
     	distanceToDrive = dist;
     }
