@@ -194,7 +194,7 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("Xvelocity", plane.getVx());
 //		SmartDashboard.putNumber("Yvelocity", plane.getVy());
 		
-		SmartDashboard.putNumber("PigeonYaw", driveSubsystem.getPigeonYaw());
+		SmartDashboard.putNumber("PigeonYaw", driveSubsystem.getPigeonRoll());
 		
 		SmartDashboard.putNumber("shortArr[0]", shortArr[0]);
 		SmartDashboard.putNumber("shortArr[1]", shortArr[1]);

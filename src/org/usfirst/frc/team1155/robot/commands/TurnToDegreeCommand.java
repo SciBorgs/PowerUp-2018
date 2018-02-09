@@ -20,12 +20,12 @@ public class TurnToDegreeCommand extends Command{
 		// Calibrates the turn angle
     	Robot.driveSubsystem.pidMode = PIDMode.TurnDegree;
     	
-		Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonYaw(), angleToTurn);
+		Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonRoll(), angleToTurn);
 	}
 
 	@Override
 	protected void execute() {
-		SmartDashboard.putNumber("GyroValue", Robot.driveSubsystem.getPigeonYaw());
+		SmartDashboard.putNumber("GyroValue", Robot.driveSubsystem.getPigeonRoll());
 	}
 
 	@Override

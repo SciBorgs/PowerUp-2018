@@ -72,7 +72,7 @@ public class DriveSubsystem extends PIDSubsystem {
 		switch (pidMode) {
 		case TurnDegree:
 		case DriveStraight:
-			return getPigeonYaw();
+			return getPigeonRoll();
 		case DriveDistance:
 			return getEncPosition();
 		default:
@@ -169,10 +169,10 @@ public class DriveSubsystem extends PIDSubsystem {
 		gyro.reset();
 	}
 	
-	public double getPigeonYaw(){
+	public double getPigeonRoll(){
 		double[] yawPitchRoll = new double[3];
 		Robot.pigeon.getYawPitchRoll(yawPitchRoll);
-		return yawPitchRoll[0];
+		return yawPitchRoll[2];
 	}
 	
 	public double getEncPosition() {
