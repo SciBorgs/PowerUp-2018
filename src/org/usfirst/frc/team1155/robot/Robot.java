@@ -58,7 +58,6 @@ public class Robot extends IterativeRobot {
 	public static Client client;
 
 	public static short[] shortArr;
-	public static double[] anglesYPR;
 
 	public static Position position;
 	public static PositioningHandler positioningHandler;
@@ -83,7 +82,7 @@ public class Robot extends IterativeRobot {
 		m_chooser.addDefault("Auto Position 1", 1);
 		m_chooser.addObject("Auto Position 2", 2);
 		m_chooser.addObject("Auto Position 3", 3);
-		pigeon = new PigeonIMU(27);
+		pigeon = new PigeonIMU(Robot.driveSubsystem.talonWithPigeon);
 
 		position = new Position();
 		positioningHandler = new PositioningHandler(position, driveSubsystem.frontRightMotor, driveSubsystem.backLeftMotor);
@@ -104,10 +103,8 @@ public class Robot extends IterativeRobot {
 		*/ 
 		timer = new Timer();
 		accel = new BuiltInAccelerometer();
-//		pigeon = new PigeonIMU(driveSubsystem.frontLeftMotor);
 		PointTwoMeters = new int[2];
 		shortArr = new short[3];
-		anglesYPR = new double[3];
 		PointTwoMeters[0] = 0;
 		PointTwoMeters[1] = 80;
 		//pigeon.enterCalibrationMode(CalibrationMode.BootTareGyroAccel, 3000);
@@ -196,10 +193,8 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("Yceleration", plane.getAy());
 //		SmartDashboard.putNumber("Xvelocity", plane.getVx());
 //		SmartDashboard.putNumber("Yvelocity", plane.getVy());
-		SmartDashboard.putNumber("Xposition", position.getX());
-		SmartDashboard.putNumber("Yposition", position.getY());
 		
-		SmartDashboard.putNumber("Yawwwww", anglesYPR[0]);
+		SmartDashboard.putNumber("PigeonYaw", driveSubsystem.getPigeonYaw());
 		
 		SmartDashboard.putNumber("shortArr[0]", shortArr[0]);
 		SmartDashboard.putNumber("shortArr[1]", shortArr[1]);

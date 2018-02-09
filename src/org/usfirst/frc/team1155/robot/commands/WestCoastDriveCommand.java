@@ -29,10 +29,10 @@ public class WestCoastDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putNumber("GyroValue", Robot.driveSubsystem.gyro.getAngle());
+    	SmartDashboard.putNumber("GyroValue", Robot.driveSubsystem.getPigeonYaw());
     	Robot.driveSubsystem.setSpeed(-left.getY(), -right.getY());
     	if(OI.driveStraightButton.get() && !Robot.driveSubsystem.getPIDController().isEnabled())
-    		Robot.driveSubsystem.startAdjustment(0, Robot.driveSubsystem.gyro.getAngle());
+    		Robot.driveSubsystem.startAdjustment(0, Robot.driveSubsystem.getPigeonYaw());
     	else if (!OI.driveStraightButton.get() && Robot.driveSubsystem.getPIDController().isEnabled())
     		Robot.driveSubsystem.endAdjustment();
     }

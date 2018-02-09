@@ -20,6 +20,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	public TalonSRX frontLeftMotor, middleLeftMotor, frontRightMotor, backLeftMotor, middleRightMotor, backRightMotor;
 	public Gyro gyro;
 	public DoubleSolenoid gearShifter;
+	public TalonSRX talonWithPigeon;
 	public final double TICKS_PER_ROTATION = 4096;
 	public final double WHEEL_RADIUS = 3./12.; //(0.25) 3 inches over 12 inches is wheel radius in feet
 	public final double ENC_WHEEL_RATIO = 4./25.; //(0.16) 4 rotations of the wheel is 25 rotations of the encoder
@@ -45,6 +46,8 @@ public class DriveSubsystem extends PIDSubsystem {
 		backLeftMotor.set(ControlMode.Follower, frontLeftMotor.getDeviceID());
 		middleRightMotor.set(ControlMode.Follower, frontRightMotor.getDeviceID());
 		middleLeftMotor.set(ControlMode.Follower, frontLeftMotor.getDeviceID());
+		
+		talonWithPigeon = frontLeftMotor;
 
 		gearShifter = new DoubleSolenoid(PortMap.GEAR_SHIFTER_SOLENOID[0], PortMap.GEAR_SHIFTER_SOLENOID[1]);
 		
@@ -69,7 +72,7 @@ public class DriveSubsystem extends PIDSubsystem {
 		switch (pidMode) {
 		case TurnDegree:
 		case DriveStraight:
-			return gyro.getAngle();
+			return getPigeonYaw();
 		case DriveDistance:
 			return getEncPosition();
 		default:
@@ -164,6 +167,12 @@ public class DriveSubsystem extends PIDSubsystem {
 	
 	public void resetGyro() {
 		gyro.reset();
+	}
+	
+	public double getPigeonYaw(){
+		double[] yawPitchRoll = new double[3];
+		Robot.pigeon.getYawPitchRoll(yawPitchRoll);
+		return yawPitchRoll[0];
 	}
 	
 	public double getEncPosition() {
