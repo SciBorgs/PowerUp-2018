@@ -194,4 +194,11 @@ public class DriveSubsystem extends PIDSubsystem {
 		frontRightMotor.getSensorCollection().setQuadraturePosition(0, 0);
 	}
 	
+	
+	public double feetToEncTicks(double feet){
+		double wheelRotations = feet / (2 * Math.PI * WHEEL_RADIUS);
+		double encTicks = wheelRotations / ENC_WHEEL_RATIO;
+		return encTicks;
+	}
+	
 }

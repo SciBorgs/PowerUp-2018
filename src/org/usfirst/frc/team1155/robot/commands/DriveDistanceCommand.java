@@ -22,8 +22,8 @@ public class DriveDistanceCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveSubsystem.pidMode = PIDMode.DriveDistance;
-    	// TODO: Complete getEncPosition so that it returns actual distance.
-    	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getEncPosition(), distanceToDrive);
+    	double ticksToDrive = Robot.driveSubsystem.feetToEncTicks(distanceToDrive);
+    	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getEncPosition(), ticksToDrive);
     }
 
     // Called repeatedly when this Command is scheduled to run
