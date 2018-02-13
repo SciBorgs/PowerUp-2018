@@ -11,7 +11,7 @@ public class LiftSubsystem extends Subsystem{
 
 	public TalonSRX leftLiftMotor, rightLiftMotor, leftLift2Motor, rightLift2Motor;
 	public Encoder liftEncoder;
-	public final double LIFT_SPEED = 0.4;
+	public final double LIFT_SPEED = 1.;
 	public final double TICKS_TO_TOP = 100;
 	public final double TICKS_TO_SWITCH_HEIGHT = 20;
 	public final double TICKS_AT_BOTTOM = 0;
