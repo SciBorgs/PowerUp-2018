@@ -48,6 +48,13 @@ public class DriveSubsystem extends PIDSubsystem {
 		middleRightMotor.set(ControlMode.Follower, frontRightMotor.getDeviceID());
 		middleLeftMotor.set(ControlMode.Follower, frontLeftMotor.getDeviceID());
 		
+		frontLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+		backLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+		middleLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+		middleRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+		frontRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+		backRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+		
 		talonWithPigeon = new TalonSRX(27);
 		
 		gearShifter = new DoubleSolenoid(PortMap.GEAR_SHIFTER_SOLENOID[0], PortMap.GEAR_SHIFTER_SOLENOID[1]);
@@ -83,6 +90,8 @@ public class DriveSubsystem extends PIDSubsystem {
 	}
 
 	protected void usePIDOutput(double output) {
+		//System.out.println("PID output: " + output);
+
 		switch (pidMode) {
 		// For reference, a CW gyro correction is positive by default
 		// TODO: Check if the robot goes in the right direction.
@@ -96,14 +105,24 @@ public class DriveSubsystem extends PIDSubsystem {
 			correctSpeed(output);
 			break;
 		case DriveDistance:
-			output *= -0.5;
-			setSpeed(output, output);
+			output *= 0.5;
+			autoSetSpeed(output, output);
 		default:
 			setSpeed(0, 0);
 			break;
 		}
 	}
 
+	public void autoSetSpeed(double leftSpeed, double rightSpeed) {
+		frontLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);
+		middleLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);
+		backLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);
+
+		frontRightMotor.set(ControlMode.PercentOutput, rightSpeed);
+		middleRightMotor.set(ControlMode.PercentOutput, rightSpeed);
+		backRightMotor.set(ControlMode.PercentOutput, rightSpeed);
+	}
+	
 	public void setSpeed(double leftSpeed, double rightSpeed) {
 		frontLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);
 		frontRightMotor.set(ControlMode.PercentOutput, rightSpeed);
@@ -126,7 +145,7 @@ public class DriveSubsystem extends PIDSubsystem {
 			break;
 		case DriveStraight:
 		case DriveDistance:
-			getPIDController().setPercentTolerance(0.5);
+			getPIDController().setPercentTolerance(10.0);
 			setSetpoint(setPoint);
 			break;
 		default:
@@ -145,23 +164,21 @@ public class DriveSubsystem extends PIDSubsystem {
 	 * the gyro
 	 */
 	public double calculatesAngleToTurnTo(int[] coordArr) {
-//		double currentGyroAngle = Robot.Gyro.getAngle() % 360;
-//		double x = Robot.plane.getX();
-//		double y = Robot.plane.getY();
-//		double nextX = 0.0127 * coordArr[0] - x;
-//		double nextY = 0.0127 * coordArr[1] - y;
-//		if (nextX > 0 && nextY > 0) {
-//			return Math.toDegrees(Math.atan(nextY/nextX));
-//		} else if (nextX > 0 && nextY < 0) {
-//			return 90 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
-//		} else if (nextX < 0 && nextY < 0) {
-//			return 180 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
-//		} else if (nextX < 0 && nextY > 0) {
-//			return 270 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
-//		} else {
-//			return 0;
-//		}
-		return 0;
+		double x = Robot.positioningHandler.position.getX();
+		double y = Robot.positioningHandler.position.getY();
+		double nextX = 0.0127 * coordArr[0] - x;
+		double nextY = 0.0127 * coordArr[1] - y;
+		if (nextX > 0 && nextY > 0) {
+			return Math.toDegrees(Math.atan(nextY/nextX));
+		} else if (nextX > 0 && nextY < 0) {
+			return 90 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
+		} else if (nextX < 0 && nextY < 0) {
+			return 180 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
+		} else if (nextX < 0 && nextY > 0) {
+			return 270 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
+		} else {
+			return 0;
+		}
 	}
 	
 	public void endAdjustment() {
@@ -175,7 +192,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	public double getPigeonRoll(){
 		double[] yawPitchRoll = new double[3];
 		Robot.pigeon.getYawPitchRoll(yawPitchRoll);
-		System.out.println("yaw: " + yawPitchRoll[0] + " pitch: " + yawPitchRoll[1] + " roll: " + yawPitchRoll[2]);
+		//System.out.println("yaw: " + yawPitchRoll[0] + " pitch: " + yawPitchRoll[1] + " roll: " + yawPitchRoll[2]);
 		return yawPitchRoll[0] % 360.;
 	}
 	
@@ -194,11 +211,26 @@ public class DriveSubsystem extends PIDSubsystem {
 		frontRightMotor.getSensorCollection().setQuadraturePosition(0, 0);
 	}
 	
+	public double getEncPositionTicks() {
+		return frontRightMotor.getSensorCollection().getQuadraturePosition();
+	}
+	
 	
 	public double feetToEncTicks(double feet){
 		double wheelRotations = feet / (2 * Math.PI * WHEEL_RADIUS);
 		double encTicks = wheelRotations / ENC_WHEEL_RATIO;
 		return encTicks;
+	}
+	
+	public double applyDriveCurve(double raw) {
+		if(raw <= -0.5)
+			return -Math.sqrt(.25 - (raw + 1) * (raw + 1)) - 0.5;
+		else if(raw > -0.5 && raw <= 0)
+			return Math.sqrt(.25 - raw * raw) - 0.5;
+		else if(raw > 0 && raw <= 0.5)
+			return -Math.sqrt(.25 - raw * raw) + 0.5;
+		else
+			return Math.sqrt(.25 - (raw - 1) * (raw - 1)) + 0.5;
 	}
 	
 }

@@ -10,23 +10,20 @@ package org.usfirst.frc.team1155.robot;
 import java.io.File;
 import java.io.IOException;
 
-import api.AutonomousRoutine;
-import api.Position;
-import api.positioning.PositioningHandler;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.sensors.PigeonIMU;
-import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
-
 import org.usfirst.frc.team1155.robot.commands.*;
 import org.usfirst.frc.team1155.robot.commands.autoCommands.AutonomousCommandGroup;
 import org.usfirst.frc.team1155.robot.subsystems.*;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.sensors.PigeonIMU;
+
+import api.AutonomousRoutine;
 import api.Client;
+import api.Position;
+import api.positioning.PositioningHandler;
 //import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.DriverStation;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -65,7 +62,6 @@ public class Robot extends IterativeRobot {
 
 	public static Position position;
 	public static PositioningHandler positioningHandler;
-
 	
 	Command m_autonomousCommand;
 	SendableChooser<Integer> m_chooser = new SendableChooser<>();
@@ -86,6 +82,7 @@ public class Robot extends IterativeRobot {
 		m_chooser.addDefault("Auto Position 1", 1);
 		m_chooser.addObject("Auto Position 2", 2);
 		m_chooser.addObject("Auto Position 3", 3);
+		
 		pigeon = new PigeonIMU(driveSubsystem.talonWithPigeon);
 		//System.out.println("entering calibration mode");
 		pigeon.setYaw(0.,0);
@@ -173,7 +170,6 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 	//	Scheduler.getInstance().run();
 		//plane.updatePosition();
-		System.out.print("DESCARTES");
 
 		//System.out.println(plane.getX() + ", " + plane.getY());
 		intakeSubsystem.leftArmMotor.set(ControlMode.PercentOutput, .2);
@@ -181,7 +177,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
+		// This makes sure that the autonomous stops running when 
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
@@ -190,9 +186,11 @@ public class Robot extends IterativeRobot {
 		}
 		pigeon.setYaw(0.,0);
 		Robot.driveSubsystem.resetEncoders();
-		System.out.println(position.getX() + ", " + position.getY());
-		new WestCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
-		new PlaceCommand().start();
+		//System.out.println(position.getX() + ", " + position.getY());
+		//new WestCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
+		new WestCoastDriveCommand(OI.xbox).start();
+		//new PlaceCommand(OI.xbox).start();
+		new CascadeLiftCommand(OI.xbox).start();
 	}
 
 	/**
@@ -208,12 +206,9 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("Xvelocity", plane.getVx());
 //		SmartDashboard.putNumber("Yvelocity", plane.getVy());
 		//System.out.println(driveSubsystem.getPigeonRoll());
-		SmartDashboard.putNumber("Left Encoder", Robot.driveSubsystem.getEncPosition());
+		SmartDashboard.putNumber("Left Encoder Feet", Robot.driveSubsystem.getEncPosition());
+		SmartDashboard.putNumber("Left Encoder Ticks", Robot.driveSubsystem.getEncPositionTicks());	
 		SmartDashboard.putNumber("PigeonRoll", driveSubsystem.getPigeonRoll());
-		
-		SmartDashboard.putNumber("shortArr[0]", shortArr[0]);
-		SmartDashboard.putNumber("shortArr[1]", shortArr[1]);
-		SmartDashboard.putNumber("shortArr[2]", shortArr[2]);
 	}
 
 	/**
@@ -221,6 +216,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		System.out.println(position.getX() + ", " + position.getY());
+		//System.out.println(position.getX() + ", " + position.getY());
 	}
 }

@@ -2,6 +2,7 @@ package org.usfirst.frc.team1155.robot;
 
 import org.usfirst.frc.team1155.robot.commands.*;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -16,6 +17,7 @@ public class OI {
 
 	public static Joystick leftJoystick = new Joystick(PortMap.JOYSTICK_LEFT);
 	public static Joystick rightJoystick = new Joystick(PortMap.JOYSTICK_RIGHT);
+	public static XboxController xbox = new XboxController(1);
 	
 	public static Button descendLift = new JoystickButton(leftJoystick, 3);
 	public static Button ascendLift = new JoystickButton(leftJoystick, 8);	
@@ -23,29 +25,39 @@ public class OI {
 	public static Button extendClimber = new JoystickButton(leftJoystick, 3);
 	public static Button stopClimber = new JoystickButton(leftJoystick, 2);
 	
-	public static Button gearShifter = new JoystickButton(rightJoystick, 2);
+	public static Button gearShifter = new JoystickButton(leftJoystick, 2);
+	public static Button xboxGearShifter = new JoystickButton(xbox, 10);
+	
+	public static Button tiltClimb = new JoystickButton(rightJoystick, 3);
 
-	public static Button tiltClimb = new JoystickButton(rightJoystick, 1);
-
-	public static Button intakeArmControl = new JoystickButton(rightJoystick, 3);
+	public static Button intakeArmControl = new JoystickButton(rightJoystick, 1);
+	public static Button xboxIntakeArmControl = new JoystickButton(rightJoystick, 9);
+	
 	public static Button driveStraightButton = new JoystickButton(rightJoystick, 4);
 	public static Button pidAngleTest = new JoystickButton(leftJoystick, 4);
 	public static Button driveDistTest = new JoystickButton(rightJoystick, 5);
 
+	public static Button leftArmIntake = new JoystickButton(leftJoystick, 1);
+	
 //	public static Button intakeCube = new JoystickButton(leftJoystick, 3);
 //	public static Button placeOutCube = new JoystickButton(leftJoystick, 3);
 //	public static Button shootOutCube = new JoystickButton(leftJoystick, 3);
 //	
 	public OI() {
-		intakeArmControl.toggleWhenPressed(new ToggleArmCommand());
-		gearShifter.toggleWhenPressed(new ToggleGearCommand());
-		tiltClimb.toggleWhenPressed(new ToggleClimbCommand());
-		pidAngleTest.whenPressed(new TurnToDegreeCommand(90));
-		pidAngleTest.whenReleased(new WestCoastDriveCommand(leftJoystick, rightJoystick));
-		driveDistTest.whenPressed(new DriveDistanceCommand(4));
+//		intakeArmControl.toggleWhenPressed(new ToggleArmCommand());
+		xboxIntakeArmControl.toggleWhenPressed(new ToggleArmCommand());
+		
+//		gearShifter.toggleWhenPressed(new ToggleGearCommand());
+		xboxGearShifter.toggleWhenActive(new ToggleGearCommand());
+		
+//		tiltClimb.toggleWhenPressed(new ToggleClimbCommand());
+		
+//		pidAngleTest.whenPressed(new TurnToDegreeCommand(90));
+//		pidAngleTest.whenReleased(new WestCoastDriveCommand(leftJoystick, rightJoystick));
+		//driveDistTest.whenPressed(new DriveDistanceCommand(7));
+//		leftArmIntake.whileHeld(new AdjustCubeRotationCommand(0));
+		//driveDistTest.whenReleased(new WestCoastDriveCommand(leftJoystick, rightJoystick));
 
-//		descendLift.toggleWhenPressed(new LowerLiftCommand());
-//		ascendLift.toggleWhenPressed(new RaiseLiftCommand());
 //		intakeCube.whileActive(new PlaceIntakeCommand());
 //		placeOutCube.whileActive(new PlaceOutputCommand());
 //		shootOutCube.toggleWhenPressed(new ShootCommand());

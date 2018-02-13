@@ -6,6 +6,7 @@ import org.usfirst.frc.team1155.robot.Robot;
 import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem.PIDMode;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
@@ -14,11 +15,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class WestCoastDriveCommand extends Command {
 	
 	private Joystick left, right;
+	private XboxController xbox;
 	
     public WestCoastDriveCommand(Joystick leftStick, Joystick rightStick) {
         requires(Robot.driveSubsystem);
         left = leftStick;
         right = rightStick;
+        setInterruptible(true);
+    }
+    
+    public WestCoastDriveCommand(XboxController xbox) {
+        requires(Robot.driveSubsystem);
+        this.xbox = xbox;
         setInterruptible(true);
     }
 
@@ -29,8 +37,22 @@ public class WestCoastDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putNumber("GyroValue", Robot.driveSubsystem.getPigeonRoll());
+/*    	SmartDashboard.putNumber("GyroValue", Robot.driveSubsystem.getPigeonRoll());
     	Robot.driveSubsystem.setSpeed(-left.getY(), -right.getY());
+    	if(OI.driveStraightButton.get() && !Robot.driveSubsystem.getPIDController().isEnabled())
+    		Robot.driveSubsystem.startAdjustment(0, Robot.driveSubsystem.getPigeonRoll());
+    	else if (!OI.driveStraightButton.get() && Robot.driveSubsystem.getPIDController().isEnabled())
+    		Robot.driveSubsystem.endAdjustment(); */
+    	double rawLeft = -xbox.getRawAxis(1);
+    	double rawRight = -xbox.getRawAxis(5);
+    	double leftSpeed = Robot.driveSubsystem.applyDriveCurve(rawLeft);
+    	double rightSpeed = Robot.driveSubsystem.applyDriveCurve(rawRight);
+    	
+    	System.out.println(leftSpeed);
+    	System.out.println(rightSpeed);
+    	Robot.driveSubsystem.setSpeed(-xbox.getRawAxis(1), -xbox.getRawAxis(5));
+    	//Robot.driveSubsystem.setSpeed(leftSpeed, rightSpeed);
+
     	if(OI.driveStraightButton.get() && !Robot.driveSubsystem.getPIDController().isEnabled())
     		Robot.driveSubsystem.startAdjustment(0, Robot.driveSubsystem.getPigeonRoll());
     	else if (!OI.driveStraightButton.get() && Robot.driveSubsystem.getPIDController().isEnabled())

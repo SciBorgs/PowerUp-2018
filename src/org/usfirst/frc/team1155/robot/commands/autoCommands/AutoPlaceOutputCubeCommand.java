@@ -17,7 +17,7 @@ public class AutoPlaceOutputCubeCommand extends Command {
     @Override
 	protected void initialize() {
 		Robot.intakeSubsystem.setCounter(0);
-		Robot.intakeSubsystem.retractTiltPiston();
+//		Robot.intakeSubsystem.retractTiltPiston();
 		Robot.intakeSubsystem.retractArmPiston();
 		Robot.intakeSubsystem.setSpeed(.3);
 	}

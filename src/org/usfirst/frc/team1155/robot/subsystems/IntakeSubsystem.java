@@ -18,7 +18,7 @@ public class IntakeSubsystem extends Subsystem{
 	public final double MIN_INCHES_FROM_ULTRA_TO_BOX = 4.0;
 	public final double MAX_INCHES_FROM_ULTRA_TO_BOX = 24.5;
 	public final double REV_AMOUNT = 50.0;
-	public final double ADJUST_SPEED = 0.5;
+	public final double ADJUST_SPEED = 0.6;
 	public final double SECONDS_PER_EXECUTE = 0.02;
 	
 	public void initDefaultCommand() {
@@ -28,9 +28,8 @@ public class IntakeSubsystem extends Subsystem{
 		leftArmMotor = new TalonSRX(PortMap.INTAKE_ARM_LEFT_TALON);
 		rightArmMotor = new TalonSRX(PortMap.INTAKE_ARM_RIGHT_TALON);
 
-		armSolenoid = new DoubleSolenoid(PortMap.INTAKE_SOLENOID_LEFT[0], PortMap.INTAKE_SOLENOID_LEFT[1]);
-		tiltSolenoid = new DoubleSolenoid(PortMap.INTAKE_SOLENOID_RIGHT[0], PortMap.INTAKE_SOLENOID_RIGHT[1]);
-//		ultrasonic.setAutomaticMode(true);
+		armSolenoid = new DoubleSolenoid(PortMap.INTAKE_SOLENOID[0], PortMap.INTAKE_SOLENOID[1]);
+		//ultrasonic.setAutomaticMode(true);
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 		stop();
@@ -51,12 +50,12 @@ public class IntakeSubsystem extends Subsystem{
 		leftIntakeMotor.set(ControlMode.PercentOutput, speed);
 		rightIntakeMotor.set(ControlMode.PercentOutput, speed);
 		leftArmMotor.set(ControlMode.PercentOutput, speed);
-		rightArmMotor.set(ControlMode.PercentOutput, speed);
+		rightArmMotor.set(ControlMode.PercentOutput, -speed);
 	}
 	
 	public void setArmSpeed(double speed) {
 		leftArmMotor.set(ControlMode.PercentOutput, speed);
-		rightArmMotor.set(ControlMode.PercentOutput, speed);
+		rightArmMotor.set(ControlMode.PercentOutput, -speed);
 	}
 	
 	public void setCounter(int set) {
@@ -74,13 +73,6 @@ public class IntakeSubsystem extends Subsystem{
 	public void retractArmPiston() {
 		armSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
-	public void extendTiltPiston() {
-		tiltSolenoid.set(DoubleSolenoid.Value.kForward);
-	}
-
-	public void retractTiltPiston() {
-		tiltSolenoid.set(DoubleSolenoid.Value.kReverse);
-	}		
 	
 	public void setLeftArmSpeed(double speed){
 		leftArmMotor.set(ControlMode.PercentOutput, speed);

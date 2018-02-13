@@ -13,8 +13,8 @@ public class AdjustCubeRotationCommand extends Command {
 	double angle;
 	
     public AdjustCubeRotationCommand(double a) {
-        requires(Robot.intakeSubsystem);
-        requires(Robot.visionSubsystem);
+//        requires(Robot.intakeSubsystem);
+//        requires(Robot.visionSubsystem);
         angle = a;
     }
 
@@ -31,7 +31,7 @@ public class AdjustCubeRotationCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return counter > Robot.intakeSubsystem.adjustTimeForAngle(angle) / Robot.intakeSubsystem.SECONDS_PER_EXECUTE;
+        return true;//counter > Robot.intakeSubsystem.adjustTimeForAngle(angle) / Robot.intakeSubsystem.SECONDS_PER_EXECUTE;
     }
 
     // Called once after isFinished returns true

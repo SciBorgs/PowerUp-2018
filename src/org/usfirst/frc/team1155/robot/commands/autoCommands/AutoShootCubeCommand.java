@@ -16,7 +16,7 @@ public class AutoShootCubeCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
 		Robot.intakeSubsystem.setCounter(0);
-		Robot.intakeSubsystem.extendTiltPiston();
+//		Robot.intakeSubsystem.extendTiltPiston();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -38,7 +38,7 @@ public class AutoShootCubeCommand extends Command {
     // Called once after isFinished returns true
     protected void end() {
 		Robot.intakeSubsystem.setCounter(0);
-		Robot.intakeSubsystem.retractTiltPiston();
+//		Robot.intakeSubsystem.retractTiltPiston();
     }
 
     // Called when another command which requires one or more of the same

@@ -14,8 +14,8 @@ public class PlaceIntakeCommand extends Command{
 	@Override
 	protected void initialize() {
 		Robot.intakeSubsystem.setCounter(0);
-		Robot.intakeSubsystem.retractTiltPiston();
-		Robot.intakeSubsystem.retractArmPiston();
+//		Robot.intakeSubsystem.retractTiltPiston();
+//		Robot.intakeSubsystem.retractArmPiston();
 	}
 
 	// Called repeatedly when this Command is scheduled to run

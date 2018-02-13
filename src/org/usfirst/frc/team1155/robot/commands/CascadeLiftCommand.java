@@ -1,16 +1,18 @@
 package org.usfirst.frc.team1155.robot.commands;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.Robot;
 
-/**
- *
- */
 public class CascadeLiftCommand extends Command {
-	public CascadeLiftCommand() {
+	
+	private GenericHID controller;
+	
+	public CascadeLiftCommand(GenericHID controller) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.liftSubsystem);
+		this.controller = controller;
 	}
 
 	// Called just before this Command runs the first time
@@ -21,13 +23,30 @@ public class CascadeLiftCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (OI.leftJoystick.getPOV() == 0 && Robot.liftSubsystem.liftEncoder.get() <= Robot.liftSubsystem.TICKS_TO_TOP) {
-			Robot.liftSubsystem.setSpeed(1);
+		if (controller.getPOV() == 0 /*&& (Robot.liftSubsystem.liftEncoder.get() <= Robot.liftSubsystem.TICKS_TO_TOP*/) {
+			if(controller.getRawButton(5)) {
+				Robot.liftSubsystem.setLeftSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
+			}
+			else if(controller.getRawButton(6)) {
+				Robot.liftSubsystem.setRightSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
+			}
+			else {
+				Robot.liftSubsystem.setSpeed(-Robot.liftSubsystem.LIFT_SPEED);
+			}
 		}
-		if (OI.leftJoystick.getPOV() == 180) {
-			Robot.liftSubsystem.setSpeed(-1);			
+		if (controller.getPOV() == 180) {
+			if(controller.getRawButton(5)) {
+				Robot.liftSubsystem.setLeftSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
+			}
+			else if(controller.getRawButton(6)) {
+				Robot.liftSubsystem.setRightSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
+			}
+			else {
+				Robot.liftSubsystem.setSpeed(Robot.liftSubsystem.LIFT_SPEED);
+			}
+		
 		}
-		if (OI.leftJoystick.getPOV() == -1) {
+		if (controller.getPOV() == -1) {
 			Robot.liftSubsystem.stop();			
 		}
 	}

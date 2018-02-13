@@ -1,16 +1,16 @@
 package org.usfirst.frc.team1155.robot.commands;
 
-import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.Robot;
-
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class PlaceCommand extends Command{
 	
+	private GenericHID controller;
 	
-	
-	public PlaceCommand() {
+	public PlaceCommand(GenericHID controller) {
 		// Use requires() here to declare subsystem dependencies
+		this.controller = controller;
 		// requires(Robot.intakeSubsystem);
 	}
 
@@ -23,14 +23,13 @@ public class PlaceCommand extends Command{
 	@Override
 	protected void execute() {
 		
-		
-		if (OI.rightJoystick.getPOV() == 180) {
+		if (controller.getPOV() == 180) {
 			new PlaceIntakeCommand().start();
 		}
-		if (OI.rightJoystick.getPOV() == 0) {
+		if (controller.getPOV() == 0) {
 			new PlaceOutputCommand().start();
 		}
-		if (OI.rightJoystick.getPOV() == -1){
+		if (controller.getPOV() == -1){
 			Robot.intakeSubsystem.stop();
 		}
 	}

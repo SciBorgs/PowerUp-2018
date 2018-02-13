@@ -20,20 +20,19 @@ public class PortMap {
 
 	//*******************LIFT********************//	
 	
-	public static final int LIFT_LEFT_TALON = 8;
-	public static final int LIFT_RIGHT_TALON = 9;
-	public static final int LIFT_REVERSE_LEFT_TALON = 8;
-	public static final int LIFT_REVERSE_RIGHT_TALON = 9;
+	public static final int LIFT_LEFT_TALON = 20;
+	public static final int LIFT_LEFT_2_TALON = 30;
+	public static final int LIFT_RIGHT_TALON = 31;
+	public static final int LIFT_RIGHT_2_TALON = 28;
 	
 	//*****************INTAKE*******************//	
 	
-	public static final int INTAKE_LEFT_TALON = 7;
-	public static final int INTAKE_RIGHT_TALON = 6;
-	public static final int INTAKE_ARM_LEFT_TALON = 20;
-	public static final int INTAKE_ARM_RIGHT_TALON = 31;
+	public static final int INTAKE_LEFT_TALON = 20;
+	public static final int INTAKE_RIGHT_TALON = 31;
+	public static final int INTAKE_ARM_LEFT_TALON = 30;
+	public static final int INTAKE_ARM_RIGHT_TALON = 28;
 	
-	public static final int[] INTAKE_SOLENOID_LEFT = {3, 7};
-	public static final int[] INTAKE_SOLENOID_RIGHT = {2, 5};
+	public static final int[] INTAKE_SOLENOID = {2,3};//{0, 1};
 	
 	//*****************CLIMBER******************//	
 	

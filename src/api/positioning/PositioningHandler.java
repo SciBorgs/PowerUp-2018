@@ -16,11 +16,11 @@ public class PositioningHandler {
 
     private Object positioningHandler; // i was going to make an interface
     private AccelerometerPositioning accelerometerPositioning;
-    public boolean SRXmode;
+    private boolean SRXmode;
 
-    private Position position;
+    public Position position;
 
-    private boolean isGoingStraight() {
+    public boolean isGoingStraight() {
         if (SRXmode) {
             return leftTalonSRX.getSelectedSensorVelocity(0) == rightTalonSRX.getSelectedSensorVelocity(0);
         } else {
@@ -28,7 +28,7 @@ public class PositioningHandler {
         }
     }
 
-    private PositioningHandler() {
+    public PositioningHandler() {
         this.accelerometerPositioning = new AccelerometerPositioning(Robot.timer, Robot.pigeon);
     }
 
@@ -60,7 +60,7 @@ public class PositioningHandler {
         } else {
             //this.accelerometerPositioning.updatePosition();
         }
-        System.out.println(position);
+        //System.out.println(position);
 
         // Send coordinates to the server
         //Robot.client.setPosition(position);
