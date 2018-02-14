@@ -10,11 +10,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class LiftSubsystem extends Subsystem{
 
 	public TalonSRX leftLiftMotor, rightLiftMotor, leftLift2Motor, rightLift2Motor;
-	public Encoder liftEncoder;
+	public Encoder leftLiftEncoder, rightLiftEncoder;
 	public final double LIFT_SPEED = 1.;
+	public final double LIFT_SPEED_ADJUST = .5;
 	public final double TICKS_TO_TOP = 100;
 	public final double TICKS_TO_SWITCH_HEIGHT = 20;
 	public final double TICKS_AT_BOTTOM = 0;
+	
+	public final double MAX_TICK_DIFFERENCE = 10;
 
 	
 	
@@ -25,8 +28,8 @@ public class LiftSubsystem extends Subsystem{
 		rightLiftMotor = new TalonSRX(PortMap.LIFT_RIGHT_TALON);
 		leftLift2Motor = new TalonSRX(PortMap.LIFT_LEFT_2_TALON);
 		rightLift2Motor = new TalonSRX(PortMap.LIFT_RIGHT_2_TALON);
-		liftEncoder = new Encoder(1,2);
-		
+		leftLiftEncoder = new Encoder(PortMap.LEFT_LIFT_ENCODER[0], PortMap.LEFT_LIFT_ENCODER[1]);
+		rightLiftEncoder = new Encoder(PortMap.RIGHT_LIFT_ENCODER[0], PortMap.RIGHT_LIFT_ENCODER[1]);
 
 		leftLiftMotor.setNeutralMode(NeutralMode.Brake);
 		rightLiftMotor.setNeutralMode(NeutralMode.Brake);
@@ -59,5 +62,9 @@ public class LiftSubsystem extends Subsystem{
 	public void setRightSideSpeed(double speed) {
 		rightLiftMotor.set(ControlMode.PercentOutput, speed);
 		rightLift2Motor.set(ControlMode.PercentOutput, speed);
+	}
+	
+	public int getEncoderDifference(){
+		return leftLiftEncoder.get() - rightLiftEncoder.get();
 	}
 }

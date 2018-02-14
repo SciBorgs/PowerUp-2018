@@ -1,14 +1,14 @@
 package org.usfirst.frc.team1155.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.Robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.command.Command;
+
 public class CascadeLiftCommand extends Command {
-	
+
 	private GenericHID controller;
-	
+
 	public CascadeLiftCommand(GenericHID controller) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.liftSubsystem);
@@ -23,32 +23,58 @@ public class CascadeLiftCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (controller.getPOV() == 0 /*&& (Robot.liftSubsystem.liftEncoder.get() <= Robot.liftSubsystem.TICKS_TO_TOP*/) {
-			if(controller.getRawButton(5)) {
+//		if (controller.getPOV() == 0) {
+//			if (controller.getRawButton(5)) {
+//				Robot.liftSubsystem.setLeftSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
+//			} else if (controller.getRawButton(6)) {
+//				Robot.liftSubsystem.setRightSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
+//			} else {
+//				Robot.liftSubsystem.setSpeed(-Robot.liftSubsystem.LIFT_SPEED);
+//			}
+//		}
+//		if (controller.getPOV() == 180) {
+//			if (controller.getRawButton(5)) {
+//				Robot.liftSubsystem.setLeftSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
+//			} else if (controller.getRawButton(6)) {
+//				Robot.liftSubsystem.setRightSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
+//			} else {
+//				Robot.liftSubsystem.setSpeed(Robot.liftSubsystem.LIFT_SPEED);
+//			}
+//
+//		}
+		if (controller.getPOV() == 0) {
+
+			// If the difference between the encoders is too much
+			// make the side that is higher go slower so the other one
+			// can catch up
+
+			if (Robot.liftSubsystem.getEncoderDifference() < -Robot.liftSubsystem.MAX_TICK_DIFFERENCE) {
 				Robot.liftSubsystem.setLeftSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
-			}
-			else if(controller.getRawButton(6)) {
+				Robot.liftSubsystem.setRightSideSpeed(-Robot.liftSubsystem.LIFT_SPEED_ADJUST);
+			} else if (Robot.liftSubsystem.getEncoderDifference() > Robot.liftSubsystem.MAX_TICK_DIFFERENCE) {
+				Robot.liftSubsystem.setLeftSideSpeed(-Robot.liftSubsystem.LIFT_SPEED_ADJUST);
 				Robot.liftSubsystem.setRightSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
-			}
-			else {
+			} else {
 				Robot.liftSubsystem.setSpeed(-Robot.liftSubsystem.LIFT_SPEED);
 			}
+
 		}
+
 		if (controller.getPOV() == 180) {
-			if(controller.getRawButton(5)) {
+			if (Robot.liftSubsystem.getEncoderDifference() < -Robot.liftSubsystem.MAX_TICK_DIFFERENCE) {
 				Robot.liftSubsystem.setLeftSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
-			}
-			else if(controller.getRawButton(6)) {
+				Robot.liftSubsystem.setRightSideSpeed(Robot.liftSubsystem.LIFT_SPEED_ADJUST);
+			} else if (Robot.liftSubsystem.getEncoderDifference() > Robot.liftSubsystem.MAX_TICK_DIFFERENCE) {
+				Robot.liftSubsystem.setLeftSideSpeed(Robot.liftSubsystem.LIFT_SPEED_ADJUST);
 				Robot.liftSubsystem.setRightSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
-			}
-			else {
+			} else {
 				Robot.liftSubsystem.setSpeed(Robot.liftSubsystem.LIFT_SPEED);
 			}
-		
 		}
 		if (controller.getPOV() == -1) {
-			Robot.liftSubsystem.stop();			
+			Robot.liftSubsystem.stop();
 		}
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

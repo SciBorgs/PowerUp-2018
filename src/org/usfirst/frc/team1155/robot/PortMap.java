@@ -25,6 +25,9 @@ public class PortMap {
 	public static final int LIFT_RIGHT_TALON = 31;
 	public static final int LIFT_RIGHT_2_TALON = 28;
 	
+	public static final int[] LEFT_LIFT_ENCODER = {1, 2};
+	public static final int[] RIGHT_LIFT_ENCODER = {3, 4};
+	
 	//*****************INTAKE*******************//	
 	
 	public static final int INTAKE_LEFT_TALON = 20;
