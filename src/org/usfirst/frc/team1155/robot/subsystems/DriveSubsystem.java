@@ -25,7 +25,11 @@ public class DriveSubsystem extends PIDSubsystem {
 	public final double TICKS_PER_ROTATION = 4096;
 	public final double WHEEL_RADIUS = 3./12.; //(0.25) 3 inches over 12 inches is wheel radius in feet
 	public final double ENC_WHEEL_RATIO = 4./25.; //(0.16) 4 rotations of the wheel is 25 rotations of the encoder
-
+	
+	public final int CONTCURRENTLIMIT = 4; //amps
+	public final int PEAKCURRENTLIMIT = 4;
+	public final int PEAKCURRENTDURATION = 10; //ms
+	
 	public static enum PIDMode {
 		TurnDegree, DriveStraight, DriveDistance;
 	}
@@ -34,7 +38,8 @@ public class DriveSubsystem extends PIDSubsystem {
 
 	// Initialize your subsystem here
 	public DriveSubsystem() {
-		super("Drive", 0.1, 0.01, 0.1);
+		//super("Drive", 0.1, 0.01, 0.1);
+		super("Drive", 1.0, 0.1, 0.1);
 		pidMode = PIDMode.TurnDegree;
 
 		frontLeftMotor = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
@@ -54,6 +59,36 @@ public class DriveSubsystem extends PIDSubsystem {
 		middleRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
 		frontRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
 		backRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+		
+		frontRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
+		frontRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
+		frontRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
+		frontRightMotor.enableCurrentLimit(true);
+		
+		middleRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
+		middleRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
+		middleRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
+		middleRightMotor.enableCurrentLimit(true);
+		
+		backRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
+		backRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
+		backRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
+		backRightMotor.enableCurrentLimit(true);
+		
+		frontLeftMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
+		frontLeftMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
+		frontLeftMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
+		frontLeftMotor.enableCurrentLimit(true);
+		
+		middleLeftMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
+		middleLeftMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
+		middleLeftMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
+		middleLeftMotor.enableCurrentLimit(true);
+		
+		backLeftMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
+		backLeftMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
+		backLeftMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
+		backLeftMotor.enableCurrentLimit(true);
 		
 		talonWithPigeon = new TalonSRX(27);
 		
@@ -145,7 +180,7 @@ public class DriveSubsystem extends PIDSubsystem {
 			break;
 		case DriveStraight:
 		case DriveDistance:
-			getPIDController().setPercentTolerance(10.0);
+			getPIDController().setPercentTolerance(1.0);
 			setSetpoint(setPoint);
 			break;
 		default:
@@ -164,21 +199,22 @@ public class DriveSubsystem extends PIDSubsystem {
 	 * the gyro
 	 */
 	public double calculatesAngleToTurnTo(int[] coordArr) {
-		double x = Robot.positioningHandler.position.getX();
-		double y = Robot.positioningHandler.position.getY();
-		double nextX = 0.0127 * coordArr[0] - x;
-		double nextY = 0.0127 * coordArr[1] - y;
-		if (nextX > 0 && nextY > 0) {
-			return Math.toDegrees(Math.atan(nextY/nextX));
-		} else if (nextX > 0 && nextY < 0) {
-			return 90 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
-		} else if (nextX < 0 && nextY < 0) {
-			return 180 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
-		} else if (nextX < 0 && nextY > 0) {
-			return 270 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
-		} else {
-			return 0;
-		}
+//		double x = Robot.positioningHandler.position.getX();
+//		double y = Robot.positioningHandler.position.getY();
+//		double nextX = 0.0127 * coordArr[0] - x;
+//		double nextY = 0.0127 * coordArr[1] - y;
+//		if (nextX > 0 && nextY > 0) {
+//			return Math.toDegrees(Math.atan(nextY/nextX));
+//		} else if (nextX > 0 && nextY < 0) {
+//			return 90 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
+//		} else if (nextX < 0 && nextY < 0) {
+//			return 180 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
+//		} else if (nextX < 0 && nextY > 0) {
+//			return 270 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
+//		} else {
+//			return 0;
+//		}
+		return 0;
 	}
 	
 	public void endAdjustment() {
@@ -202,8 +238,8 @@ public class DriveSubsystem extends PIDSubsystem {
 	}
 	
 	public void updatePID() {
-		getPIDController().setP(SmartDashboard.getNumber("P Value", 0.1));
-		getPIDController().setI(SmartDashboard.getNumber("I Value", 0));
+		getPIDController().setP(SmartDashboard.getNumber("P Value", 1.0));
+		getPIDController().setI(SmartDashboard.getNumber("I Value", 0.1));
 		getPIDController().setD(SmartDashboard.getNumber("D Value", 0.1));
 	}
 	
@@ -223,6 +259,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	}
 	
 	public double applyDriveCurve(double raw) {
+		/*
 		if(raw <= -0.5)
 			return -Math.sqrt(.25 - (raw + 1) * (raw + 1)) - 0.5;
 		else if(raw > -0.5 && raw <= 0)
@@ -231,6 +268,8 @@ public class DriveSubsystem extends PIDSubsystem {
 			return -Math.sqrt(.25 - raw * raw) + 0.5;
 		else
 			return Math.sqrt(.25 - (raw - 1) * (raw - 1)) + 0.5;
+			*/
+		return Math.pow(raw, 3);
 	}
 	
 }

@@ -60,8 +60,8 @@ public class Robot extends IterativeRobot {
 
 	public static short[] shortArr;
 
-	public static Position position;
-	public static PositioningHandler positioningHandler;
+	//public static Position position;
+	//public static PositioningHandler positioningHandler;
 	
 	Command m_autonomousCommand;
 	SendableChooser<Integer> m_chooser = new SendableChooser<>();
@@ -89,8 +89,8 @@ public class Robot extends IterativeRobot {
 
 		
 		
-		position = new Position();
-		positioningHandler = new PositioningHandler(position, driveSubsystem.frontRightMotor, driveSubsystem.backLeftMotor);
+		//position = new Position();
+		//positioningHandler = new PositioningHandler(position, driveSubsystem.frontRightMotor, driveSubsystem.backLeftMotor);
 		SmartDashboard.putNumber("angleToTurn", 90);
 		SmartDashboard.putData("Auto mode", m_chooser);
 		SmartDashboard.putNumber("P Value", 0.1);
@@ -200,7 +200,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 //		pigeon.getYawPitchRoll(anglesYPR);
-		positioningHandler.updatePosition();
+		//positioningHandler.updatePosition();
 //		SmartDashboard.putNumber("Xceleration", plane.getAx());
 //		SmartDashboard.putNumber("Yceleration", plane.getAy());
 //		SmartDashboard.putNumber("Xvelocity", plane.getVx());

@@ -24,7 +24,7 @@ public class AutoRaiseLiftToScaleCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.liftSubsystem.liftEncoder.get() >= Robot.liftSubsystem.TICKS_TO_TOP;
+        return Robot.liftSubsystem.leftLiftEncoder.get() >= Robot.liftSubsystem.TICKS_TO_TOP;
     }
 
     // Called once after isFinished returns true

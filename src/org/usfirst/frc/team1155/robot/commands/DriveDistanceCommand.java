@@ -23,7 +23,7 @@ public class DriveDistanceCommand extends Command {
     protected void initialize() {
     	Robot.driveSubsystem.pidMode = PIDMode.DriveDistance;
 //    	double ticksToDrive = Robot.driveSubsystem.feetToEncTicks(distanceToDrive);
-    	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getEncPosition(), Robot.driveSubsystem.getEncPosition() - distanceToDrive);
+    	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getEncPosition(), Robot.driveSubsystem.getEncPosition() + distanceToDrive);
     	System.out.println("Get Enc Pos: " + Robot.driveSubsystem.getEncPosition());
     	System.out.println("dist + enc pos" + distanceToDrive + Robot.driveSubsystem.getEncPosition());
     	
@@ -33,7 +33,9 @@ public class DriveDistanceCommand extends Command {
     protected void execute() {
     	//System.out.println("PID delta setpoint: " + Robot.driveSubsystem.getPIDController().getDeltaSetpoint());
     	//SmartDashboard.putNumber("EncoderValue", Robot.driveSubsystem.getEncPosition());
-    	System.out.println("PID Error: " + Robot.driveSubsystem.getPIDController().getError());
+//    	System.out.println("PID Error: " + Robot.driveSubsystem.getPIDController().getError());
+    	SmartDashboard.putNumber("Pid error", Robot.driveSubsystem.getPIDController().getError());
+    	SmartDashboard.putNumber("Talon Current", Robot.driveSubsystem.frontLeftMotor.getOutputCurrent());
     }
 
     // Make this return true when this Command no longer needs to run execute()

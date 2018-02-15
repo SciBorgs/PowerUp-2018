@@ -24,7 +24,7 @@ public class AutoRaiseLiftToSwitchCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.liftSubsystem.liftEncoder.get() >= Robot.liftSubsystem.TICKS_TO_SWITCH_HEIGHT;
+        return Robot.liftSubsystem.leftLiftEncoder.get() >= Robot.liftSubsystem.TICKS_TO_SWITCH_HEIGHT;
     }
 
     // Called once after isFinished returns true

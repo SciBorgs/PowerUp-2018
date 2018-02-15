@@ -24,7 +24,7 @@ public class AutoLowerLiftCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.liftSubsystem.liftEncoder.get() >= Robot.liftSubsystem.TICKS_AT_BOTTOM;
+        return Robot.liftSubsystem.leftLiftEncoder.get() >= Robot.liftSubsystem.TICKS_AT_BOTTOM;
     }
 
     // Called once after isFinished returns true
