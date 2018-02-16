@@ -4,6 +4,7 @@ import org.usfirst.frc.team1155.robot.Robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CascadeLiftCommand extends Command {
 
@@ -23,26 +24,26 @@ public class CascadeLiftCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-//		if (controller.getPOV() == 0) {
-//			if (controller.getRawButton(5)) {
-//				Robot.liftSubsystem.setLeftSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
-//			} else if (controller.getRawButton(6)) {
-//				Robot.liftSubsystem.setRightSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
-//			} else {
-//				Robot.liftSubsystem.setSpeed(-Robot.liftSubsystem.LIFT_SPEED);
-//			}
-//		}
-//		if (controller.getPOV() == 180) {
-//			if (controller.getRawButton(5)) {
-//				Robot.liftSubsystem.setLeftSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
-//			} else if (controller.getRawButton(6)) {
-//				Robot.liftSubsystem.setRightSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
-//			} else {
-//				Robot.liftSubsystem.setSpeed(Robot.liftSubsystem.LIFT_SPEED);
-//			}
-//
-//		}
 		if (controller.getPOV() == 0) {
+			if (controller.getRawButton(5)) {
+				Robot.liftSubsystem.setLeftSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
+			} else if (controller.getRawButton(6)) {
+				Robot.liftSubsystem.setRightSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
+			} else {
+				Robot.liftSubsystem.setSpeed(-Robot.liftSubsystem.LIFT_SPEED);
+			}
+		}
+		if (controller.getPOV() == 180) {
+			if (controller.getRawButton(5)) {
+				Robot.liftSubsystem.setLeftSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
+			} else if (controller.getRawButton(6)) {
+				Robot.liftSubsystem.setRightSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
+			} else {
+				Robot.liftSubsystem.setSpeed(Robot.liftSubsystem.LIFT_SPEED);
+			}
+
+		}
+/*		if (controller.getPOV() == 0) {
 
 			// If the difference between the encoders is too much
 			// make the side that is higher go slower so the other one
@@ -70,10 +71,13 @@ public class CascadeLiftCommand extends Command {
 			} else {
 				Robot.liftSubsystem.setSpeed(Robot.liftSubsystem.LIFT_SPEED);
 			}
-		}
+		} */
 		if (controller.getPOV() == -1) {
 			Robot.liftSubsystem.stop();
-		}
+		} 
+		
+		SmartDashboard.putNumber("Left lift enc val", Robot.liftSubsystem.getLeftEncPos());
+		SmartDashboard.putNumber("Right lift enc val", Robot.liftSubsystem.getRightEncPos());
 
 	}
 

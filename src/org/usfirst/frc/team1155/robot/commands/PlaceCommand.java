@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1155.robot.commands;
 
+import org.usfirst.frc.team1155.robot.PortMap;
 import org.usfirst.frc.team1155.robot.Robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
@@ -22,14 +23,13 @@ public class PlaceCommand extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		
-		if (controller.getPOV() == 180) {
-			new PlaceIntakeCommand().start();
+		if (controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0) {
+			new PlaceIntakeCommand(controller).start();
 		}
-		if (controller.getPOV() == 0) {
-			new PlaceOutputCommand().start();
+		if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0) {
+			new PlaceOutputCommand(controller).start();
 		}
-		if (controller.getPOV() == -1){
+		if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) == 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) == 0){
 			Robot.intakeSubsystem.stop();
 		}
 	}

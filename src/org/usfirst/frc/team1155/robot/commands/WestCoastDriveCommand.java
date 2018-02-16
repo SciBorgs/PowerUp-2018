@@ -2,6 +2,7 @@
 package org.usfirst.frc.team1155.robot.commands;
 
 import org.usfirst.frc.team1155.robot.OI;
+import org.usfirst.frc.team1155.robot.PortMap;
 import org.usfirst.frc.team1155.robot.Robot;
 import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem.PIDMode;
 
@@ -43,16 +44,15 @@ public class WestCoastDriveCommand extends Command {
     		Robot.driveSubsystem.startAdjustment(0, Robot.driveSubsystem.getPigeonRoll());
     	else if (!OI.driveStraightButton.get() && Robot.driveSubsystem.getPIDController().isEnabled())
     		Robot.driveSubsystem.endAdjustment(); */
-    	double rawLeft = -xbox.getRawAxis(1);
-    	double rawRight = -xbox.getRawAxis(5);
+    	double rawLeft = -xbox.getRawAxis(PortMap.XBOX_LEFT_JOY_Y);
+    	double rawRight = -xbox.getRawAxis(PortMap.XBOX_RIGHT_JOY_Y);
     	double leftSpeed = Robot.driveSubsystem.applyDriveCurve(rawLeft);
     	double rightSpeed = Robot.driveSubsystem.applyDriveCurve(rawRight);
     	
-    	//System.out.println(leftSpeed);
-    	//System.out.println(rightSpeed);
-    	Robot.driveSubsystem.setSpeed(-xbox.getRawAxis(1), -xbox.getRawAxis(5));
+    	
+    	Robot.driveSubsystem.setSpeed(rawLeft, rawRight);
     	//Robot.driveSubsystem.setSpeed(leftSpeed, rightSpeed);
-
+    	
     	if(OI.driveStraightButton.get() && !Robot.driveSubsystem.getPIDController().isEnabled())
     		Robot.driveSubsystem.startAdjustment(0, Robot.driveSubsystem.getPigeonRoll());
     	else if (!OI.driveStraightButton.get() && Robot.driveSubsystem.getPIDController().isEnabled())

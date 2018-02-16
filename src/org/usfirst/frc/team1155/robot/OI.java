@@ -17,27 +17,25 @@ public class OI {
 
 	public static Joystick leftJoystick = new Joystick(PortMap.JOYSTICK_LEFT);
 	public static Joystick rightJoystick = new Joystick(PortMap.JOYSTICK_RIGHT);
-	public static XboxController xbox = new XboxController(1);
+	public static XboxController xbox = new XboxController(PortMap.XBOX);
 	
-	public static Button descendLift = new JoystickButton(leftJoystick, 3);
-	public static Button ascendLift = new JoystickButton(leftJoystick, 8);	
+//	
+	public static Button extendClimber = new JoystickButton(xbox, PortMap.XBOX_B);
+	public static Button stopClimber = new JoystickButton(xbox, PortMap.XBOX_X);
+//	
+//	public static Button gearShifter = new JoystickButton(leftJoystick, 2);
+	public static Button xboxGearShifter = new JoystickButton(xbox, PortMap.XBOX_STICK_RIGHT_BUTTON);
 	
-	public static Button extendClimber = new JoystickButton(leftJoystick, 3);
-	public static Button stopClimber = new JoystickButton(leftJoystick, 2);
-	
-	public static Button gearShifter = new JoystickButton(leftJoystick, 2);
-	public static Button xboxGearShifter = new JoystickButton(xbox, 10);
-	
-	public static Button tiltClimb = new JoystickButton(rightJoystick, 3);
+	//public static Button tiltClimb = new JoystickButton(rightJoystick, 3);
 
 	//public static Button intakeArmControl = new JoystickButton(rightJoystick, 1);
 	//public static Button xboxIntakeArmControl = new JoystickButton(rightJoystick, 9);
 	
-	public static Button driveStraightButton = new JoystickButton(rightJoystick, 4);
-	public static Button pidAngleTest = new JoystickButton(leftJoystick, 4);
-	public static Button driveDistTest = new JoystickButton(rightJoystick, 5);
+	public static Button driveStraightButton = new JoystickButton(xbox, PortMap.XBOX_Y);
+	//public static Button pidAngleTest = new JoystickButton(leftJoystick, 4);
+	public static Button driveDistTest = new JoystickButton(xbox, PortMap.XBOX_BUMPER_LEFT);
 
-	public static Button leftArmIntake = new JoystickButton(leftJoystick, 1);
+	//public static Button leftArmIntake = new JoystickButton(leftJoystick, 1);
 	
 //	public static Button intakeCube = new JoystickButton(leftJoystick, 3);
 //	public static Button placeOutCube = new JoystickButton(leftJoystick, 3);
@@ -49,7 +47,7 @@ public class OI {
 		
 //		gearShifter.toggleWhenPressed(new ToggleGearCommand());
 		xboxGearShifter.toggleWhenActive(new ToggleGearCommand());
-		tiltClimb.whenPressed(new ToggleClimbCommand());
+		//tiltClimb.whenPressed(new ToggleClimbCommand());
 //		tiltClimb.toggleWhenPressed(new ToggleClimbCommand());
 		
 //		pidAngleTest.whenPressed(new TurnToDegreeCommand(90));

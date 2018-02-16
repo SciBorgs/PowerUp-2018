@@ -35,7 +35,7 @@ public class AutonomousCommandGroup extends CommandGroup {
     	int pathSize = path.size();
     	for(int i = 1; i < pathSize; i++){
     		if(i != pathSize - 1){
-	    		double angle = Robot.driveSubsystem.calculatesAngleToTurnTo(path.getCoordinate(i));
+	    		double angle = Robot.driveSubsystem.calculatesAngleToTurnTo(path.getCoordinate(i-1), path.getCoordinate(i));
 	    		addSequential(new TurnToDegreeCommand(angle));
 	    		double distance = path.getDistance(i-1, i);
 	    		addSequential(new DriveDistanceCommand(distance));

@@ -14,7 +14,7 @@ public class DriveDistanceCommand extends Command {
 	double distanceToDrive;
 	
     public DriveDistanceCommand(double dist) {
-    	requires(Robot.driveSubsystem);
+    	//requires(Robot.driveSubsystem);
     	setInterruptible(true);
     	distanceToDrive = dist;
     }
@@ -40,7 +40,6 @@ public class DriveDistanceCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-   
     	return Robot.driveSubsystem.getPIDController().onTarget();
     }
 

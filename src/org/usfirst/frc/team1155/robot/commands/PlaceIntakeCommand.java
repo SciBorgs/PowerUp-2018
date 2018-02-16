@@ -1,13 +1,18 @@
 package org.usfirst.frc.team1155.robot.commands;
 
+import org.usfirst.frc.team1155.robot.PortMap;
 import org.usfirst.frc.team1155.robot.Robot;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class PlaceIntakeCommand extends Command{
-	public PlaceIntakeCommand() {
+
+	private GenericHID controller;
+	
+	public PlaceIntakeCommand(GenericHID controller) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.intakeSubsystem);
+		this.controller = controller;
 	}
 
 	// Called just before this Command runs the first time
@@ -21,7 +26,7 @@ public class PlaceIntakeCommand extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.intakeSubsystem.setSpeed(-.6);
+		Robot.intakeSubsystem.setSpeed(controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

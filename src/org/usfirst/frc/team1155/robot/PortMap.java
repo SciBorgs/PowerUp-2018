@@ -6,6 +6,33 @@ public class PortMap {
 
 	public static final int JOYSTICK_LEFT = 0;
 	public static final int JOYSTICK_RIGHT = 1;
+	public static final int XBOX = 2;
+	
+	//*****************XBOX*****************//
+
+	public static final int XBOX_A = 1;
+	public static final int XBOX_B = 2;
+	public static final int XBOX_X = 3;
+	public static final int XBOX_Y = 4;
+	
+	public static final int XBOX_BUMPER_LEFT = 5;
+	public static final int XBOX_BUMPER_RIGHT = 6;
+	
+	public static final int XBOX_BACK = 7;
+	public static final int XBOX_START = 8;
+
+	public static final int XBOX_STICK_LEFT_BUTTON = 9;
+	public static final int XBOX_STICK_RIGHT_BUTTON = 10;
+
+	public static final int XBOX_TRIGGER_LEFT = 2;
+	public static final int XBOX_TRIGGER_RIGHT = 3;
+	
+	public static final int XBOX_LEFT_JOY_X = 0;
+	public static final int XBOX_LEFT_JOY_Y = 1;
+
+	public static final int XBOX_RIGHT_JOY_X = 4;
+	public static final int XBOX_RIGHT_JOY_Y = 5;
+
 	
 	//*******************DRIVE*******************//
 	
@@ -21,7 +48,7 @@ public class PortMap {
 	//*******************LIFT********************//	
 	
 	public static final int LIFT_LEFT_TALON = 20;
-	public static final int LIFT_LEFT_2_TALON = 30;
+	public static final int LIFT_LEFT_2_TALON = 26;
 	public static final int LIFT_RIGHT_TALON = 31;
 	public static final int LIFT_RIGHT_2_TALON = 28;
 	

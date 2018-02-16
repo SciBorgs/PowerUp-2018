@@ -26,9 +26,11 @@ public class DriveSubsystem extends PIDSubsystem {
 	public final double WHEEL_RADIUS = 3./12.; //(0.25) 3 inches over 12 inches is wheel radius in feet
 	public final double ENC_WHEEL_RATIO = 4./25.; //(0.16) 4 rotations of the wheel is 25 rotations of the encoder
 	
-	public final int CONTCURRENTLIMIT = 4; //amps
-	public final int PEAKCURRENTLIMIT = 4;
-	public final int PEAKCURRENTDURATION = 10; //ms
+	public final int CONTCURRENTLIMIT = 1; //amps
+	public final int PEAKCURRENTLIMIT = 2;
+	public final int PEAKCURRENTDURATION = 0; //ms
+	
+	public final double PIXEL_TO_FEET = 0.127/12.;
 	
 	public static enum PIDMode {
 		TurnDegree, DriveStraight, DriveDistance;
@@ -48,6 +50,7 @@ public class DriveSubsystem extends PIDSubsystem {
 		backLeftMotor = new TalonSRX(PortMap.DRIVE_BACK_LEFT_TALON);
 		middleLeftMotor = new TalonSRX(PortMap.DRIVE_MIDDLE_LEFT_TALON);
 		backRightMotor = new TalonSRX(PortMap.DRIVE_BACK_RIGHT_TALON);
+		
 		backRightMotor.set(ControlMode.Follower, frontRightMotor.getDeviceID());
 		backLeftMotor.set(ControlMode.Follower, frontLeftMotor.getDeviceID());
 		middleRightMotor.set(ControlMode.Follower, frontRightMotor.getDeviceID());
@@ -59,6 +62,7 @@ public class DriveSubsystem extends PIDSubsystem {
 		middleRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
 		frontRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
 		backRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+		
 		
 		frontRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
 		frontRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
@@ -180,7 +184,7 @@ public class DriveSubsystem extends PIDSubsystem {
 			break;
 		case DriveStraight:
 		case DriveDistance:
-			getPIDController().setPercentTolerance(1.0);
+			getPIDController().setPercentTolerance(10.0);
 			setSetpoint(setPoint);
 			break;
 		default:
@@ -198,7 +202,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	 * degrees that need to be added to get a degree that would match with
 	 * the gyro
 	 */
-	public double calculatesAngleToTurnTo(int[] coordArr) {
+	public double calculatesAngleToTurnTo(int[] currentPoint, int[] destPoint) {
 //		double x = Robot.positioningHandler.position.getX();
 //		double y = Robot.positioningHandler.position.getY();
 //		double nextX = 0.0127 * coordArr[0] - x;
@@ -214,7 +218,16 @@ public class DriveSubsystem extends PIDSubsystem {
 //		} else {
 //			return 0;
 //		}
-		return 0;
+		
+		int x1 = currentPoint[0];
+		int y1 = currentPoint[1];
+		
+		int x2 = destPoint[0];
+		int y2 = destPoint[1];
+		
+		double angle = Math.toDegrees(Math.atan2(y2-y1, x2-x1));
+		
+		return angle;
 	}
 	
 	public void endAdjustment() {
@@ -268,7 +281,7 @@ public class DriveSubsystem extends PIDSubsystem {
 			return -Math.sqrt(.25 - raw * raw) + 0.5;
 		else
 			return Math.sqrt(.25 - (raw - 1) * (raw - 1)) + 0.5;
-			*/
+			*/		
 		return Math.pow(raw, 3);
 	}
 	

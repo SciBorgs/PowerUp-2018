@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1155.robot.commands.autoCommands;
 
 import org.usfirst.frc.team1155.robot.Robot;
+import org.usfirst.frc.team1155.robot.subsystems.LiftSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -15,7 +16,8 @@ public class AutoRaiseLiftToSwitchCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.liftSubsystem.setSpeed(1);
+    	Robot.liftSubsystem.liftTarget = LiftSubsystem.LiftTarget.SwitchHeight;
+    	Robot.liftSubsystem.startAdjustment();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -24,12 +26,14 @@ public class AutoRaiseLiftToSwitchCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.liftSubsystem.leftLiftEncoder.get() >= Robot.liftSubsystem.TICKS_TO_SWITCH_HEIGHT;
+        return Robot.liftSubsystem.onTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.liftSubsystem.stop();
+    	Robot.liftSubsystem.endAdjustment();
+
     }
 
     // Called when another command which requires one or more of the same

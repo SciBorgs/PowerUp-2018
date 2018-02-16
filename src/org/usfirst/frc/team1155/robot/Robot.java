@@ -73,7 +73,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		driveSubsystem = new DriveSubsystem();
-		liftSubsystem = new LiftSubsystem();
+		liftSubsystem = new LiftSubsystem(1.0, 0.1, 0.1);
 		climbSubsystem = new ClimbSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
 		visionSubsystem = new VisionSubsystem();
@@ -161,6 +161,7 @@ public class Robot extends IterativeRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
+		liftSubsystem.resetEncoders();
 	}
 
 	/**
@@ -184,13 +185,15 @@ public class Robot extends IterativeRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		pigeon.setYaw(0.,0);
+//		pigeon.setYaw(0.,0);
 		Robot.driveSubsystem.resetEncoders();
+		Robot.liftSubsystem.resetEncoders();
 		//System.out.println(position.getX() + ", " + position.getY());
-		//new WestCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
+		//new We	llstCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
 		new WestCoastDriveCommand(OI.xbox).start();
 		//new PlaceCommand(OI.xbox).start();
 		new CascadeLiftCommand(OI.xbox).start();
+		liftSubsystem.resetEncoders();
 	}
 
 	/**
