@@ -93,9 +93,10 @@ public class Robot extends IterativeRobot {
 		//positioningHandler = new PositioningHandler(position, driveSubsystem.frontRightMotor, driveSubsystem.backLeftMotor);
 		SmartDashboard.putNumber("angleToTurn", 90);
 		SmartDashboard.putData("Auto mode", m_chooser);
-		SmartDashboard.putNumber("P Value", 0.1);
+		SmartDashboard.putNumber("P Value", 1.0);
 		SmartDashboard.putNumber("I Value", 0);
-		SmartDashboard.putNumber("D Value", 0.1);
+		SmartDashboard.putNumber("D Value", 0.6);
+		SmartDashboard.putNumber("Dist To Drive", 0);
 		//Gyro = new ADXRS450_Gyro();
         try {
             client = new Client();
@@ -189,8 +190,9 @@ public class Robot extends IterativeRobot {
 		Robot.driveSubsystem.resetEncoders();
 		Robot.liftSubsystem.resetEncoders();
 		//System.out.println(position.getX() + ", " + position.getY());
-		//new We	llstCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
-		new WestCoastDriveCommand(OI.xbox).start();
+		//new WellstCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
+		//new DriveStraightCommand(OI.xbox).start();
+		//new WestCoastDriveCommand(OI.xbox).start();
 		//new PlaceCommand(OI.xbox).start();
 		new CascadeLiftCommand(OI.xbox).start();
 		liftSubsystem.resetEncoders();
@@ -209,9 +211,15 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("Xvelocity", plane.getVx());
 //		SmartDashboard.putNumber("Yvelocity", plane.getVy());
 		//System.out.println(driveSubsystem.getPigeonRoll());
-		SmartDashboard.putNumber("Left Encoder Feet", Robot.driveSubsystem.getEncPosition());
-		SmartDashboard.putNumber("Left Encoder Ticks", Robot.driveSubsystem.getEncPositionTicks());	
-		SmartDashboard.putNumber("PigeonRoll", driveSubsystem.getPigeonRoll());
+		SmartDashboard.putNumber("Left Encoder Feet", Robot.driveSubsystem.getLeftEncPosition());
+		SmartDashboard.putNumber("Left Encoder Ticks", Robot.driveSubsystem.getLeftEncPositionTicks());	
+		
+		SmartDashboard.putNumber("Right Encoder Feet", Robot.driveSubsystem.getRightEncPosition());
+		SmartDashboard.putNumber("Right Encoder Ticks", Robot.driveSubsystem.getRightEncPosition());
+		
+		SmartDashboard.putNumber("Avg. enc feet", Robot.driveSubsystem.getEncPosition());
+		
+		SmartDashboard.putNumber("PigeonRoll", driveSubsystem.getPigeonAngle());
 	}
 
 	/**

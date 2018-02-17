@@ -19,7 +19,7 @@ public class AlignToCubeCommand extends Command {
     protected void initialize() {
     	Robot.driveSubsystem.pidMode = PIDMode.TurnDegree;
     	double angleToCube = Robot.visionSubsystem.getAngleToCube();
-		Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonRoll(), Robot.driveSubsystem.getPigeonRoll() + angleToCube);
+		Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonAngle(), Robot.driveSubsystem.getPigeonAngle() + angleToCube);
     }
 
     // Called repeatedly when this Command is scheduled to run

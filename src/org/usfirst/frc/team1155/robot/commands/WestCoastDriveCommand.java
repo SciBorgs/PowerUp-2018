@@ -49,16 +49,17 @@ public class WestCoastDriveCommand extends Command {
     	double leftSpeed = Robot.driveSubsystem.applyDriveCurve(rawLeft);
     	double rightSpeed = Robot.driveSubsystem.applyDriveCurve(rawRight);
     	
+    	//Robot.driveSubsystem.setSpeed(rawLeft, rawRight);
+    	Robot.driveSubsystem.setSpeed(leftSpeed, rightSpeed);
+    	if(OI.driveStraightButton.get())
+    		Robot.driveSubsystem.setSpeed(rawLeft, rawLeft);
+    	if(OI.driveStraightButton.get() && !Robot.driveSubsystem.getPIDController().isEnabled()) {
+    		Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonAngle(), Robot.driveSubsystem.getPigeonAngle());
     	
-    	Robot.driveSubsystem.setSpeed(rawLeft, rawRight);
-    	//Robot.driveSubsystem.setSpeed(leftSpeed, rightSpeed);
-    	
-    	if(OI.driveStraightButton.get() && !Robot.driveSubsystem.getPIDController().isEnabled())
-    		Robot.driveSubsystem.startAdjustment(0, Robot.driveSubsystem.getPigeonRoll());
-    	else if (!OI.driveStraightButton.get() && Robot.driveSubsystem.getPIDController().isEnabled())
+    	}else if (!OI.driveStraightButton.get() && Robot.driveSubsystem.getPIDController().isEnabled()) {
     		Robot.driveSubsystem.endAdjustment();
-    	
-    	SmartDashboard.putNumber("Talon Current", Robot.driveSubsystem.frontLeftMotor.getOutputCurrent());
+    	}
+    	SmartDashboard.putNumber("Talon Current", Robot.driveSubsystem.frontRightMotor.getOutputCurrent());
 
     }
 

@@ -20,8 +20,8 @@ public class ClimbSubsystem extends Subsystem {
 		rightClimbTalon = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
 		leftServo = new PWM(PortMap.TILT_CLIMB_SERVO_LEFT);
 		rightServo = new PWM(PortMap.TILT_CLIMB_SERVO_RIGHT);
-		leftServo.setBounds(2, 2, 1,1, 1);
-		rightServo.setBounds(2, 2, 1,1, 1);
+		leftServo.setBounds(2, 2, 1, 1, 1);
+		rightServo.setBounds(2, 2, 1, 1, 1);
 
 	}
 	

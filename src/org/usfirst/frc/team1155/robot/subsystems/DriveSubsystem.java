@@ -24,13 +24,17 @@ public class DriveSubsystem extends PIDSubsystem {
 	public TalonSRX talonWithPigeon;
 	public final double TICKS_PER_ROTATION = 4096;
 	public final double WHEEL_RADIUS = 3./12.; //(0.25) 3 inches over 12 inches is wheel radius in feet
-	public final double ENC_WHEEL_RATIO = 4./25.; //(0.16) 4 rotations of the wheel is 25 rotations of the encoder
+	public final double ENC_WHEEL_RATIO = (4./25.) * (1./1.2); //(0.16) 4 rotations of the wheel is 25 rotations of the encoder
 	
 	public final int CONTCURRENTLIMIT = 1; //amps
 	public final int PEAKCURRENTLIMIT = 2;
 	public final int PEAKCURRENTDURATION = 0; //ms
 	
 	public final double PIXEL_TO_FEET = 0.127/12.;
+	public double currentAngle = 0;
+	
+	public final double ANGLE_BUFFER = 5.;
+	public final double ADJUST_SPEED_DELTA = .1;
 	
 	public static enum PIDMode {
 		TurnDegree, DriveStraight, DriveDistance;
@@ -41,7 +45,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	// Initialize your subsystem here
 	public DriveSubsystem() {
 		//super("Drive", 0.1, 0.01, 0.1);
-		super("Drive", 1.0, 0.1, 0.1);
+		super("Drive", 1.0, 0, 0.6);
 		pidMode = PIDMode.TurnDegree;
 
 		frontLeftMotor = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
@@ -64,35 +68,35 @@ public class DriveSubsystem extends PIDSubsystem {
 		backRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
 		
 		
-		frontRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
-		frontRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
-		frontRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
-		frontRightMotor.enableCurrentLimit(true);
-		
-		middleRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
-		middleRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
-		middleRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
-		middleRightMotor.enableCurrentLimit(true);
-		
-		backRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
-		backRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
-		backRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
-		backRightMotor.enableCurrentLimit(true);
-		
-		frontLeftMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
-		frontLeftMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
-		frontLeftMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
-		frontLeftMotor.enableCurrentLimit(true);
-		
-		middleLeftMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
-		middleLeftMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
-		middleLeftMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
-		middleLeftMotor.enableCurrentLimit(true);
-		
-		backLeftMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
-		backLeftMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
-		backLeftMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
-		backLeftMotor.enableCurrentLimit(true);
+//		frontRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
+//		frontRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
+//		frontRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
+//		frontRightMotor.enableCurrentLimit(true);
+//		
+//		middleRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
+//		middleRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
+//		middleRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
+//		middleRightMotor.enableCurrentLimit(true);
+//		
+//		backRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
+//		backRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
+//		backRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
+//		backRightMotor.enableCurrentLimit(true);
+//		
+//		frontLeftMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
+//		frontLeftMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
+//		frontLeftMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
+//		frontLeftMotor.enableCurrentLimit(true);
+//		
+//		middleLeftMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
+//		middleLeftMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
+//		middleLeftMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
+//		middleLeftMotor.enableCurrentLimit(true);
+//		
+//		backLeftMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
+//		backLeftMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
+//		backLeftMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
+//		backLeftMotor.enableCurrentLimit(true);
 		
 		talonWithPigeon = new TalonSRX(27);
 		
@@ -118,9 +122,9 @@ public class DriveSubsystem extends PIDSubsystem {
 	protected double returnPIDInput() {
 		switch (pidMode) {
 		case TurnDegree:
-			return getPigeonRoll();
+			return getPigeonAngle();
 		case DriveStraight:
-			return getPigeonRoll();
+			return getPigeonAngle();
 		case DriveDistance:
 			return getEncPosition();
 		default:
@@ -140,23 +144,45 @@ public class DriveSubsystem extends PIDSubsystem {
 			setSpeed(output, -output);
 			break;
 		case DriveStraight:
-			output *= 0.1;
+			output *= -0.1;
 			correctSpeed(output);
 			break;
 		case DriveDistance:
 			output *= 0.5;
-			autoSetSpeed(output, output);
+			driveDistSetSpeed(output, output);
 		default:
 			setSpeed(0, 0);
 			break;
 		}
 	}
 
-	public void autoSetSpeed(double leftSpeed, double rightSpeed) {
-		frontLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);
-		middleLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);
-		backLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);
-
+	public void driveDistSetSpeed(double leftSpeed, double rightSpeed) {
+		
+		
+		double deviance = getPigeonAngle() - currentAngle;
+		
+		if(Math.abs(deviance) > ANGLE_BUFFER) {
+			if(deviance < 0) {
+				if(rightSpeed < 0) {
+					rightSpeed += ADJUST_SPEED_DELTA;
+				}else if(rightSpeed > 0) {
+					rightSpeed -= ADJUST_SPEED_DELTA;
+				}
+			}else if(deviance > 0) {
+				if(leftSpeed < 0) {
+					leftSpeed += ADJUST_SPEED_DELTA;
+				}else if(leftSpeed > 0) {
+					leftSpeed -= ADJUST_SPEED_DELTA;
+				}
+			}
+		}
+		
+		leftSpeed = -leftSpeed;
+		
+		frontLeftMotor.set(ControlMode.PercentOutput, leftSpeed);
+		middleLeftMotor.set(ControlMode.PercentOutput, leftSpeed);
+		backLeftMotor.set(ControlMode.PercentOutput, leftSpeed);
+		
 		frontRightMotor.set(ControlMode.PercentOutput, rightSpeed);
 		middleRightMotor.set(ControlMode.PercentOutput, rightSpeed);
 		backRightMotor.set(ControlMode.PercentOutput, rightSpeed);
@@ -166,16 +192,19 @@ public class DriveSubsystem extends PIDSubsystem {
 		frontLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);
 		frontRightMotor.set(ControlMode.PercentOutput, rightSpeed);
 	}
-
+ 
 	public void correctSpeed(double offset) {
 		double rightOutput = frontRightMotor.getMotorOutputPercent();
 		double leftOutput = frontLeftMotor.getMotorOutputPercent();
 		frontLeftMotor.set(ControlMode.PercentOutput, leftOutput + ((rightOutput >= 0) ? offset : -offset));
+		middleLeftMotor.set(ControlMode.PercentOutput, leftOutput + ((rightOutput >= 0) ? offset : -offset));
+		backLeftMotor.set(ControlMode.PercentOutput, leftOutput + ((rightOutput >= 0) ? offset : -offset));
 
 	}
 
 	public void startAdjustment(double current, double setPoint) {
 		updatePID();
+		getPIDController().setContinuous(false);
 		switch (pidMode) {
 		case TurnDegree:
 			getPIDController().setPercentTolerance(10.0);
@@ -183,8 +212,9 @@ public class DriveSubsystem extends PIDSubsystem {
 			setSetpoint((int) (((current - setPoint >= 0 ? 180 : -180) + current - setPoint) / 360) * 360 + setPoint);
 			break;
 		case DriveStraight:
+			getPIDController().setContinuous(true);
 		case DriveDistance:
-			getPIDController().setPercentTolerance(10.0);
+			getPIDController().setPercentTolerance(1.0);
 			setSetpoint(setPoint);
 			break;
 		default:
@@ -202,7 +232,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	 * degrees that need to be added to get a degree that would match with
 	 * the gyro
 	 */
-	public double calculatesAngleToTurnTo(int[] currentPoint, int[] destPoint) {
+	public double calculatesAngleToTurnTo(double[] currentPoint, double[] destPoint) {
 //		double x = Robot.positioningHandler.position.getX();
 //		double y = Robot.positioningHandler.position.getY();
 //		double nextX = 0.0127 * coordArr[0] - x;
@@ -219,11 +249,11 @@ public class DriveSubsystem extends PIDSubsystem {
 //			return 0;
 //		}
 		
-		int x1 = currentPoint[0];
-		int y1 = currentPoint[1];
+		double x1 = currentPoint[0];
+		double y1 = currentPoint[1];
 		
-		int x2 = destPoint[0];
-		int y2 = destPoint[1];
+		double x2 = destPoint[0];
+		double y2 = destPoint[1];
 		
 		double angle = Math.toDegrees(Math.atan2(y2-y1, x2-x1));
 		
@@ -238,7 +268,7 @@ public class DriveSubsystem extends PIDSubsystem {
 		gyro.reset();
 	}
 	
-	public double getPigeonRoll(){
+	public double getPigeonAngle(){
 		double[] yawPitchRoll = new double[3];
 		Robot.pigeon.getYawPitchRoll(yawPitchRoll);
 		//System.out.println("yaw: " + yawPitchRoll[0] + " pitch: " + yawPitchRoll[1] + " roll: " + yawPitchRoll[2]);
@@ -246,8 +276,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	}
 	
 	public double getEncPosition() {
-		double dist = (frontRightMotor.getSensorCollection().getQuadraturePosition() / TICKS_PER_ROTATION) * ENC_WHEEL_RATIO * (2 * Math.PI * WHEEL_RADIUS);
-		return dist;
+		return (getLeftEncPosition() + getRightEncPosition()) / 2.;
 	}
 	
 	public void updatePID() {
@@ -258,11 +287,33 @@ public class DriveSubsystem extends PIDSubsystem {
 	
 	public void resetEncoders() {
 		frontRightMotor.getSensorCollection().setQuadraturePosition(0, 0);
+		backLeftMotor.getSensorCollection().setQuadraturePosition(0, 0);
 	}
 	
 	public double getEncPositionTicks() {
+		return (frontRightMotor.getSensorCollection().getQuadraturePosition() - backLeftMotor.getSensorCollection().getQuadraturePosition()) / 2.;
+	}
+	
+	public double getLeftEncPosition() {
+		double dist = (-backLeftMotor.getSensorCollection().getQuadraturePosition() / TICKS_PER_ROTATION) * ENC_WHEEL_RATIO * (2 * Math.PI * WHEEL_RADIUS);
+		return dist;
+
+	}
+	
+	public double getRightEncPosition() {
+		double dist = (frontRightMotor.getSensorCollection().getQuadraturePosition() / TICKS_PER_ROTATION) * ENC_WHEEL_RATIO * (2 * Math.PI * WHEEL_RADIUS);
+		return dist;
+
+	}
+	
+	public double getLeftEncPositionTicks() {
+		return -backLeftMotor.getSensorCollection().getQuadraturePosition();
+	}
+
+	public double getRightEncPositionTicks() {
 		return frontRightMotor.getSensorCollection().getQuadraturePosition();
 	}
+
 	
 	
 	public double feetToEncTicks(double feet){
@@ -271,18 +322,20 @@ public class DriveSubsystem extends PIDSubsystem {
 		return encTicks;
 	}
 	
-	public double applyDriveCurve(double raw) {
-		/*
-		if(raw <= -0.5)
+	public double applyDriveCurve(double raw) {	
+/*		if(raw <= -0.5)
 			return -Math.sqrt(.25 - (raw + 1) * (raw + 1)) - 0.5;
 		else if(raw > -0.5 && raw <= 0)
 			return Math.sqrt(.25 - raw * raw) - 0.5;
 		else if(raw > 0 && raw <= 0.5)
 			return -Math.sqrt(.25 - raw * raw) + 0.5;
 		else
-			return Math.sqrt(.25 - (raw - 1) * (raw - 1)) + 0.5;
-			*/		
-		return Math.pow(raw, 3);
+			return Math.sqrt(.25 - (raw - 1) * (raw - 1)) + 0.5; */	
+		if(raw < 0) {
+			return -Math.pow(-raw, 1.8);
+		}
+		return Math.pow(raw, 1.8);
+//		return raw;
 	}
 	
 }

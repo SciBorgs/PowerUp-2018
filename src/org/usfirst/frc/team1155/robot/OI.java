@@ -34,7 +34,7 @@ public class OI {
 	public static Button driveStraightButton = new JoystickButton(xbox, PortMap.XBOX_Y);
 	//public static Button pidAngleTest = new JoystickButton(leftJoystick, 4);
 	public static Button driveDistTest = new JoystickButton(xbox, PortMap.XBOX_BUMPER_LEFT);
-
+	public static Button driving = new JoystickButton(xbox, PortMap.XBOX_BUMPER_RIGHT);
 	//public static Button leftArmIntake = new JoystickButton(leftJoystick, 1);
 	
 //	public static Button intakeCube = new JoystickButton(leftJoystick, 3);
@@ -46,6 +46,7 @@ public class OI {
 		//xboxIntakeArmControl.toggleWhenPressed(new ToggleArmCommand());
 		
 //		gearShifter.toggleWhenPressed(new ToggleGearCommand());
+		
 		xboxGearShifter.toggleWhenActive(new ToggleGearCommand());
 		//tiltClimb.whenPressed(new ToggleClimbCommand());
 //		tiltClimb.toggleWhenPressed(new ToggleClimbCommand());
@@ -53,8 +54,9 @@ public class OI {
 //		pidAngleTest.whenPressed(new TurnToDegreeCommand(90));
 //		pidAngleTest.whenReleased(new WestCoastDriveCommand(leftJoystick, rightJoystick));
 		driveDistTest.whileHeld(new DriveDistanceCommand(6.0833));
+		//driving.whileHeld(new WestCoastDriveCommand(xbox));
 //		leftArmIntake.whileHeld(new AdjustCubeRotationCommand(0));
-		//driveDistTest.whenReleased(new WestCoastDriveCommand(leftJoystick, rightJoystick));
+		//driveDistTest.whenReleased(new WestCoastDriveCommand(xbox));
 
 //		intakeCube.whileActive(new PlaceIntakeCommand());
 //		placeOutCube.whileActive(new PlaceOutputCommand());

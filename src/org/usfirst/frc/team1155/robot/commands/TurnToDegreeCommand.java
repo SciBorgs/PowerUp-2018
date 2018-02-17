@@ -14,6 +14,7 @@ public class TurnToDegreeCommand extends Command{
 		requires(Robot.driveSubsystem);
 		setInterruptible(true);
 		angleToTurn = angle;
+		Robot.driveSubsystem.currentAngle = angle;
 	}
 	@Override
 	protected void initialize() {
@@ -22,12 +23,12 @@ public class TurnToDegreeCommand extends Command{
     	Robot.driveSubsystem.pidMode = PIDMode.TurnDegree;
     	
 		//Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonRoll(), angleToTurn);
-    	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonRoll(), SmartDashboard.getNumber("angleToTurn", 0));
+    	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonAngle(), SmartDashboard.getNumber("angleToTurn", 0));
 	}
 
 	@Override
 	protected void execute() {
-		SmartDashboard.putNumber("GyroValue", Robot.driveSubsystem.getPigeonRoll());
+		SmartDashboard.putNumber("GyroValue", Robot.driveSubsystem.getPigeonAngle());
 	}
 
 	@Override

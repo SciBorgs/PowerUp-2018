@@ -68,7 +68,7 @@ public class PortMap {
 	
 	public static final int LEFT_CLIMB_TALON = 7;
 	public static final int RIGHT_CLIMB_TALON = 6;
-	public static final int TILT_CLIMB_SERVO_LEFT = 0;
+	public static final int TILT_CLIMB_SERVO_LEFT = 9;
 	public static final int TILT_CLIMB_SERVO_RIGHT = 1;
 
 }

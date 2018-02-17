@@ -16,16 +16,21 @@ public class DriveDistanceCommand extends Command {
     public DriveDistanceCommand(double dist) {
     	//requires(Robot.driveSubsystem);
     	setInterruptible(true);
+    	
     	distanceToDrive = dist;
+    	distanceToDrive = SmartDashboard.getNumber("Dist To Drive", 0);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveSubsystem.pidMode = PIDMode.DriveDistance;
 //    	double ticksToDrive = Robot.driveSubsystem.feetToEncTicks(distanceToDrive);
+    	Robot.driveSubsystem.currentAngle = Robot.driveSubsystem.getPigeonAngle();
     	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getEncPosition(), Robot.driveSubsystem.getEncPosition() + distanceToDrive);
     	System.out.println("Get Enc Pos: " + Robot.driveSubsystem.getEncPosition());
     	System.out.println("dist + enc pos" + distanceToDrive + Robot.driveSubsystem.getEncPosition());
+    	distanceToDrive = SmartDashboard.getNumber("Dist To Drive", 0);
+
     	
     }
 
