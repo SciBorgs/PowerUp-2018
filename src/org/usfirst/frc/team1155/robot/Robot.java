@@ -97,6 +97,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("I Value", 0);
 		SmartDashboard.putNumber("D Value", 0.6);
 		SmartDashboard.putNumber("Dist To Drive", 0);
+		SmartDashboard.putNumber("AngleToTurn", 0);
 		//Gyro = new ADXRS450_Gyro();
         try {
             client = new Client();
@@ -150,7 +151,8 @@ public class Robot extends IterativeRobot {
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 
 		m_autonomousCommand = new AutonomousCommandGroup(gameData, m_chooser.getSelected());
-		
+		Robot.driveSubsystem.resetEncoders();
+		Robot.liftSubsystem.resetEncoders();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -160,9 +162,9 @@ public class Robot extends IterativeRobot {
 
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
+			System.out.println("startinggg...");
 			m_autonomousCommand.start();
 		}
-		liftSubsystem.resetEncoders();
 	}
 
 	/**
@@ -170,7 +172,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-	//	Scheduler.getInstance().run();
+		Scheduler.getInstance().run();
 		//plane.updatePosition();
 
 		//System.out.println(plane.getX() + ", " + plane.getY());

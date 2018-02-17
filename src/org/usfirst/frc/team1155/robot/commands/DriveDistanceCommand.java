@@ -18,18 +18,23 @@ public class DriveDistanceCommand extends Command {
     	setInterruptible(true);
     	
     	distanceToDrive = dist;
-    	distanceToDrive = SmartDashboard.getNumber("Dist To Drive", 0);
+    	//distanceToDrive = SmartDashboard.getNumber("Dist To Drive", 0);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("drivedistance starting");
     	Robot.driveSubsystem.pidMode = PIDMode.DriveDistance;
+    	double[] drivePids = Robot.driveSubsystem.DRIVE_PID;
+    	Robot.driveSubsystem.getPIDController().setPID(drivePids[0], drivePids[1], drivePids[2]);
 //    	double ticksToDrive = Robot.driveSubsystem.feetToEncTicks(distanceToDrive);
     	Robot.driveSubsystem.currentAngle = Robot.driveSubsystem.getPigeonAngle();
+    	Robot.driveSubsystem.getPIDController().setInputRange(-distanceToDrive, distanceToDrive + 1);
+    	Robot.driveSubsystem.getPIDController().setOutputRange(-1, 1);
     	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getEncPosition(), Robot.driveSubsystem.getEncPosition() + distanceToDrive);
     	System.out.println("Get Enc Pos: " + Robot.driveSubsystem.getEncPosition());
     	System.out.println("dist + enc pos" + distanceToDrive + Robot.driveSubsystem.getEncPosition());
-    	distanceToDrive = SmartDashboard.getNumber("Dist To Drive", 0);
+    	//distanceToDrive = SmartDashboard.getNumber("Dist To Drive", 0);
 
     	
     }
@@ -38,7 +43,7 @@ public class DriveDistanceCommand extends Command {
     protected void execute() {
     	//System.out.println("PID delta setpoint: " + Robot.driveSubsystem.getPIDController().getDeltaSetpoint());
     	//SmartDashboard.putNumber("EncoderValue", Robot.driveSubsystem.getEncPosition());
-//    	System.out.println("PID Error: " + Robot.driveSubsystem.getPIDController().getError());
+    	System.out.println("PID Error: " + Robot.driveSubsystem.getPIDController().getError());
     	SmartDashboard.putNumber("Pid error", Robot.driveSubsystem.getPIDController().getError());
     	SmartDashboard.putNumber("Talon Current", Robot.driveSubsystem.frontLeftMotor.getOutputCurrent());
     }
@@ -46,6 +51,7 @@ public class DriveDistanceCommand extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	return Robot.driveSubsystem.getPIDController().onTarget();
+//    	return (Robot.driveSubsystem.getPIDController().getError() / distanceToDrive) < 0.03;
     }
 
     // Called once after isFinished returns true
@@ -59,6 +65,5 @@ public class DriveDistanceCommand extends Command {
     protected void interrupted() {
     	System.out.println("Drive distance interrupt");
     	end();
-    	System.out.println("Drive distance interrupt");
     }
 }

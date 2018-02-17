@@ -32,9 +32,9 @@ public class OI {
 	//public static Button xboxIntakeArmControl = new JoystickButton(rightJoystick, 9);
 	
 	public static Button driveStraightButton = new JoystickButton(xbox, PortMap.XBOX_Y);
-	//public static Button pidAngleTest = new JoystickButton(leftJoystick, 4);
+	static Button pidAngleTest = new JoystickButton(xbox,PortMap.XBOX_BUMPER_RIGHT);
 	public static Button driveDistTest = new JoystickButton(xbox, PortMap.XBOX_BUMPER_LEFT);
-	public static Button driving = new JoystickButton(xbox, PortMap.XBOX_BUMPER_RIGHT);
+//	public static Button driving = new JoystickButton(xbox, PortMap.XBOX_BUMPER_RIGHT);
 	//public static Button leftArmIntake = new JoystickButton(leftJoystick, 1);
 	
 //	public static Button intakeCube = new JoystickButton(leftJoystick, 3);
@@ -52,8 +52,9 @@ public class OI {
 //		tiltClimb.toggleWhenPressed(new ToggleClimbCommand());
 		
 //		pidAngleTest.whenPressed(new TurnToDegreeCommand(90));
-//		pidAngleTest.whenReleased(new WestCoastDriveCommand(leftJoystick, rightJoystick));
-		driveDistTest.whileHeld(new DriveDistanceCommand(6.0833));
+		pidAngleTest.whenPressed(new TurnToDegreeCommand(90));
+		driveDistTest.whenPressed(new DriveDistanceCommand(4));
+		
 		//driving.whileHeld(new WestCoastDriveCommand(xbox));
 //		leftArmIntake.whileHeld(new AdjustCubeRotationCommand(0));
 		//driveDistTest.whenReleased(new WestCoastDriveCommand(xbox));

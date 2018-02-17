@@ -36,6 +36,12 @@ public class DriveSubsystem extends PIDSubsystem {
 	public final double ANGLE_BUFFER = 5.;
 	public final double ADJUST_SPEED_DELTA = .1;
 	
+	public final double[] DRIVE_PID = {1.0, 0, 0.6};
+	public final double[] TURN_PID = {0.1, 0.01, 0.1};
+	
+	public final double PID_TOLERANCE = .01;
+
+	
 	public static enum PIDMode {
 		TurnDegree, DriveStraight, DriveDistance;
 	}
@@ -205,11 +211,11 @@ public class DriveSubsystem extends PIDSubsystem {
 	}
 
 	public void startAdjustment(double current, double setPoint) {
-		updatePID();
+		//updatePID();
 		getPIDController().setContinuous(false);
 		switch (pidMode) {
 		case TurnDegree:
-			getPIDController().setPercentTolerance(10.0);
+			getPIDController().setPercentTolerance(1.0);
 			setPoint %= 360;
 			setSetpoint((int) (((current - setPoint >= 0 ? 180 : -180) + current - setPoint) / 360) * 360 + setPoint);
 			break;
