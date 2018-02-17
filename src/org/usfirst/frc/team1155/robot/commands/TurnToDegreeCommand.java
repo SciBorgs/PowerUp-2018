@@ -45,7 +45,7 @@ public class TurnToDegreeCommand extends Command{
 	@Override
 	protected boolean isFinished() {
 		return Robot.driveSubsystem.getPIDController().onTarget();
-//    	return (Robot.driveSubsystem.getPIDController().getError() / angleToTurn) < 0.03;
+    	//return Math.abs(Robot.driveSubsystem.getPigeonAngle() - angleToTurn ) < 1;//Robot.driveSubsystem.getPIDController().getError() < 1;//(Robot.driveSubsystem.getPIDController().getError() / angleToTurn) < 0.03;
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class DriveDistanceCommand extends Command {
     	Robot.driveSubsystem.getPIDController().setPID(drivePids[0], drivePids[1], drivePids[2]);
 //    	double ticksToDrive = Robot.driveSubsystem.feetToEncTicks(distanceToDrive);
     	Robot.driveSubsystem.currentAngle = Robot.driveSubsystem.getPigeonAngle();
-    	Robot.driveSubsystem.getPIDController().setInputRange(-distanceToDrive, distanceToDrive + 1);
+    	Robot.driveSubsystem.getPIDController().setInputRange(distanceToDrive - 10, distanceToDrive + 10);
     	Robot.driveSubsystem.getPIDController().setOutputRange(-1, 1);
     	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getEncPosition(), Robot.driveSubsystem.getEncPosition() + distanceToDrive);
     	System.out.println("Get Enc Pos: " + Robot.driveSubsystem.getEncPosition());
@@ -58,6 +58,8 @@ public class DriveDistanceCommand extends Command {
     protected void end() {
     	System.out.println("Drive distance end");
     	Robot.driveSubsystem.endAdjustment();
+
+    	Robot.driveSubsystem.resetEncoders();
     }
 
     // Called when another command which requires one or more of the same

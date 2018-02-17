@@ -33,11 +33,11 @@ public class DriveSubsystem extends PIDSubsystem {
 	public final double PIXEL_TO_FEET = 0.127/12.;
 	public double currentAngle = 0;
 	
-	public final double ANGLE_BUFFER = 5.;
+	public final double ANGLE_BUFFER = 1.;
 	public final double ADJUST_SPEED_DELTA = .1;
 	
 	public final double[] DRIVE_PID = {1.0, 0, 0.6};
-	public final double[] TURN_PID = {0.1, 0.01, 0.1};
+	public final double[] TURN_PID = {0.1, 0.01, .7};
 	
 	public final double PID_TOLERANCE = .01;
 
@@ -170,13 +170,13 @@ public class DriveSubsystem extends PIDSubsystem {
 		double deviance = getPigeonAngle() - currentAngle;
 		
 		if(Math.abs(deviance) > ANGLE_BUFFER) {
-			if(deviance < 0) {
+			if(deviance > 0) {
 				if(rightSpeed < 0) {
 					rightSpeed += ADJUST_SPEED_DELTA;
 				}else if(rightSpeed > 0) {
 					rightSpeed -= ADJUST_SPEED_DELTA;
 				}
-			}else if(deviance > 0) {
+			}else if(deviance < 0) {
 				if(leftSpeed < 0) {
 					leftSpeed += ADJUST_SPEED_DELTA;
 				}else if(leftSpeed > 0) {
@@ -215,14 +215,14 @@ public class DriveSubsystem extends PIDSubsystem {
 		getPIDController().setContinuous(false);
 		switch (pidMode) {
 		case TurnDegree:
-			getPIDController().setPercentTolerance(1.0);
+			getPIDController().setPercentTolerance(1);
 			setPoint %= 360;
 			setSetpoint((int) (((current - setPoint >= 0 ? 180 : -180) + current - setPoint) / 360) * 360 + setPoint);
 			break;
 		case DriveStraight:
 			getPIDController().setContinuous(true);
 		case DriveDistance:
-			getPIDController().setPercentTolerance(1.0);
+			getPIDController().setPercentTolerance(1);
 			setSetpoint(setPoint);
 			break;
 		default:

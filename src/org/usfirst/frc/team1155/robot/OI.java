@@ -52,8 +52,8 @@ public class OI {
 //		tiltClimb.toggleWhenPressed(new ToggleClimbCommand());
 		
 //		pidAngleTest.whenPressed(new TurnToDegreeCommand(90));
-		pidAngleTest.whenPressed(new TurnToDegreeCommand(90));
-		driveDistTest.whenPressed(new DriveDistanceCommand(4));
+//		pidAngleTest.whenPressed(new TurnToDegreeCommand(90));
+//		driveDistTest.whenPressed(new DriveDistanceCommand(4));
 		
 		//driving.whileHeld(new WestCoastDriveCommand(xbox));
 //		leftArmIntake.whileHeld(new AdjustCubeRotationCommand(0));

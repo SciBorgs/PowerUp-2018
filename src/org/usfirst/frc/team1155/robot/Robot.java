@@ -221,7 +221,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putNumber("Avg. enc feet", Robot.driveSubsystem.getEncPosition());
 		
-		SmartDashboard.putNumber("PigeonRoll", driveSubsystem.getPigeonAngle());
+		SmartDashboard.putNumber("PigeonRoll", Robot.driveSubsystem.getPigeonAngle());
 	}
 
 	/**
