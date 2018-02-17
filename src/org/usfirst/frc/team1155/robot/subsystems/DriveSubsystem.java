@@ -48,6 +48,8 @@ public class DriveSubsystem extends PIDSubsystem {
 		super("Drive", 1.0, 0, 0.6);
 		pidMode = PIDMode.TurnDegree;
 
+		//P is 1.0, I is 0.0, D is 0.6
+		
 		frontLeftMotor = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
 		middleRightMotor = new TalonSRX(PortMap.DRIVE_MIDDLE_RIGHT_TALON);
 		frontRightMotor = new TalonSRX(PortMap.DRIVE_FRONT_RIGHT_TALON);
