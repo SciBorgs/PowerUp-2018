@@ -195,7 +195,7 @@ public class Robot extends IterativeRobot {
 		//new WellstCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
 		//new DriveStraightCommand(OI.xbox).start();
 		//new WestCoastDriveCommand(OI.xbox).start();
-		//new PlaceCommand(OI.xbox).start();
+		new PlaceCommand(OI.xbox).start();
 		new CascadeLiftCommand(OI.xbox).start();
 		liftSubsystem.resetEncoders();
 	}

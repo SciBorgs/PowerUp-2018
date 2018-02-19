@@ -34,6 +34,7 @@ public class OI {
 	public static Button driveStraightButton = new JoystickButton(xbox, PortMap.XBOX_Y);
 	static Button pidAngleTest = new JoystickButton(xbox,PortMap.XBOX_BUMPER_RIGHT);
 	public static Button driveDistTest = new JoystickButton(xbox, PortMap.XBOX_BUMPER_LEFT);
+	public static Button intakeArmControl = new JoystickButton(xbox, PortMap.XBOX_STICK_LEFT_BUTTON);
 //	public static Button driving = new JoystickButton(xbox, PortMap.XBOX_BUMPER_RIGHT);
 	//public static Button leftArmIntake = new JoystickButton(leftJoystick, 1);
 	
@@ -42,7 +43,7 @@ public class OI {
 //	public static Button shootOutCube = new JoystickButton(leftJoystick, 3);
 //	
 	public OI() {
-//		intakeArmControl.toggleWhenPressed(new ToggleArmCommand());
+		//intakeArmControl.toggleWhenPressed(new ToggleArmCommand());
 		//xboxIntakeArmControl.toggleWhenPressed(new ToggleArmCommand());
 		
 //		gearShifter.toggleWhenPressed(new ToggleGearCommand());
