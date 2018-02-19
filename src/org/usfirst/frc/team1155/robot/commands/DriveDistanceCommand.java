@@ -23,6 +23,8 @@ public class DriveDistanceCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.driveSubsystem.resetEncoders();
+
     	System.out.println("drivedistance starting");
     	Robot.driveSubsystem.pidMode = PIDMode.DriveDistance;
     	double[] drivePids = Robot.driveSubsystem.DRIVE_PID;

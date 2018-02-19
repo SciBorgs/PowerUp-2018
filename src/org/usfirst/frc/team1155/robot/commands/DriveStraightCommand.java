@@ -32,10 +32,10 @@ public class DriveStraightCommand extends Command {
     	SmartDashboard.putNumber("GyroValue", Robot.driveSubsystem.getPigeonAngle());
     	Robot.driveSubsystem.setSpeed(-controller.getRawAxis(1), -controller.getRawAxis(5));
     	
-    	if(OI.driveStraightButton.get() && !Robot.driveSubsystem.getPIDController().isEnabled())
+/*    	if(OI.driveStraightButton.get() && !Robot.driveSubsystem.getPIDController().isEnabled())
     		Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonAngle(), Robot.driveSubsystem.getPigeonAngle());
     	else if (!OI.driveStraightButton.get() && Robot.driveSubsystem.getPIDController().isEnabled())
-    		Robot.driveSubsystem.endAdjustment();
+    		Robot.driveSubsystem.endAdjustment(); */
     }	
 
     // Make this return true when this Command no longer needs to run execute()

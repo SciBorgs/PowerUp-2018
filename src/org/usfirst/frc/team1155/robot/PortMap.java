@@ -49,18 +49,17 @@ public class PortMap {
 	
 	public static final int LIFT_LEFT_TALON = 20;
 	public static final int LIFT_LEFT_2_TALON = 26;
+	
 	public static final int LIFT_RIGHT_TALON = 31;
 	public static final int LIFT_RIGHT_2_TALON = 28;
 	
-	public static final int[] LEFT_LIFT_ENCODER = {1, 2};
-	public static final int[] RIGHT_LIFT_ENCODER = {3, 4};
-	
 	//*****************INTAKE*******************//	
 	
-	public static final int INTAKE_LEFT_TALON = 20;
-	public static final int INTAKE_RIGHT_TALON = 31;
-	public static final int INTAKE_ARM_LEFT_TALON = 30;
-	public static final int INTAKE_ARM_RIGHT_TALON = 28;
+	public static final int INTAKE_LEFT_TALON = 28;
+	public static final int INTAKE_RIGHT_TALON = 26;
+	
+	public static final int INTAKE_ARM_LEFT_TALON = 31;
+	public static final int INTAKE_ARM_RIGHT_TALON = 20;
 	
 	public static final int[] INTAKE_SOLENOID = {2,3};//{0, 1};
 	

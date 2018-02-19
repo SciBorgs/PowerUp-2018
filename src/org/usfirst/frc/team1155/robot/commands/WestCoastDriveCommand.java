@@ -51,14 +51,14 @@ public class WestCoastDriveCommand extends Command {
     	
     	//Robot.driveSubsystem.setSpeed(rawLeft, rawRight);
     	Robot.driveSubsystem.setSpeed(leftSpeed, rightSpeed);
-    	if(OI.driveStraightButton.get())
+   /* 	if(OI.driveStraightButton.get())
     		Robot.driveSubsystem.setSpeed(rawLeft, rawLeft);
     	if(OI.driveStraightButton.get() && !Robot.driveSubsystem.getPIDController().isEnabled()) {
     		Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonAngle(), Robot.driveSubsystem.getPigeonAngle());
     	
     	}else if (!OI.driveStraightButton.get() && Robot.driveSubsystem.getPIDController().isEnabled()) {
     		Robot.driveSubsystem.endAdjustment();
-    	}
+    	} */
     	SmartDashboard.putNumber("Talon Current", Robot.driveSubsystem.frontRightMotor.getOutputCurrent());
 
     }

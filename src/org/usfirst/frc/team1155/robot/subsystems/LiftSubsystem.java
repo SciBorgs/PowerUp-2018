@@ -43,6 +43,9 @@ public class LiftSubsystem extends PIDSubsystem{
 		rightLiftMotor.setNeutralMode(NeutralMode.Brake);
 		leftLift2Motor.setNeutralMode(NeutralMode.Brake);
 		rightLift2Motor.setNeutralMode(NeutralMode.Brake);
+		
+		getPIDController().setInputRange(TICKS_AT_BOTTOM, TICKS_TO_TOP);
+		getPIDController().setOutputRange(-1, 1);
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 		stop();

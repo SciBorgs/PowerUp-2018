@@ -47,15 +47,15 @@ public class IntakeSubsystem extends Subsystem{
 		if(speed != 0){
 			isStopped = false;
 		}
-		leftIntakeMotor.set(ControlMode.PercentOutput, -speed);
+		leftIntakeMotor.set(ControlMode.PercentOutput, speed);
 		rightIntakeMotor.set(ControlMode.PercentOutput, speed);
 		leftArmMotor.set(ControlMode.PercentOutput, -speed);
-		rightArmMotor.set(ControlMode.PercentOutput, -speed);
+		rightArmMotor.set(ControlMode.PercentOutput, speed);
 	}
 	
 	public void setArmSpeed(double speed) {
 		leftArmMotor.set(ControlMode.PercentOutput, -speed);
-		rightArmMotor.set(ControlMode.PercentOutput, -speed);
+		rightArmMotor.set(ControlMode.PercentOutput, speed);
 	}
 	
 	public void setCounter(int set) {

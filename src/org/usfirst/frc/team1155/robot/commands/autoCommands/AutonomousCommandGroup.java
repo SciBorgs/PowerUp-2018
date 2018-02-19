@@ -60,14 +60,15 @@ public class AutonomousCommandGroup extends CommandGroup {
 //    		}
 //		}
     	System.out.println("asd");
-    	addSequential(new DriveDistanceCommand(4));
+    	addSequential(new DriveDistanceCommand(8));
     	System.out.println("drove first side");
     	addSequential(new TurnToDegreeCommand(90));
-    	addSequential(new DriveDistanceCommand(4));
+    	addSequential(new DriveDistanceCommand(8));
     	System.out.println("drove second");
     	addSequential(new TurnToDegreeCommand(180));
-    	addSequential(new DriveDistanceCommand(4));
+    	addSequential(new DriveDistanceCommand(8));
     	addSequential(new TurnToDegreeCommand(270));
-    	addSequential(new DriveDistanceCommand(4));
+    	addSequential(new DriveDistanceCommand(8));
+    	addSequential(new TurnToDegreeCommand(0));
     }
 }

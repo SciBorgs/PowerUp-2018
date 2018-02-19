@@ -25,11 +25,13 @@ public class PlaceCommand extends Command{
 	protected void execute() {
 		if (controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0) {
 			new PlaceIntakeCommand(controller).start();
-		}
-		if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0) {
+		} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0) {
 			new PlaceOutputCommand(controller).start();
-		}
-		if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) == 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) == 0){
+		} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) == 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) == 0){
+			Robot.intakeSubsystem.stop();
+		} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0){
+			Robot.intakeSubsystem.stop();
+		} else {
 			Robot.intakeSubsystem.stop();
 		}
 	}

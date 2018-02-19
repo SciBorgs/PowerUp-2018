@@ -128,6 +128,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		pigeon.setYaw(0.,0);
+
 	}
 
 	@Override
@@ -177,6 +178,15 @@ public class Robot extends IterativeRobot {
 
 		//System.out.println(plane.getX() + ", " + plane.getY());
 		intakeSubsystem.leftArmMotor.set(ControlMode.PercentOutput, .2);
+		
+		SmartDashboard.putNumber("Left Encoder Feet", Robot.driveSubsystem.getLeftEncPosition());
+		SmartDashboard.putNumber("Left Encoder Ticks", Robot.driveSubsystem.getLeftEncPositionTicks());	
+		
+		SmartDashboard.putNumber("Right Encoder Feet", Robot.driveSubsystem.getRightEncPosition());
+		SmartDashboard.putNumber("Right Encoder Ticks", Robot.driveSubsystem.getRightEncPosition());
+		
+		SmartDashboard.putNumber("Avg. enc feet", Robot.driveSubsystem.getEncPosition());
+		
 	}
 
 	@Override
@@ -192,11 +202,11 @@ public class Robot extends IterativeRobot {
 		Robot.driveSubsystem.resetEncoders();
 		Robot.liftSubsystem.resetEncoders();
 		//System.out.println(position.getX() + ", " + position.getY());
-		//new WellstCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
+//		new WestCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
 		//new DriveStraightCommand(OI.xbox).start();
 		//new WestCoastDriveCommand(OI.xbox).start();
 		new PlaceCommand(OI.xbox).start();
-		new CascadeLiftCommand(OI.xbox).start();
+		//new CascadeLiftCommand(OI.xbox).start();
 		liftSubsystem.resetEncoders();
 	}
 

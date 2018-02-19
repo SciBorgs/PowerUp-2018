@@ -18,6 +18,8 @@ public class TurnToDegreeCommand extends Command{
 	}
 	@Override
 	protected void initialize() {
+    	Robot.driveSubsystem.resetEncoders();
+		
 		// Calibrates the turn angle
 		System.out.println("turning...");
 		//angleToTurn = SmartDashboard.getNumber("AngleToTurn", 0);

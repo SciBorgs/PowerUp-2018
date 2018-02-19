@@ -26,7 +26,7 @@ public class PlaceIntakeCommand extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.intakeSubsystem.setSpeed(controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT));
+		Robot.intakeSubsystem.setSpeed(-controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
