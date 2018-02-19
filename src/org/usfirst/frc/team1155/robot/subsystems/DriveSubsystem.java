@@ -68,13 +68,12 @@ public class DriveSubsystem extends PIDSubsystem {
 		middleRightMotor.set(ControlMode.Follower, frontRightMotor.getDeviceID());
 		middleLeftMotor.set(ControlMode.Follower, frontLeftMotor.getDeviceID());
 		
-		frontLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-		backLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-		middleLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-		middleRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-		frontRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-		backRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-		
+//		frontLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+//		backLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+//		middleLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+//		middleRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+//		frontRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+//		backRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full		
 		
 //		frontRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
 //		frontRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
@@ -339,11 +338,7 @@ public class DriveSubsystem extends PIDSubsystem {
 			return -Math.sqrt(.25 - raw * raw) + 0.5;
 		else
 			return Math.sqrt(.25 - (raw - 1) * (raw - 1)) + 0.5; */	
-		if(raw < 0) {
-			return -Math.pow(-raw, 1.8);
-		}
-		return Math.pow(raw, 1.8);
-//		return raw;
+		return Math.pow(raw, 3);
 	}
 	
 }

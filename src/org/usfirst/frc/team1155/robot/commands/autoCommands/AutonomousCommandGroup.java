@@ -31,44 +31,45 @@ public class AutonomousCommandGroup extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-//    	AutonomousRoutine path = Robot.autonomousSubsystem.configurePath(gameInfo, pos);
-//    	int pathSize = path.size();
-//    	for(int i = 1; i < pathSize; i++){
-//    		if(i != pathSize - 1){
-//	    		double angle = Robot.driveSubsystem.calculatesAngleToTurnTo(path.getCoordinate(i-1), path.getCoordinate(i));
-//	    		addSequential(new TurnToDegreeCommand(angle));
-//	    		double distance = path.getDistance(i-1, i);
-//	    		addSequential(new DriveDistanceCommand(distance));
-//    		}
-//    		if(path.hasAutonomousAction(i)){
-//    			switch(path.getAutonomousAction(i)){
-//    			case PLACE_CUBE_ON_SWITCH:
-//    				addSequential(new AutoRaiseLiftToSwitchCommand());
-//    				addSequential(new AutoPlaceOutputCubeCommand());
-//    				addSequential(new AutoLowerLiftCommand());
-//    				break;
-//    			case PLACE_CUBE_ON_SCALE:
-//    				addSequential(new AutoRaiseLiftToScaleCommand());
-//    				addSequential(new AutoShootCubeCommand());
-//    				addSequential(new AutoLowerLiftCommand());
-//    				break;
-//    			case PICKUP_CUBE:
-//    				addSequential(new AlignToCubeCommand());
-//    				addSequential(new AutoIntakeCubeCommand());
-//    				break;
-//    			}
-//    		}
-//		}
-    	System.out.println("asd");
-    	addSequential(new DriveDistanceCommand(8));
-    	System.out.println("drove first side");
-    	addSequential(new TurnToDegreeCommand(90));
-    	addSequential(new DriveDistanceCommand(8));
-    	System.out.println("drove second");
-    	addSequential(new TurnToDegreeCommand(180));
-    	addSequential(new DriveDistanceCommand(8));
-    	addSequential(new TurnToDegreeCommand(270));
-    	addSequential(new DriveDistanceCommand(8));
-    	addSequential(new TurnToDegreeCommand(0));
+    	AutonomousRoutine path = Robot.autonomousSubsystem.configurePath(gameInfo, pos);
+    	int pathSize = path.size();
+    	for(int i = 1; i < pathSize; i++){
+    		if(i != pathSize - 1){
+    			System.out.println("Step:" + i);
+	    		double angle = Robot.driveSubsystem.calculatesAngleToTurnTo(path.getCoordinate(i-1), path.getCoordinate(i));
+	    		addSequential(new TurnToDegreeCommand(angle));
+	    		double distance = path.getDistance(i-1, i);
+	    		addSequential(new DriveDistanceCommand(distance));
+    		}
+    		if(path.hasAutonomousAction(i)){
+    			switch(path.getAutonomousAction(i)){
+    			case PLACE_CUBE_ON_SWITCH:
+    				addSequential(new AutoRaiseLiftToSwitchCommand());
+    				addSequential(new AutoPlaceOutputCubeCommand());
+    				addSequential(new AutoLowerLiftCommand());
+    				break;
+    			case PLACE_CUBE_ON_SCALE:
+    				addSequential(new AutoRaiseLiftToScaleCommand());
+    				addSequential(new AutoShootCubeCommand());
+    				addSequential(new AutoLowerLiftCommand());
+    				break;
+    			case PICKUP_CUBE:
+    				addSequential(new AlignToCubeCommand());
+    				addSequential(new AutoIntakeCubeCommand());
+    				break;
+    			}
+    		}
+		}
+//    	System.out.println("asd");
+//    	addSequential(new DriveDistanceCommand(8));
+//    	System.out.println("drove first side");
+//    	addSequential(new TurnToDegreeCommand(90));
+//    	addSequential(new DriveDistanceCommand(8));
+//    	System.out.println("drove second");
+//    	addSequential(new TurnToDegreeCommand(180));
+//    	addSequential(new DriveDistanceCommand(8));
+//    	addSequential(new TurnToDegreeCommand(270));
+//    	addSequential(new DriveDistanceCommand(8));
+//    	addSequential(new TurnToDegreeCommand(0));
     }
 }

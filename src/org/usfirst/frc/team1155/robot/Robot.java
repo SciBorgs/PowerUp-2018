@@ -118,6 +118,7 @@ public class Robot extends IterativeRobot {
 		PointTwoMeters[0] = 0;
 		PointTwoMeters[1] = 80;
 		//pigeon.enterCalibrationMode(CalibrationMode.BootTareGyroAccel, 3000);
+		SmartDashboard.putNumber("Intake Speed", 0.);
 	}
 
 	/**
@@ -162,10 +163,10 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			System.out.println("startinggg...");
-			m_autonomousCommand.start();
-		}
+		//if (m_autonomousCommand != null) {
+		//	System.out.println("startinggg...");
+		//	m_autonomousCommand.start();
+		//}
 	}
 
 	/**
@@ -204,7 +205,7 @@ public class Robot extends IterativeRobot {
 		//System.out.println(position.getX() + ", " + position.getY());
 //		new WestCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
 		//new DriveStraightCommand(OI.xbox).start();
-		//new WestCoastDriveCommand(OI.xbox).start();
+		new WestCoastDriveCommand(OI.xbox).start();
 		new PlaceCommand(OI.xbox).start();
 		//new CascadeLiftCommand(OI.xbox).start();
 		liftSubsystem.resetEncoders();

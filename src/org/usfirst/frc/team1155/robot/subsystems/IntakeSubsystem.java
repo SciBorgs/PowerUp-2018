@@ -78,6 +78,16 @@ public class IntakeSubsystem extends Subsystem{
 		leftArmMotor.set(ControlMode.PercentOutput, speed);
 	}
 	
+	public void setLeftSpeed(double speed){
+		leftArmMotor.set(ControlMode.PercentOutput, -speed);
+		leftIntakeMotor.set(ControlMode.PercentOutput, speed);
+	}
+
+	public void setRightSpeed(double speed){
+		rightArmMotor.set(ControlMode.PercentOutput, speed);
+		rightIntakeMotor.set(ControlMode.PercentOutput, speed);
+	}	
+	
 	//TODO: Find this value
 	public double adjustTimeForAngle(double angle){
 		return 0;

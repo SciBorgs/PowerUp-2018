@@ -4,6 +4,7 @@ import org.usfirst.frc.team1155.robot.PortMap;
 import org.usfirst.frc.team1155.robot.Robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PlaceCommand extends Command{
 	
@@ -23,10 +24,11 @@ public class PlaceCommand extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		double speed = SmartDashboard.getNumber("Intake Speed", 0.);
 		if (controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0) {
-			new PlaceIntakeCommand(controller).start();
+			new PlaceIntakeCommand(controller, speed).start();
 		} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0) {
-			new PlaceOutputCommand(controller).start();
+			new PlaceOutputCommand(controller, speed).start();
 		} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) == 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) == 0){
 			Robot.intakeSubsystem.stop();
 		} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0){

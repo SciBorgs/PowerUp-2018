@@ -9,11 +9,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class PlaceOutputCommand extends Command{
 
 	private GenericHID controller;
+	private double speed;
 	
-	public PlaceOutputCommand(GenericHID controller) {
+	public PlaceOutputCommand(GenericHID controller, double speed) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.intakeSubsystem);
 		this.controller = controller;
+		this.speed = speed;
 	}
 
 	// Called just before this Command runs the first time
@@ -27,7 +29,8 @@ public class PlaceOutputCommand extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.intakeSubsystem.setSpeed(controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT));
+		Robot.intakeSubsystem.setRightSpeed(1);
+		Robot.intakeSubsystem.setLeftSpeed(1);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -46,9 +46,14 @@ public class WestCoastDriveCommand extends Command {
     		Robot.driveSubsystem.endAdjustment(); */
     	double rawLeft = -xbox.getRawAxis(PortMap.XBOX_LEFT_JOY_Y);
     	double rawRight = -xbox.getRawAxis(PortMap.XBOX_RIGHT_JOY_Y);
+    	SmartDashboard.putNumber("Left Y-Axis", rawLeft);
+    	SmartDashboard.putNumber("Right Y-Axis", rawRight);
+    	
     	double leftSpeed = Robot.driveSubsystem.applyDriveCurve(rawLeft);
     	double rightSpeed = Robot.driveSubsystem.applyDriveCurve(rawRight);
     	
+    	leftSpeed /= 2;
+    	rightSpeed /= 2;
     	//Robot.driveSubsystem.setSpeed(rawLeft, rawRight);
     	Robot.driveSubsystem.setSpeed(leftSpeed, rightSpeed);
    /* 	if(OI.driveStraightButton.get())
