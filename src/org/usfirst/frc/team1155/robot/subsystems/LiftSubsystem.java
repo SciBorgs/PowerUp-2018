@@ -15,8 +15,7 @@ public class LiftSubsystem extends PIDSubsystem{
 		// TODO Auto-generated constructor stub
 	}
 
-	public TalonSRX leftLiftMotor, rightLiftMotor, leftLift2Motor, rightLift2Motor;
-	public Encoder leftLiftEncoder, rightLiftEncoder;
+	public TalonSRX leftLiftMotor, rightLiftMotor, leftLiftEncoderMotor, rightLiftEncoderMotor;
 	public final double LIFT_SPEED = .6;
 	public final double LIFT_SPEED_ADJUST = .3;
 	public final double TICKS_TO_TOP = 100;
@@ -34,15 +33,13 @@ public class LiftSubsystem extends PIDSubsystem{
 
 		leftLiftMotor = new TalonSRX(PortMap.LIFT_LEFT_TALON);
 		rightLiftMotor = new TalonSRX(PortMap.LIFT_RIGHT_TALON);
-		leftLift2Motor = new TalonSRX(PortMap.LIFT_LEFT_2_TALON);
-		rightLift2Motor = new TalonSRX(PortMap.LIFT_RIGHT_2_TALON);
-//		leftLiftEncoder = new Encoder(PortMap.LEFT_LIFT_ENCODER[0], PortMap.LEFT_LIFT_ENCODER[1]);
-//		rightLiftEncoder = new Encoder(PortMap.RIGHT_LIFT_ENCODER[0], PortMap.RIGHT_LIFT_ENCODER[1]);
+		leftLiftEncoderMotor = new TalonSRX(PortMap.LIFT_LEFT_ENCODER_TALON);
+		rightLiftEncoderMotor = new TalonSRX(PortMap.LIFT_RIGHT_ENCODER_TALON);
 
 		leftLiftMotor.setNeutralMode(NeutralMode.Brake);
 		rightLiftMotor.setNeutralMode(NeutralMode.Brake);
-		leftLift2Motor.setNeutralMode(NeutralMode.Brake);
-		rightLift2Motor.setNeutralMode(NeutralMode.Brake);
+		leftLiftEncoderMotor.setNeutralMode(NeutralMode.Brake);
+		rightLiftEncoderMotor.setNeutralMode(NeutralMode.Brake);
 		
 		getPIDController().setInputRange(TICKS_AT_BOTTOM, TICKS_TO_TOP);
 		getPIDController().setOutputRange(-1, 1);
@@ -54,25 +51,25 @@ public class LiftSubsystem extends PIDSubsystem{
 	public void stop() {
 		leftLiftMotor.set(ControlMode.PercentOutput, 0);
 		rightLiftMotor.set(ControlMode.PercentOutput, 0);
-		leftLift2Motor.set(ControlMode.PercentOutput, 0);
-		rightLift2Motor.set(ControlMode.PercentOutput, 0);
+		leftLiftEncoderMotor.set(ControlMode.PercentOutput, 0);
+		rightLiftEncoderMotor.set(ControlMode.PercentOutput, 0);
 	}
 	
 	public void setSpeed(double speed){
 		leftLiftMotor.set(ControlMode.PercentOutput, -speed);
-		leftLift2Motor.set(ControlMode.PercentOutput, -speed);
+		leftLiftEncoderMotor.set(ControlMode.PercentOutput, -speed);
 		rightLiftMotor.set(ControlMode.PercentOutput, speed);
-		rightLift2Motor.set(ControlMode.PercentOutput, speed);
+		rightLiftEncoderMotor.set(ControlMode.PercentOutput, speed);
 	}
 	
 	public void setLeftSideSpeed(double speed) {
 		leftLiftMotor.set(ControlMode.PercentOutput, -speed);
-		leftLift2Motor.set(ControlMode.PercentOutput, -speed);
+		leftLiftEncoderMotor.set(ControlMode.PercentOutput, -speed);
 	}
 	
 	public void setRightSideSpeed(double speed) {
 		rightLiftMotor.set(ControlMode.PercentOutput, speed);
-		rightLift2Motor.set(ControlMode.PercentOutput, speed);
+		rightLiftEncoderMotor.set(ControlMode.PercentOutput, speed);
 	}
 	
 	public int getEncoderDifference(){
@@ -80,16 +77,16 @@ public class LiftSubsystem extends PIDSubsystem{
 	}
 	
 	public int getLeftEncPos() {
-		return leftLiftMotor.getSensorCollection().getQuadraturePosition();
+		return leftLiftEncoderMotor.getSensorCollection().getQuadraturePosition();
 	}
 	
 	public int getRightEncPos() {
-		return rightLiftMotor.getSensorCollection().getQuadraturePosition();
+		return rightLiftEncoderMotor.getSensorCollection().getQuadraturePosition();
 	}
 	
 	public void resetEncoders() {
-		rightLiftMotor.getSensorCollection().setQuadraturePosition(0, 0);
-		leftLiftMotor.getSensorCollection().setQuadraturePosition(0, 0);
+		rightLiftEncoderMotor.getSensorCollection().setQuadraturePosition(0, 0);
+		leftLiftEncoderMotor.getSensorCollection().setQuadraturePosition(0, 0);
 	}
 
 	@Override

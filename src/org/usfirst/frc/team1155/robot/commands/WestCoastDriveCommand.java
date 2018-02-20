@@ -17,18 +17,22 @@ public class WestCoastDriveCommand extends Command {
 	
 	private Joystick left, right;
 	private XboxController xbox;
+	private boolean joystick;
+	private double rawLeft, rawRight;
 	
     public WestCoastDriveCommand(Joystick leftStick, Joystick rightStick) {
         requires(Robot.driveSubsystem);
         left = leftStick;
         right = rightStick;
         setInterruptible(true);
+        joystick = true;
     }
     
     public WestCoastDriveCommand(XboxController xbox) {
         requires(Robot.driveSubsystem);
         this.xbox = xbox;
         setInterruptible(true);
+        joystick = false;
     }
 
     // Called just before this Command runs the first time
@@ -44,17 +48,22 @@ public class WestCoastDriveCommand extends Command {
     		Robot.driveSubsystem.startAdjustment(0, Robot.driveSubsystem.getPigeonRoll());
     	else if (!OI.driveStraightButton.get() && Robot.driveSubsystem.getPIDController().isEnabled())
     		Robot.driveSubsystem.endAdjustment(); */
-    	double rawLeft = -xbox.getRawAxis(PortMap.XBOX_LEFT_JOY_Y);
-    	double rawRight = -xbox.getRawAxis(PortMap.XBOX_RIGHT_JOY_Y);
+    	if(joystick) {
+    		rawLeft = -left.getY();
+    		rawRight = -right.getY();
+    	} else {
+    		rawLeft = -xbox.getRawAxis(PortMap.XBOX_LEFT_JOY_Y);
+    		rawRight = -xbox.getRawAxis(PortMap.XBOX_RIGHT_JOY_Y);
+    	}
     	SmartDashboard.putNumber("Left Y-Axis", rawLeft);
     	SmartDashboard.putNumber("Right Y-Axis", rawRight);
     	
     	double leftSpeed = Robot.driveSubsystem.applyDriveCurve(rawLeft);
     	double rightSpeed = Robot.driveSubsystem.applyDriveCurve(rawRight);
     	
-    	leftSpeed /= 2;
-    	rightSpeed /= 2;
-    	//Robot.driveSubsystem.setSpeed(rawLeft, rawRight);
+//    	leftSpeed /= 2;
+//    	rightSpeed /= 2;
+//    	//Robot.driveSubsystem.setSpeed(rawLeft, rawRight);
     	Robot.driveSubsystem.setSpeed(leftSpeed, rightSpeed);
    /* 	if(OI.driveStraightButton.get())
     		Robot.driveSubsystem.setSpeed(rawLeft, rawLeft);

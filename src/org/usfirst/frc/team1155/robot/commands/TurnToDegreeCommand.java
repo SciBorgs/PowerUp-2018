@@ -31,7 +31,7 @@ public class TurnToDegreeCommand extends Command{
 
     	
 		//Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonRoll(), angleToTurn);
-    	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonAngle(), angleToTurn);
+    	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonAngle(), Robot.driveSubsystem.getPigeonAngle() + angleToTurn);
 	}
 
 	@Override

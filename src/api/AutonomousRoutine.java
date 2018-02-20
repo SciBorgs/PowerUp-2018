@@ -214,10 +214,21 @@ public class AutonomousRoutine implements Serializable {
         if (file != null) {
             AutonomousRoutine autonomousRoutine;
             try {
-                autonomousRoutine = (AutonomousRoutine)new ObjectInputStream(new FileInputStream(file)).readObject();
+            	System.out.println("started load()");
+            	FileInputStream fis = new FileInputStream(file);
+            	System.out.println("fis");
+            	ObjectInputStream ois = new ObjectInputStream(fis);
+            	System.out.println("ois");
+
+            	System.out.println(ois.readLine());
+            	autonomousRoutine = (AutonomousRoutine)ois.readObject();
+            	System.out.println("casted");
+
+//                autonomousRoutine = (AutonomousRoutine)new ObjectInputStream(new FileInputStream(file)).readObject();
                 this.set(autonomousRoutine);
             } catch (Exception e) {
             	System.out.println("could not cast");
+            	e.printStackTrace();
                 return false;
             }
             return true;

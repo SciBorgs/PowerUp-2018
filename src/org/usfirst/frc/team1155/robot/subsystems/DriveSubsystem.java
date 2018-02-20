@@ -293,32 +293,32 @@ public class DriveSubsystem extends PIDSubsystem {
 	}
 	
 	public void resetEncoders() {
-		frontRightMotor.getSensorCollection().setQuadraturePosition(0, 0);
-		backLeftMotor.getSensorCollection().setQuadraturePosition(0, 0);
+		middleRightMotor.getSensorCollection().setQuadraturePosition(0, 0);
+		middleLeftMotor.getSensorCollection().setQuadraturePosition(0, 0);
 	}
 	
 	public double getEncPositionTicks() {
-		return (frontRightMotor.getSensorCollection().getQuadraturePosition() - backLeftMotor.getSensorCollection().getQuadraturePosition()) / 2.;
+		return (middleRightMotor.getSensorCollection().getQuadraturePosition() - middleLeftMotor.getSensorCollection().getQuadraturePosition()) / 2.;
 	}
 	
 	public double getLeftEncPosition() {
-		double dist = (-backLeftMotor.getSensorCollection().getQuadraturePosition() / TICKS_PER_ROTATION) * ENC_WHEEL_RATIO * (2 * Math.PI * WHEEL_RADIUS);
+		double dist = (-middleLeftMotor.getSensorCollection().getQuadraturePosition() / TICKS_PER_ROTATION) * ENC_WHEEL_RATIO * (2 * Math.PI * WHEEL_RADIUS);
 		return dist;
 
 	}
 	
 	public double getRightEncPosition() {
-		double dist = (frontRightMotor.getSensorCollection().getQuadraturePosition() / TICKS_PER_ROTATION) * ENC_WHEEL_RATIO * (2 * Math.PI * WHEEL_RADIUS);
+		double dist = (middleRightMotor.getSensorCollection().getQuadraturePosition() / TICKS_PER_ROTATION) * ENC_WHEEL_RATIO * (2 * Math.PI * WHEEL_RADIUS);
 		return dist;
 
 	}
 	
 	public double getLeftEncPositionTicks() {
-		return -backLeftMotor.getSensorCollection().getQuadraturePosition();
+		return -middleLeftMotor.getSensorCollection().getQuadraturePosition();
 	}
 
 	public double getRightEncPositionTicks() {
-		return frontRightMotor.getSensorCollection().getQuadraturePosition();
+		return middleRightMotor.getSensorCollection().getQuadraturePosition();
 	}
 
 	

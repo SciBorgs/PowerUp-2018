@@ -24,7 +24,7 @@ public class PlaceCommand extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		double speed = SmartDashboard.getNumber("Intake Speed", 0.);
+		double speed = SmartDashboard.getNumber("Intake Speed", 0.45);
 		if (controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0) {
 			new PlaceIntakeCommand(controller, speed).start();
 		} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0) {

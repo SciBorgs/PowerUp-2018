@@ -33,12 +33,14 @@ public class AutonomousCommandGroup extends CommandGroup {
     	
     	AutonomousRoutine path = Robot.autonomousSubsystem.configurePath(gameInfo, pos);
     	int pathSize = path.size();
+    	//double initialX = path.getCoordinate(0)[0];
+    	//double initialY = path.getCoordinate(0)[1];
     	for(int i = 1; i < pathSize; i++){
     		if(i != pathSize - 1){
     			System.out.println("Step:" + i);
 	    		double angle = Robot.driveSubsystem.calculatesAngleToTurnTo(path.getCoordinate(i-1), path.getCoordinate(i));
 	    		addSequential(new TurnToDegreeCommand(angle));
-	    		double distance = path.getDistance(i-1, i);
+	    		double distance = (path.getDistance(i-1, i) / 24.);
 	    		addSequential(new DriveDistanceCommand(distance));
     		}
     		if(path.hasAutonomousAction(i)){

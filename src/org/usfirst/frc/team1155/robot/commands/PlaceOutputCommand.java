@@ -29,8 +29,8 @@ public class PlaceOutputCommand extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.intakeSubsystem.setRightSpeed(1);
-		Robot.intakeSubsystem.setLeftSpeed(1);
+		Robot.intakeSubsystem.setRightSpeed(speed + .1);
+		Robot.intakeSubsystem.setLeftSpeed(speed + .1);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
