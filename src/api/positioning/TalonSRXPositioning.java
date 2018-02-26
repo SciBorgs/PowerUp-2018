@@ -34,6 +34,6 @@ public class TalonSRXPositioning {
         // have to replace this with the distance values
         position.setX(position.getX() + dist * Math.cos(Math.toRadians(Robot.driveSubsystem.getPigeonAngle())));
         position.setY(position.getY() + dist * Math.sin(Math.toRadians(Robot.driveSubsystem.getPigeonAngle())));
-       // System.out.println(position);
+        //System.out.println(position);
     }
 }

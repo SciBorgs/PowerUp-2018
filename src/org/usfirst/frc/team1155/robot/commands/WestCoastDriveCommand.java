@@ -73,7 +73,8 @@ public class WestCoastDriveCommand extends Command {
     	}else if (!OI.driveStraightButton.get() && Robot.driveSubsystem.getPIDController().isEnabled()) {
     		Robot.driveSubsystem.endAdjustment();
     	} */
-    	SmartDashboard.putNumber("Talon Current", Robot.driveSubsystem.frontRightMotor.getOutputCurrent());
+    	SmartDashboard.putNumber("Right Talon Current", Robot.driveSubsystem.frontRightMotor.getOutputCurrent());
+    	SmartDashboard.putNumber("Left Talon Current", Robot.driveSubsystem.frontLeftMotor.getOutputCurrent());
 
     }
 

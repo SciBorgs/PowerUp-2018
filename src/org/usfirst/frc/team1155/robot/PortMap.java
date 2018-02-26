@@ -53,8 +53,8 @@ public class PortMap {
 	//*******************DRIVE*******************//
 	
 	public static final int DRIVE_FRONT_LEFT_TALON = 24;
-	public static final int DRIVE_MIDDLE_LEFT_TALON = 32;
-	public static final int DRIVE_BACK_LEFT_TALON = 19;
+	public static final int DRIVE_MIDDLE_LEFT_TALON = 19;
+	public static final int DRIVE_BACK_LEFT_TALON = 32;
 	
 	public static final int DRIVE_FRONT_RIGHT_TALON = 17;
 	public static final int DRIVE_MIDDLE_RIGHT_TALON = 21;

@@ -24,7 +24,7 @@ public class OI {
 	
 	public static Button gearShifter = new JoystickButton(leftJoystick, PortMap.JOYSTICK_CENTER_BUTTON);
 	public static Button xboxGearShifter = new JoystickButton(xbox, PortMap.XBOX_STICK_RIGHT_BUTTON);
-
+	public static Button testDriveDist = new JoystickButton(rightJoystick, PortMap.JOYSTICK_CENTER_BUTTON);
 	//public static Button intakeArmControl = new JoystickButton(rightJoystick, 1);
 	public static Button xboxIntakeArmControl = new JoystickButton(xbox, PortMap.XBOX_BUMPER_RIGHT);
 	
@@ -35,6 +35,7 @@ public class OI {
 			xboxGearShifter.toggleWhenActive(new ToggleGearCommand());
 		}else{
 			gearShifter.toggleWhenActive(new ToggleGearCommand());
+			testDriveDist.whenPressed(new DriveDistanceCommand(10));
 		}
 	}
 	

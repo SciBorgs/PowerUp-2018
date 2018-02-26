@@ -25,6 +25,8 @@ public class DriveDistanceCommand extends Command {
     protected void initialize() {
     	Robot.driveSubsystem.resetEncoders();
 
+    	distanceToDrive = SmartDashboard.getNumber("Dist To Drive", 0);
+
     	System.out.println("drivedistance starting");
     	Robot.driveSubsystem.pidMode = PIDMode.DriveDistance;
     	double[] drivePids = Robot.driveSubsystem.DRIVE_PID;
@@ -36,7 +38,6 @@ public class DriveDistanceCommand extends Command {
     	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getEncPosition(), Robot.driveSubsystem.getEncPosition() + distanceToDrive);
     	System.out.println("Get Enc Pos: " + Robot.driveSubsystem.getEncPosition());
     	System.out.println("dist + enc pos" + distanceToDrive + Robot.driveSubsystem.getEncPosition());
-    	//distanceToDrive = SmartDashboard.getNumber("Dist To Drive", 0);
 
     	
     }
