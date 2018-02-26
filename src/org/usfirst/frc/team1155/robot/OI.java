@@ -11,6 +11,10 @@ import edu.wpi.first.wpilibj.buttons.*;
  */
 public class OI {
 
+	public static enum ControllerType{
+		JOYSTICK, XBOX;
+	}
+	public static ControllerType controllerType = ControllerType.JOYSTICK;
 	public static Joystick leftJoystick = new Joystick(PortMap.JOYSTICK_LEFT);
 	public static Joystick rightJoystick = new Joystick(PortMap.JOYSTICK_RIGHT);
 	public static XboxController xbox = new XboxController(PortMap.XBOX);
@@ -18,15 +22,20 @@ public class OI {
 	public static Button extendClimber = new JoystickButton(xbox, PortMap.XBOX_B);
 	public static Button stopClimber = new JoystickButton(xbox, PortMap.XBOX_X);
 	
-//	public static Button gearShifter = new JoystickButton(leftJoystick, 2);
+	public static Button gearShifter = new JoystickButton(leftJoystick, PortMap.JOYSTICK_CENTER_BUTTON);
 	public static Button xboxGearShifter = new JoystickButton(xbox, PortMap.XBOX_STICK_RIGHT_BUTTON);
 
 	//public static Button intakeArmControl = new JoystickButton(rightJoystick, 1);
 	public static Button xboxIntakeArmControl = new JoystickButton(xbox, PortMap.XBOX_BUMPER_RIGHT);
 	
 	public OI() {	
-		xboxIntakeArmControl.toggleWhenPressed(new ToggleArmCommand());
-		xboxGearShifter.toggleWhenActive(new ToggleGearCommand());
+		
+		if(controllerType == ControllerType.XBOX) {
+			xboxIntakeArmControl.toggleWhenPressed(new ToggleArmCommand());
+			xboxGearShifter.toggleWhenActive(new ToggleGearCommand());
+		}else{
+			gearShifter.toggleWhenActive(new ToggleGearCommand());
+		}
 	}
 	
 }

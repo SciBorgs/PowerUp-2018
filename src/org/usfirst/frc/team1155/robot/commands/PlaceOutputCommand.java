@@ -18,6 +18,10 @@ public class PlaceOutputCommand extends Command{
 		this.speed = speed;
 	}
 
+	public PlaceOutputCommand() {
+		// TODO Auto-generated constructor stub
+	}
+
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {

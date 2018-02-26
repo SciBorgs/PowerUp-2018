@@ -262,10 +262,24 @@ public class DriveSubsystem extends PIDSubsystem {
 		double x2 = destPoint[0];
 		double y2 = destPoint[1];
 		
-		double angle = Math.toDegrees(Math.atan2(y2-y1, x2-x1));
+		double relativeX = x2 - x1;
+		double relativeY = y2 - y1;
+		
+		double angle = Math.toDegrees(Math.atan2(relativeY, relativeX)) - 90;
+		
+		//double angle = 90 - Math.toDegrees(Math.atan2(y2-y1, x2-x1));
+		
+//		double angle = Math.toDegrees(Math.acos((x1*(x2-x1) + y1*(y2-y1))/(getMagnitude(x1, x2, y1, y2)*getMagnitude(x1, x2, y1, y2))));
+	//	double angle = 90 - Math.toDegrees(Math.atan((y2 - y1) / (x2-x1)));
+		
 		
 		return angle;
 	}
+	
+	private double getMagnitude(double x1, double x2, double y1, double y2) {
+		return Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
+	}
+	
 	
 	public void endAdjustment() {
 		getPIDController().disable();
@@ -338,7 +352,10 @@ public class DriveSubsystem extends PIDSubsystem {
 			return -Math.sqrt(.25 - raw * raw) + 0.5;
 		else
 			return Math.sqrt(.25 - (raw - 1) * (raw - 1)) + 0.5; */	
-		return Math.pow(raw, 3);
+		if(raw < 0) {
+			return -Math.pow(-raw, 2.4);
+		}
+		return Math.pow(raw, 2.4);
 	}
 	
 }

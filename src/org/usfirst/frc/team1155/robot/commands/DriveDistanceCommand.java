@@ -45,7 +45,7 @@ public class DriveDistanceCommand extends Command {
     protected void execute() {
     	//System.out.println("PID delta setpoint: " + Robot.driveSubsystem.getPIDController().getDeltaSetpoint());
     	//SmartDashboard.putNumber("EncoderValue", Robot.driveSubsystem.getEncPosition());
-    	System.out.println("PID Error: " + Robot.driveSubsystem.getPIDController().getError());
+    	//System.out.println("PID Error: " + Robot.driveSubsystem.getPIDController().getError());
     	SmartDashboard.putNumber("Pid error", Robot.driveSubsystem.getPIDController().getError());
     	SmartDashboard.putNumber("Talon Current", Robot.driveSubsystem.frontLeftMotor.getOutputCurrent());
     }

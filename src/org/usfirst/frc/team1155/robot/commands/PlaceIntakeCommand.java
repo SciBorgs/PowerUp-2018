@@ -16,6 +16,9 @@ public class PlaceIntakeCommand extends Command{
 		this.controller = controller;
 		this.speed = speed;
 	}
+	public PlaceIntakeCommand() {
+		
+	}
 
 	// Called just before this Command runs the first time
 	@Override

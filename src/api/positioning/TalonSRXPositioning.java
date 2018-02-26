@@ -30,11 +30,10 @@ public class TalonSRXPositioning {
         //double distance = (((leftTalon.getSelectedSensorPosition(0) + rightTalon.getSelectedSensorPosition(0)) / 2) / RATIO) * (2 * Math.PI * RADIUS);
 //        double distance = (rightTalon.getSelectedSensorPosition(0) / RATIO) * Robot.driveSubsystem.ENC_WHEEL_RATIO * (2 * Math.PI * Robot.driveSubsystem.ENC_WHEEL_RATIO);
 
-		double dist = (rightTalon.getSensorCollection().getQuadraturePosition() / Robot.driveSubsystem.TICKS_PER_ROTATION) *Robot.driveSubsystem.ENC_WHEEL_RATIO * (2 * Math.PI * Robot.driveSubsystem.WHEEL_RADIUS);
-        
+		double dist = Robot.driveSubsystem.getEncPosition();
         // have to replace this with the distance values
-        position.setX(position.getX() + dist);// * Math.cos(Math.toRadians(position.getDirection())));
-        position.setY(position.getY() + dist);// * Math.sin(Math.toRadians(position.getDirection())));
+        position.setX(position.getX() + dist * Math.cos(Math.toRadians(Robot.driveSubsystem.getPigeonAngle())));
+        position.setY(position.getY() + dist * Math.sin(Math.toRadians(Robot.driveSubsystem.getPigeonAngle())));
        // System.out.println(position);
     }
 }

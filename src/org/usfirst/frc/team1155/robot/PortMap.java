@@ -6,9 +6,25 @@ public class PortMap {
 
 	public static final int JOYSTICK_LEFT = 0;
 	public static final int JOYSTICK_RIGHT = 1;
-	public static final int XBOX = 2;
+	
+	public static final int JOYSTICK_TRIGGER = 1;
+	public static final int JOYSTICK_CENTER_BUTTON = 2;
+	public static final int JOYSTICK_LEFT_BUTTON = 3;
+	public static final int JOYSTICK_RIGHT_BUTTON = 4;
+	
+	public static final int[][] JOYSTICK_BUTTON_MATRIX_LEFT = {
+															   {5, 6, 7},
+															   {10, 9, 8}
+															  };
+	
+	public static final int[][] JOYSTICK_BUTTON_MATRIX_RIGHT = {
+															   {13, 12, 11},
+															   {14, 15, 16}
+															  };
 	
 	//*****************XBOX*****************//
+
+	public static final int XBOX = 2;
 
 	public static final int XBOX_A = 1;
 	public static final int XBOX_B = 2;

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1155.robot.commands;
 
+import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.PortMap;
 import org.usfirst.frc.team1155.robot.Robot;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -15,6 +16,10 @@ public class PlaceCommand extends Command{
 		this.controller = controller;
 		// requires(Robot.intakeSubsystem);
 	}
+	
+	public PlaceCommand() {
+		
+	}
 
 	// Called just before this Command runs the first time
 	@Override
@@ -25,16 +30,31 @@ public class PlaceCommand extends Command{
 	@Override
 	protected void execute() {
 		double speed = SmartDashboard.getNumber("Intake Speed", 0.45);
-		if (controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0) {
-			new PlaceIntakeCommand(controller, speed).start();
-		} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0) {
-			new PlaceOutputCommand(controller, speed).start();
-		} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) == 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) == 0){
-			Robot.intakeSubsystem.stop();
-		} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0){
-			Robot.intakeSubsystem.stop();
-		} else {
-			Robot.intakeSubsystem.stop();
+		
+		if(OI.controllerType == OI.ControllerType.JOYSTICK) {
+			System.out.println("here");
+			System.out.println(OI.leftJoystick.getRawButton(PortMap.JOYSTICK_TRIGGER));
+			if(OI.leftJoystick.getRawButton(PortMap.JOYSTICK_TRIGGER)) {
+				new PlaceIntakeCommand().start();
+			}else if(OI.rightJoystick.getRawButton(PortMap.JOYSTICK_TRIGGER)) {
+				new PlaceOutputCommand().start();
+
+			}else {
+				Robot.intakeSubsystem.stop();
+			}
+		}else {
+			
+			if (controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0) {
+				new PlaceIntakeCommand(controller, speed).start();
+			} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0) {
+				new PlaceOutputCommand(controller, speed).start();
+			} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) == 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) == 0){
+				Robot.intakeSubsystem.stop();
+			} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0){
+				Robot.intakeSubsystem.stop();
+			} else {
+				Robot.intakeSubsystem.stop();
+			}
 		}
 	}
 

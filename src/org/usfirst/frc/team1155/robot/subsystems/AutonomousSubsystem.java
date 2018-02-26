@@ -15,9 +15,9 @@ public class AutonomousSubsystem extends Subsystem {
 	
 	
 	public AutonomousRoutine configurePath(String gameInfo, int pos){
-		try {
-			File myPath = new File("/home/lvuser/AutoRoutines/star.auto");
-			System.out.println(myPath.getAbsolutePath());
+		try {	
+			//File myPath = new File("/home/lvuser/AutoRoutines/star.auto");
+			//System.out.println(myPath.getAbsolutePath());
 			AutonomousRoutine path = new AutonomousRoutine(new File("/home/lvuser/AutoRoutines/triangle.auto"));
 			System.out.println(path);
 			return path;

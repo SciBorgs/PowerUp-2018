@@ -31,17 +31,17 @@ public class TurnToDegreeCommand extends Command{
 
     	
 		//Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonRoll(), angleToTurn);
-    	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonAngle(), Robot.driveSubsystem.getPigeonAngle() + angleToTurn);
+    	Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonAngle(), angleToTurn);
 	}
 
 	@Override
 	protected void execute() {
-		System.out.println("Angle error: " + Robot.driveSubsystem.getPIDController().getError());
+		//System.out.println("Angle error: " + Robot.driveSubsystem.getPIDController().getError());
 		
 //		if(Robot.driveSubsystem.getPIDController().getError() <= 0.2)
 //			end();
 		
-		SmartDashboard.putNumber("GyroValue", Robot.driveSubsystem.getPigeonAngle());
+		//SmartDashboard.putNumber("GyroValue", Robot.driveSubsystem.getPigeonAngle());
 	}
 
 	@Override
