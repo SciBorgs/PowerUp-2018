@@ -14,6 +14,7 @@ public class Client {
     private Position position = new Position();
 
     public Client() throws IOException {
+        System.out.println("trying to connect");
         socket = new Socket(SERVER_IP_ADDRESS, SERVER_PORT);
         objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
     }
