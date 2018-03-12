@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveSubsystem extends PIDSubsystem {
 
 	public TalonSRX frontLeftMotor, middleLeftMotor, frontRightMotor, backLeftMotor, middleRightMotor, backRightMotor;
-	public Gyro gyro;
+	//public Gyro gyro;
 	public DoubleSolenoid gearShifter;
 	public TalonSRX talonWithPigeon;
 	public final double TICKS_PER_ROTATION = 4096;
@@ -105,14 +105,14 @@ public class DriveSubsystem extends PIDSubsystem {
 //		backLeftMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
 //		backLeftMotor.enableCurrentLimit(true);
 		
-		talonWithPigeon = new TalonSRX(27);
+		talonWithPigeon = new TalonSRX(5);
 		
 		gearShifter = new DoubleSolenoid(PortMap.GEAR_SHIFTER_SOLENOID[0], PortMap.GEAR_SHIFTER_SOLENOID[1]);
 		
 		getPIDController().setContinuous(false);
 
-		gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
-		gyro.reset();
+	//	gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+	//	gyro.reset();
 	}
 	
 	public void shiftDown() {
@@ -286,7 +286,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	}
 	
 	public void resetGyro() {
-		gyro.reset();
+//		gyro.reset();
 	}
 	
 	public double getPigeonAngle(){

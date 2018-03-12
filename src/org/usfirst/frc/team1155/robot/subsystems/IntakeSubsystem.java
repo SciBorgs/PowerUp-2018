@@ -23,8 +23,8 @@ public class IntakeSubsystem extends Subsystem{
 	
 	public void initDefaultCommand() {
 
-		leftIntakeMotor = new TalonSRX(PortMap.INTAKE_LEFT_TALON);
-		rightIntakeMotor = new TalonSRX(PortMap.INTAKE_RIGHT_TALON);
+//		leftIntakeMotor = new TalonSRX(PortMap.INTAKE_LEFT_TALON);
+//		rightIntakeMotor = new TalonSRX(PortMap.INTAKE_RIGHT_TALON);
 		leftArmMotor = new TalonSRX(PortMap.INTAKE_ARM_LEFT_TALON);
 		rightArmMotor = new TalonSRX(PortMap.INTAKE_ARM_RIGHT_TALON);
 
@@ -37,8 +37,8 @@ public class IntakeSubsystem extends Subsystem{
 	
 	public void stop() {
 		isStopped = true;
-		leftIntakeMotor.set(ControlMode.PercentOutput, 0);
-		rightIntakeMotor.set(ControlMode.PercentOutput, 0);
+//		leftIntakeMotor.set(ControlMode.PercentOutput, 0);
+//		rightIntakeMotor.set(ControlMode.PercentOutput, 0);
 		leftArmMotor.set(ControlMode.PercentOutput, 0);
 		rightArmMotor.set(ControlMode.PercentOutput, 0);
 	}
@@ -47,8 +47,8 @@ public class IntakeSubsystem extends Subsystem{
 		if(speed != 0){
 			isStopped = false;
 		}
-		leftIntakeMotor.set(ControlMode.PercentOutput, -speed);
-		rightIntakeMotor.set(ControlMode.PercentOutput, -speed);
+//		leftIntakeMotor.set(ControlMode.PercentOutput, -speed);
+//		rightIntakeMotor.set(ControlMode.PercentOutput, -speed);
 		leftArmMotor.set(ControlMode.PercentOutput, -speed);
 		rightArmMotor.set(ControlMode.PercentOutput, speed);
 	}
@@ -80,12 +80,12 @@ public class IntakeSubsystem extends Subsystem{
 	
 	public void setLeftSpeed(double speed){
 		leftArmMotor.set(ControlMode.PercentOutput, -speed);
-		leftIntakeMotor.set(ControlMode.PercentOutput, -speed);
+//		leftIntakeMotor.set(ControlMode.PercentOutput, -speed);
 	}
 
 	public void setRightSpeed(double speed){
 		rightArmMotor.set(ControlMode.PercentOutput, speed);
-		rightIntakeMotor.set(ControlMode.PercentOutput, -speed);
+//		rightIntakeMotor.set(ControlMode.PercentOutput, -speed);
 	}	
 	
 	//TODO: Find this value

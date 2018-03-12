@@ -14,7 +14,7 @@ public class OI {
 	public static enum ControllerType{
 		JOYSTICK, XBOX;
 	}
-	public static ControllerType controllerType = ControllerType.JOYSTICK;
+	public static ControllerType controllerType = ControllerType.XBOX;
 	public static Joystick leftJoystick = new Joystick(PortMap.JOYSTICK_LEFT);
 	public static Joystick rightJoystick = new Joystick(PortMap.JOYSTICK_RIGHT);
 	public static XboxController xbox = new XboxController(PortMap.XBOX);

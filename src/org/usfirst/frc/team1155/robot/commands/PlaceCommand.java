@@ -43,18 +43,30 @@ public class PlaceCommand extends Command{
 				Robot.intakeSubsystem.stop();
 			}
 		}else {
+//			
+//			if (controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0) {
+//				new PlaceIntakeCommand(controller, speed).start();
+//			} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0) {
+//				new PlaceOutputCommand(controller, speed).start();
+//			} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) == 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) == 0){
+//				Robot.intakeSubsystem.stop();
+//			} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0){
+//				Robot.intakeSubsystem.stop();
+//			} else {
+//				Robot.intakeSubsystem.stop();
+//			}
 			
-			if (controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0) {
+			if(controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0) {
+				Robot.intakeSubsystem.stop();
+			}else if(controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0) {
+				System.out.println("here");
 				new PlaceIntakeCommand(controller, speed).start();
-			} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0) {
+			}else if(controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0) {
 				new PlaceOutputCommand(controller, speed).start();
-			} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) == 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) == 0){
-				Robot.intakeSubsystem.stop();
-			} else if (controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0){
-				Robot.intakeSubsystem.stop();
-			} else {
+			}else {
 				Robot.intakeSubsystem.stop();
 			}
+			
 		}
 	}
 

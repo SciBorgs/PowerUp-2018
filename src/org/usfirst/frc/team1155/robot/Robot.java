@@ -204,10 +204,10 @@ public class Robot extends IterativeRobot {
 		Robot.liftSubsystem.resetEncoders();
 		//System.out.println(position.getX() + ", " + position.getY());
 //		new WestCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
-		//new DriveStraightCommand(OI.xbox).start();
-		new WestCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
-		//new PlaceCommand().start();
-		//new CascadeLiftCommand(OI.xbox).start();
+//		new DriveStraightCommand(OI.xbox).start();
+		new WestCoastDriveCommand(OI.xbox).start();
+		new PlaceCommand(OI.xbox).start();
+		new CascadeLiftCommand(OI.xbox).start();
 		liftSubsystem.resetEncoders();
 	}
 

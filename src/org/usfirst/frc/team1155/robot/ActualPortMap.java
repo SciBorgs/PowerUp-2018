@@ -48,11 +48,11 @@ public class ActualPortMap {
 
 	//*******************LIFT********************//	
 	
-	public static final int LIFT_LEFT_TALON = 4;
-	public static final int LIFT_LEFT_ENCODER_TALON = 5;
+	public static final int LIFT_LEFT_TALON = 3;
+	public static final int LIFT_LEFT_ENCODER_TALON = 1;
 	
-	public static final int LIFT_RIGHT_TALON = 12;
-	public static final int LIFT_RIGHT_ENCODER_TALON = 13;
+	public static final int LIFT_RIGHT_TALON = 11;
+	public static final int LIFT_RIGHT_ENCODER_TALON = 9;
 	
 	//*****************INTAKE*******************//	
 	
