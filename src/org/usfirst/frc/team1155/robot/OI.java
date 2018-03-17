@@ -18,7 +18,7 @@ public class OI {
 	public static Joystick leftJoystick = new Joystick(PortMap.JOYSTICK_LEFT);
 	public static Joystick rightJoystick = new Joystick(PortMap.JOYSTICK_RIGHT);
 	public static XboxController xbox = new XboxController(PortMap.XBOX);
-		
+			
 	public static Button extendClimber = new JoystickButton(xbox, PortMap.XBOX_B);
 	public static Button stopClimber = new JoystickButton(xbox, PortMap.XBOX_X);
 	
@@ -27,12 +27,20 @@ public class OI {
 	public static Button testDriveDist = new JoystickButton(rightJoystick, PortMap.JOYSTICK_CENTER_BUTTON);
 	//public static Button intakeArmControl = new JoystickButton(rightJoystick, 1);
 	public static Button xboxIntakeArmControl = new JoystickButton(xbox, PortMap.XBOX_BUMPER_RIGHT);
+	public static Button tiltIntake = new JoystickButton(xbox, PortMap.XBOX_Y);
+	public static Button tiltClimber = new JoystickButton(xbox, PortMap.XBOX_A);
+	public static Button deployClimber = new JoystickButton(xbox, PortMap.XBOX_START);
 	
 	public OI() {	
 		
 		if(controllerType == ControllerType.XBOX) {
 			xboxIntakeArmControl.toggleWhenPressed(new ToggleArmCommand());
 			xboxGearShifter.toggleWhenActive(new ToggleGearCommand());
+			tiltIntake.toggleWhenActive(new TiltIntakeCommand());
+			tiltClimber.toggleWhenActive(new ToggleClimbCommand());
+			deployClimber.toggleWhenActive(new DeployClimberCommand());
+			
+//			climb
 		}else{
 			gearShifter.toggleWhenActive(new ToggleGearCommand());
 			testDriveDist.whenPressed(new DriveDistanceCommand(10));

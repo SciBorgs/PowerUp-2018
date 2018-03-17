@@ -28,7 +28,8 @@ public class IntakeSubsystem extends Subsystem{
 		leftArmMotor = new TalonSRX(PortMap.INTAKE_ARM_LEFT_TALON);
 		rightArmMotor = new TalonSRX(PortMap.INTAKE_ARM_RIGHT_TALON);
 
-		armSolenoid = new DoubleSolenoid(PortMap.INTAKE_SOLENOID[0], PortMap.INTAKE_SOLENOID[1]);
+		armSolenoid = new DoubleSolenoid(PortMap.INTAKE_ARM_SOLENOID[0], PortMap.INTAKE_ARM_SOLENOID[1]);
+		//tiltSolenoid = new DoubleSolenoid(PortMap.INTAKE_TILT_SOLENOID[0], PortMap.INTAKE_TILT_SOLENOID[1]);
 		//ultrasonic.setAutomaticMode(true);
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
@@ -87,6 +88,15 @@ public class IntakeSubsystem extends Subsystem{
 		rightArmMotor.set(ControlMode.PercentOutput, speed);
 //		rightIntakeMotor.set(ControlMode.PercentOutput, -speed);
 	}	
+	
+	public void toggleTilt() {
+		if(tiltSolenoid.get() == DoubleSolenoid.Value.kForward) {
+			tiltSolenoid.set(DoubleSolenoid.Value.kReverse);
+		}else {
+			tiltSolenoid.set(DoubleSolenoid.Value.kForward);
+
+		}
+	}
 	
 	//TODO: Find this value
 	public double adjustTimeForAngle(double angle){

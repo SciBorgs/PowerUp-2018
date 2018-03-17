@@ -12,6 +12,7 @@ public class ClimbCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		
 		Robot.climbSubsystem.setExtensionSpeed(0);
 	}
 	
@@ -20,10 +21,16 @@ public class ClimbCommand extends Command {
 	protected void execute() {
 		//if (OI.retractClimber.get())
 			//Robot.climbSubsystem.setExtensionSpeed(-.5);
-		if (OI.extendClimber.get())
-			Robot.climbSubsystem.setExtensionSpeed(1);
-		if (OI.stopClimber.get())
-			Robot.climbSubsystem.setExtensionSpeed(0);
+		
+		
+		if (OI.extendClimber.get()) {
+			System.out.println("extending");
+			Robot.climbSubsystem.setExtensionSpeed(-.5);
+		}else if (OI.stopClimber.get()){
+			System.out.println("stopping");
+			Robot.climbSubsystem.setExtensionSpeed(.5);
+
+		}
 	}
 	// Make this return true when this Command no longer needs to run execute()
 	@Override

@@ -4,6 +4,7 @@ import org.usfirst.frc.team1155.robot.PortMap;
 import org.usfirst.frc.team1155.robot.Robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -63,18 +64,26 @@ public class DriveSubsystem extends PIDSubsystem {
 		middleLeftMotor = new TalonSRX(PortMap.DRIVE_MIDDLE_LEFT_TALON);
 		backRightMotor = new TalonSRX(PortMap.DRIVE_BACK_RIGHT_TALON);
 		
+		frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+		middleRightMotor.setNeutralMode(NeutralMode.Brake);
+		frontRightMotor.setNeutralMode(NeutralMode.Brake);
+		backLeftMotor.setNeutralMode(NeutralMode.Brake);
+		middleRightMotor.setNeutralMode(NeutralMode.Brake);
+		backRightMotor.setNeutralMode(NeutralMode.Brake);
+
+		
 		backRightMotor.set(ControlMode.Follower, frontRightMotor.getDeviceID());
 		backLeftMotor.set(ControlMode.Follower, frontLeftMotor.getDeviceID());
 		middleRightMotor.set(ControlMode.Follower, frontRightMotor.getDeviceID());
 		middleLeftMotor.set(ControlMode.Follower, frontLeftMotor.getDeviceID());
 		
-//		frontLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-//		backLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-//		middleLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-//		middleRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-//		frontRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-//		backRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full		
-		
+		frontLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+		backLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+		middleLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+		middleRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+		frontRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
+		backRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full		
+	
 //		frontRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
 //		frontRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
 //		frontRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);

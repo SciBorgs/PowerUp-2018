@@ -56,7 +56,7 @@ public class PlaceCommand extends Command{
 //				Robot.intakeSubsystem.stop();
 //			}
 			
-			if(controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0) {
+			if(controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0 && controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0) {
 				Robot.intakeSubsystem.stop();
 			}else if(controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0) {
 				System.out.println("here");

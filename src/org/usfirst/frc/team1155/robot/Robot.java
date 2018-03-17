@@ -23,6 +23,7 @@ import api.Position;
 import api.positioning.PositioningHandler;
 //import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -84,13 +85,13 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("Auto Position 3", 3);
 		
 		pigeon = new PigeonIMU(driveSubsystem.talonWithPigeon);
-		//System.out.println("entering calibration mode");
+//		//System.out.println("entering calibration mode");
 		pigeon.setYaw(0.,0);
 
 		
 		
-		position = new Position();
-		positioningHandler = new PositioningHandler(position, driveSubsystem.frontRightMotor, driveSubsystem.backLeftMotor);
+//		position = new Position();
+//		positioningHandler = new PositioningHandler(position, driveSubsystem.frontRightMotor, driveSubsystem.backLeftMotor);
 		SmartDashboard.putNumber("angleToTurn", 90);
 		SmartDashboard.putData("Auto mode", m_chooser);
 		SmartDashboard.putNumber("P Value", 1.0);
@@ -199,16 +200,24 @@ public class Robot extends IterativeRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		
+		/*DoubleSolenoid ds = new DoubleSolenoid(5, 7);
+		if(ds.get() == DoubleSolenoid.Value.kForward) {
+			ds.set(DoubleSolenoid.Value.kReverse);
+		}else if (ds.get() == DoubleSolenoid.Value.kReverse){
+			ds.set(DoubleSolenoid.Value.kForward);
+		}*/
+		
 //		pigeon.setYaw(0.,0);
 		Robot.driveSubsystem.resetEncoders();
 		Robot.liftSubsystem.resetEncoders();
 		//System.out.println(position.getX() + ", " + position.getY());
 //		new WestCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
-//		new DriveStraightCommand(OI.xbox).start();
+		new DriveStraightCommand(OI.xbox).start();
 		new WestCoastDriveCommand(OI.xbox).start();
 		new PlaceCommand(OI.xbox).start();
 		new CascadeLiftCommand(OI.xbox).start();
-		liftSubsystem.resetEncoders();
+		new ClimbCommand().start();
 	}
 
 	/**
@@ -218,7 +227,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 //		pigeon.getYawPitchRoll(anglesYPR);
-		positioningHandler.updatePosition();
+//		positioningHandler.updatePosition();
 //		SmartDashboard.putNumber("Xceleration", plane.getAx());
 //		SmartDashboard.putNumber("Yceleration", plane.getAy());
 //		SmartDashboard.putNumber("Xvelocity", plane.getVx());

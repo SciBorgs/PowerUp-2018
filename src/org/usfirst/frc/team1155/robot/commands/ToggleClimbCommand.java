@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ToggleClimbCommand extends Command{
+	
+	private final double E_MARGIN = 0.02;
+	
 	public ToggleClimbCommand() {
 		// Use requires() here to declare subsystem dependencies
 		//requires(Robot.intakeSubsystem);
@@ -15,12 +18,13 @@ public class ToggleClimbCommand extends Command{
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+//		Robot.climbSubsystem.retract();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {		
-		if(Robot.climbSubsystem.leftServo.getPosition() == 0.0)
+		if(Robot.climbSubsystem.leftServo.getPosition() == 0.0 + E_MARGIN)
 			Robot.climbSubsystem.extend();
 		else {
 			Robot.climbSubsystem.retract();

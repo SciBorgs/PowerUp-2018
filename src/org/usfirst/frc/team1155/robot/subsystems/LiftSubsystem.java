@@ -16,6 +16,8 @@ public class LiftSubsystem extends PIDSubsystem{
 	}
 
 	public TalonSRX leftLiftMotor, rightLiftMotor, leftLiftEncoderMotor, rightLiftEncoderMotor;
+	public TalonSRX[] allTalons;
+	
 	public final double LIFT_SPEED = .6;
 	public final double LIFT_SPEED_ADJUST = .3;
 	public final double TICKS_TO_TOP = 100;
@@ -35,11 +37,18 @@ public class LiftSubsystem extends PIDSubsystem{
 		rightLiftMotor = new TalonSRX(PortMap.LIFT_RIGHT_TALON);
 		leftLiftEncoderMotor = new TalonSRX(PortMap.LIFT_LEFT_ENCODER_TALON);
 		rightLiftEncoderMotor = new TalonSRX(PortMap.LIFT_RIGHT_ENCODER_TALON);
+		
+		allTalons = new TalonSRX[] {leftLiftMotor, rightLiftMotor, leftLiftEncoderMotor, rightLiftEncoderMotor};
 
 		leftLiftMotor.setNeutralMode(NeutralMode.Brake);
 		rightLiftMotor.setNeutralMode(NeutralMode.Brake);
 		leftLiftEncoderMotor.setNeutralMode(NeutralMode.Brake);
 		rightLiftEncoderMotor.setNeutralMode(NeutralMode.Brake);
+		
+//		frontRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
+//		frontRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
+//		frontRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
+//		frontRightMotor.enableCurrentLimit(true);
 		
 		getPIDController().setInputRange(TICKS_AT_BOTTOM, TICKS_TO_TOP);
 		getPIDController().setOutputRange(-1, 1);

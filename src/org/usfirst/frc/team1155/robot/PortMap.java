@@ -60,7 +60,7 @@ public class PortMap {
 	public static final int DRIVE_MIDDLE_RIGHT_TALON = 15;
 	public static final int DRIVE_BACK_RIGHT_TALON = 16;
 	
-	public static final int[] GEAR_SHIFTER_SOLENOID = {0,1};
+	public static final int[] GEAR_SHIFTER_SOLENOID = {5,7};
 
 	//*******************LIFT********************//	
 	
@@ -78,13 +78,17 @@ public class PortMap {
 	public static final int INTAKE_ARM_LEFT_TALON = 3;
 	public static final int INTAKE_ARM_RIGHT_TALON = 11;
 	
-	public static final int[] INTAKE_SOLENOID = {2,3};//{0, 1};
+	public static final int[] INTAKE_ARM_SOLENOID = {1,3};//{0, 1};
+	//public static final int[] INTAKE_TILT_SOLENOID = {5,7};//{0, 1};
+
 	
 	//*****************CLIMBER******************//	
 	
-	public static final int LEFT_CLIMB_TALON = 7;
-	public static final int RIGHT_CLIMB_TALON = 6;
-	public static final int TILT_CLIMB_SERVO_LEFT = 9;
+	public static final int[] CLIMB_SOLENOID = {6, 4};
+	
+	public static final int LEFT_CLIMB_TALON = 4;
+	public static final int RIGHT_CLIMB_TALON = 5;
+	public static final int TILT_CLIMB_SERVO_LEFT = 0;
 	public static final int TILT_CLIMB_SERVO_RIGHT = 1;
 
 }
