@@ -60,8 +60,11 @@ public class PlaceCommand extends Command{
 				Robot.intakeSubsystem.stop();
 			}else if(controller.getRawAxis(PortMap.XBOX_TRIGGER_LEFT) != 0) {
 				System.out.println("here");
+				speed = Robot.intakeSubsystem.OUTPUT_SPEED;
+				System.out.println("output speed" + speed);
 				new PlaceIntakeCommand(controller, speed).start();
 			}else if(controller.getRawAxis(PortMap.XBOX_TRIGGER_RIGHT) != 0) {
+				speed = Robot.intakeSubsystem.INTAKE_SPEED;
 				new PlaceOutputCommand(controller, speed).start();
 			}else {
 				Robot.intakeSubsystem.stop();

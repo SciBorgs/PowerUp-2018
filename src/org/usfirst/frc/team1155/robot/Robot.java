@@ -179,7 +179,6 @@ public class Robot extends IterativeRobot {
 		//plane.updatePosition();
 
 		//System.out.println(plane.getX() + ", " + plane.getY());
-		intakeSubsystem.leftArmMotor.set(ControlMode.PercentOutput, .2);
 		
 		SmartDashboard.putNumber("Left Encoder Feet", Robot.driveSubsystem.getLeftEncPosition());
 		SmartDashboard.putNumber("Left Encoder Ticks", Robot.driveSubsystem.getLeftEncPositionTicks());	
@@ -218,6 +217,7 @@ public class Robot extends IterativeRobot {
 		new PlaceCommand(OI.xbox).start();
 		new CascadeLiftCommand(OI.xbox).start();
 		new ClimbCommand().start();
+		new ChangeLiftHeightCommand(OI.xbox).start();
 	}
 
 	/**
@@ -233,6 +233,10 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("Xvelocity", plane.getVx());
 //		SmartDashboard.putNumber("Yvelocity", plane.getVy());
 		//System.out.println(driveSubsystem.getPigeonRoll());
+//		System.out.println("Ultra dist: " + Robot.intakeSubsystem.getUltraPos());
+//		System.out.println("Is ultra enabled: " + Robot.intakeSubsystem.ultrasonic.isEnabled());
+//		System.out.println("Is ultra valid: " + Robot.intakeSubsystem.ultrasonic.isRangeValid());
+
 		SmartDashboard.putNumber("Left Encoder Feet", Robot.driveSubsystem.getLeftEncPosition());
 		SmartDashboard.putNumber("Left Encoder Ticks", Robot.driveSubsystem.getLeftEncPositionTicks());	
 		

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1155.robot;
 
+@Deprecated
 public class ActualPortMap {
 		
 	//*****************JOYSTICKS*****************//

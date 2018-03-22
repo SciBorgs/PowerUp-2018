@@ -77,13 +77,13 @@ public class DriveSubsystem extends PIDSubsystem {
 		middleRightMotor.set(ControlMode.Follower, frontRightMotor.getDeviceID());
 		middleLeftMotor.set(ControlMode.Follower, frontLeftMotor.getDeviceID());
 		
-		frontLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-		backLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-		middleLeftMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-		middleRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-		frontRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full
-		backRightMotor.configClosedloopRamp(2, 0); //2 seconds from neutral to full		
-	
+		frontLeftMotor.configOpenloopRamp(0.1, 0); //2 seconds from neutral to full
+		backLeftMotor.configOpenloopRamp(0.1, 0); //2 seconds from neutral to full
+		middleLeftMotor.configOpenloopRamp(0.1, 0); //2 seconds from neutral to full
+		middleRightMotor.configOpenloopRamp(0.1, 0); //2 seconds from neutral to full
+		frontRightMotor.configOpenloopRamp(0.1, 0); //2 seconds from neutral to full
+		backRightMotor.configOpenloopRamp(0.1, 0); //2 seconds from neutral to full	
+//	
 //		frontRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
 //		frontRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
 //		frontRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
@@ -271,11 +271,20 @@ public class DriveSubsystem extends PIDSubsystem {
 		double x2 = destPoint[0];
 		double y2 = destPoint[1];
 		
-		double relativeX = x2 - x1;
+		double relativeX = -(x2 - x1); //Made negative because the paths are made with the origin on the left
 		double relativeY = y2 - y1;
 		
-		double angle = Math.toDegrees(Math.atan2(relativeY, relativeX)) - 90;
+		System.out.println("calculating angle...");
 		
+		System.out.println("p1(" + x1 + ", " + y1 + ")");
+		System.out.println("p1(" + x1 + ", " + y1 + ")");
+		
+		System.out.println("relativeX" + relativeX);
+		System.out.println("relativeY" + relativeY);
+		
+		double angle = Math.toDegrees(Math.atan2(relativeY, relativeX));
+		System.out.println("Finished with angle of " + angle);
+
 		//double angle = 90 - Math.toDegrees(Math.atan2(y2-y1, x2-x1));
 		
 //		double angle = Math.toDegrees(Math.acos((x1*(x2-x1) + y1*(y2-y1))/(getMagnitude(x1, x2, y1, y2)*getMagnitude(x1, x2, y1, y2))));

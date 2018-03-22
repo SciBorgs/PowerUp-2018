@@ -14,12 +14,16 @@ public class IntakeSubsystem extends Subsystem{
 	public DoubleSolenoid armSolenoid, tiltSolenoid;
 	public int counter;
 	public boolean isStopped = true;
-	//public Ultrasonic ultrasonic = new Ultrasonic(1,1);
+	public boolean isTilted = false;
+	public Ultrasonic ultrasonic;
 	public final double MIN_INCHES_FROM_ULTRA_TO_BOX = 4.0;
 	public final double MAX_INCHES_FROM_ULTRA_TO_BOX = 24.5;
 	public final double REV_AMOUNT = 50.0;
 	public final double ADJUST_SPEED = 0.6;
 	public final double SECONDS_PER_EXECUTE = 0.02;
+	
+	public final double INTAKE_SPEED = 0.55;
+	public final double OUTPUT_SPEED = 0.8;
 	
 	public void initDefaultCommand() {
 
@@ -29,8 +33,12 @@ public class IntakeSubsystem extends Subsystem{
 		rightArmMotor = new TalonSRX(PortMap.INTAKE_ARM_RIGHT_TALON);
 
 		armSolenoid = new DoubleSolenoid(PortMap.INTAKE_ARM_SOLENOID[0], PortMap.INTAKE_ARM_SOLENOID[1]);
-		//tiltSolenoid = new DoubleSolenoid(PortMap.INTAKE_TILT_SOLENOID[0], PortMap.INTAKE_TILT_SOLENOID[1]);
+		
+		//ultrasonic = new Ultrasonic(PortMap.INTAKE_ULTRASONIC[0], PortMap.INTAKE_ULTRASONIC[1]);
+//		ultrasonic = new Ultrasonic()
+		tiltSolenoid = new DoubleSolenoid(PortMap.INTAKE_TILT_SOLENOID[0], PortMap.INTAKE_TILT_SOLENOID[1]);
 		//ultrasonic.setAutomaticMode(true);
+		
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 		stop();
@@ -90,12 +98,17 @@ public class IntakeSubsystem extends Subsystem{
 	}	
 	
 	public void toggleTilt() {
+		isTilted = !isTilted;
 		if(tiltSolenoid.get() == DoubleSolenoid.Value.kForward) {
 			tiltSolenoid.set(DoubleSolenoid.Value.kReverse);
 		}else {
 			tiltSolenoid.set(DoubleSolenoid.Value.kForward);
 
 		}
+	}
+	
+	public double getUltraPos() {
+		return ultrasonic.getRangeInches(); 
 	}
 	
 	//TODO: Find this value

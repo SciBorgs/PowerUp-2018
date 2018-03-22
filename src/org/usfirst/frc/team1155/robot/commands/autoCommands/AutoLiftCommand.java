@@ -2,22 +2,29 @@ package org.usfirst.frc.team1155.robot.commands.autoCommands;
 
 import org.usfirst.frc.team1155.robot.Robot;
 import org.usfirst.frc.team1155.robot.subsystems.LiftSubsystem;
+import org.usfirst.frc.team1155.robot.subsystems.LiftSubsystem.LiftTarget;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AutoLowerLiftCommand extends Command {
+public class AutoLiftCommand extends Command {
 
-    public AutoLowerLiftCommand() {
+	
+	LiftTarget target;
+	
+	
+    public AutoLiftCommand(LiftTarget t) {
         requires(Robot.liftSubsystem);
+        target = t;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.liftSubsystem.liftTarget = LiftSubsystem.LiftTarget.Bottom;
+    	Robot.liftSubsystem.liftTarget = target;
     	Robot.liftSubsystem.startAdjustment();
+    	System.out.println("Starting..");
     }
 
     // Called repeatedly when this Command is scheduled to run

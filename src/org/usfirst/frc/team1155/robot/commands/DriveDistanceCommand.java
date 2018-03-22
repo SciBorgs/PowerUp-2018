@@ -16,7 +16,7 @@ public class DriveDistanceCommand extends Command {
     public DriveDistanceCommand(double dist) {
     	//requires(Robot.driveSubsystem);
     	setInterruptible(true);
-    	
+    	System.out.println("dist: " + dist);
     	distanceToDrive = dist;
     	//distanceToDrive = SmartDashboard.getNumber("Dist To Drive", 0);
     }
@@ -25,7 +25,7 @@ public class DriveDistanceCommand extends Command {
     protected void initialize() {
     	Robot.driveSubsystem.resetEncoders();
 
-    	distanceToDrive = SmartDashboard.getNumber("Dist To Drive", 0);
+    	//distanceToDrive = SmartDashboard.getNumber("Dist To Drive", 0);
 
     	System.out.println("drivedistance starting");
     	Robot.driveSubsystem.pidMode = PIDMode.DriveDistance;

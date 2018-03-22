@@ -79,7 +79,9 @@ public class PortMap {
 	public static final int INTAKE_ARM_RIGHT_TALON = 11;
 	
 	public static final int[] INTAKE_ARM_SOLENOID = {1,3};//{0, 1};
-	//public static final int[] INTAKE_TILT_SOLENOID = {5,7};//{0, 1};
+	public static final int[] INTAKE_TILT_SOLENOID = {5,7};//{0, 1};
+	
+	public static final int[] INTAKE_ULTRASONIC = {1, 0}; //1 = input, 0 = output
 
 	
 	//*****************CLIMBER******************//	

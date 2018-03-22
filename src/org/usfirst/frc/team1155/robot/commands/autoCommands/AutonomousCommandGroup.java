@@ -5,6 +5,7 @@ import api.AutonomousRoutine;
 import org.usfirst.frc.team1155.robot.Robot;
 import org.usfirst.frc.team1155.robot.commands.DriveDistanceCommand;
 import org.usfirst.frc.team1155.robot.commands.TurnToDegreeCommand;
+import org.usfirst.frc.team1155.robot.subsystems.LiftSubsystem.LiftTarget;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -49,14 +50,14 @@ public class AutonomousCommandGroup extends CommandGroup {
     		if(path.hasAutonomousAction(i)){
     			switch(path.getAutonomousAction(i)){
     			case PLACE_CUBE_ON_SWITCH:
-    				addSequential(new AutoRaiseLiftToSwitchCommand());
+    				addSequential(new AutoLiftCommand(LiftTarget.SwitchHeight));
     				addSequential(new AutoPlaceOutputCubeCommand());
-    				addSequential(new AutoLowerLiftCommand());
+    				addSequential(new AutoLiftCommand(LiftTarget.Bottom));
     				break;
     			case PLACE_CUBE_ON_SCALE:
-    				addSequential(new AutoRaiseLiftToScaleCommand());
+    				addSequential(new AutoLiftCommand(LiftTarget.ScaleHeight));
     				addSequential(new AutoShootCubeCommand());
-    				addSequential(new AutoLowerLiftCommand());
+    				addSequential(new AutoLiftCommand(LiftTarget.Bottom));
     				break;
     			case PICKUP_CUBE:
     				addSequential(new AlignToCubeCommand());
@@ -65,6 +66,8 @@ public class AutonomousCommandGroup extends CommandGroup {
     			}
     		}
 		}
+    	
+    	//addSequential(new AutoIntakeCubeCommand());
 
 
 //    	addSequential(new DriveDistanceCommand(2));

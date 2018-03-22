@@ -20,9 +20,9 @@ public class LiftSubsystem extends PIDSubsystem{
 	
 	public final double LIFT_SPEED = .6;
 	public final double LIFT_SPEED_ADJUST = .3;
-	public final double TICKS_TO_TOP = 100;
-	public final double TICKS_TO_SWITCH_HEIGHT = 20;
-	public final double TICKS_AT_BOTTOM = 0;
+	public final double TICKS_TO_TOP = 58070;
+	public final double TICKS_TO_SWITCH_HEIGHT = 22420;
+	public final double TICKS_AT_BOTTOM = 400;
 	
 	public final double MAX_TICK_DIFFERENCE = 200;
 	public LiftTarget liftTarget;
@@ -50,8 +50,9 @@ public class LiftSubsystem extends PIDSubsystem{
 //		frontRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
 //		frontRightMotor.enableCurrentLimit(true);
 		
-		getPIDController().setInputRange(TICKS_AT_BOTTOM, TICKS_TO_TOP);
-		getPIDController().setOutputRange(-1, 1);
+		getPIDController().setInputRange(0, TICKS_TO_TOP);
+		getPIDController().setOutputRange(-0.8, 0.8);
+		getPIDController().setContinuous(false);
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 		stop();
@@ -90,7 +91,7 @@ public class LiftSubsystem extends PIDSubsystem{
 	}
 	
 	public int getRightEncPos() {
-		return rightLiftEncoderMotor.getSensorCollection().getQuadraturePosition();
+		return -rightLiftEncoderMotor.getSensorCollection().getQuadraturePosition();
 	}
 	
 	public void resetEncoders() {
@@ -100,12 +101,14 @@ public class LiftSubsystem extends PIDSubsystem{
 
 	@Override
 	protected double returnPIDInput() {
+//		System.out.println( (getLeftEncPos() + getRightEncPos()) / 2.);
 		return (getLeftEncPos() + getRightEncPos()) / 2.;
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
-		setSpeed(output);
+		System.out.println("usee pid output: " + output);
+		setSpeed(-output);
 	}
 	
 	public void startAdjustment() {
@@ -115,12 +118,14 @@ public class LiftSubsystem extends PIDSubsystem{
 			setSetpoint(TICKS_AT_BOTTOM);
 			break;
 		case SwitchHeight:
+			System.out.println("Setting to switch height");
 			setSetpoint(TICKS_TO_SWITCH_HEIGHT);
 			break;
 		case ScaleHeight:
 			setSetpoint(TICKS_TO_TOP);
 			break;
 		}
+		enable();
 	}
 	
 	public void endAdjustment() {
