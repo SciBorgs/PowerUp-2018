@@ -1,12 +1,12 @@
 package org.usfirst.frc.team1155.robot.subsystems;
 
 import org.usfirst.frc.team1155.robot.PortMap;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PWM;
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ClimbSubsystem extends Subsystem {
@@ -38,12 +38,16 @@ public class ClimbSubsystem extends Subsystem {
 	}
 	
 	public void retract() {
-		leftServo.setPosition(0);
+//		leftServo.setSpeed(-1);
+//		rightServo.setPosition(1);
+		leftServo.setSpeed(0);
 		rightServo.setPosition(0);
 
 	}
 	
 	public void extend() {
+//		leftServo.setPosition(1);
+//		rightServo.setPosition(-1);
 		leftServo.setPosition(1);
 		rightServo.setPosition(1);
 

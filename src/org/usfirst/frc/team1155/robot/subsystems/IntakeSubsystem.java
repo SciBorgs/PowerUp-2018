@@ -29,10 +29,20 @@ public class IntakeSubsystem extends Subsystem{
 
 //		leftIntakeMotor = new TalonSRX(PortMap.INTAKE_LEFT_TALON);
 //		rightIntakeMotor = new TalonSRX(PortMap.INTAKE_RIGHT_TALON);
+		
+		
+		//UNCOMMENT THE LINES BELOW WHEN YOU PUT IN THE INTAKE
+		//UNCOMMENT THE LINES BELOW WHEN YOU PUT IN THE INTAKE		
+		//UNCOMMENT THE LINES BELOW WHEN YOU PUT IN THE INTAKE
+		
 		leftArmMotor = new TalonSRX(PortMap.INTAKE_ARM_LEFT_TALON);
 		rightArmMotor = new TalonSRX(PortMap.INTAKE_ARM_RIGHT_TALON);
 
-		armSolenoid = new DoubleSolenoid(PortMap.INTAKE_ARM_SOLENOID[0], PortMap.INTAKE_ARM_SOLENOID[1]);
+		//UNCOMMENT THE LINES ABOVE WHEN YOU PUT IN THE INTAKE
+		//UNCOMMENT THE LINES ABOVE WHEN YOU PUT IN THE INTAKE
+		//UNCOMMENT THE LINES ABOVE WHEN YOU PUT IN THE INTAKE
+		
+		//armSolenoid = new DoubleSolenoid(PortMap.INTAKE_ARM_SOLENOID[0], PortMap.INTAKE_ARM_SOLENOID[1]);
 		
 		//ultrasonic = new Ultrasonic(PortMap.INTAKE_ULTRASONIC[0], PortMap.INTAKE_ULTRASONIC[1]);
 //		ultrasonic = new Ultrasonic()

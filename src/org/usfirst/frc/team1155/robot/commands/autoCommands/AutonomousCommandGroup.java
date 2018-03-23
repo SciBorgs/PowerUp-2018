@@ -42,9 +42,12 @@ public class AutonomousCommandGroup extends CommandGroup {
 	    		double angle = Robot.driveSubsystem.calculatesAngleToTurnTo(path.getCoordinate(i-1), path.getCoordinate(i));
 	    		addSequential(new TurnToDegreeCommand(angle));
 	    		System.out.println("Adding angle of " + angle);
-	    		double distance = (path.getDistance(i-1, i) / 24.);
-	    		addSequential(new DriveDistanceCommand(distance));
-	    		System.out.println("Adding distance of " + distance);
+	    		
+	    		if (i == pathSize - 1) {
+	    			double distance = (path.getDistance(i-1, i) / 24.);
+	    			addSequential(new DriveDistanceCommand(distance));
+	    			System.out.println("Adding distance of " + distance);
+	    		}
 
     		//}
     		if(path.hasAutonomousAction(i)){
@@ -67,8 +70,7 @@ public class AutonomousCommandGroup extends CommandGroup {
     		}
 		}
     	
-    	//addSequential(new AutoIntakeCubeCommand());
-
+    	addSequential(new AutoPlaceOutputCubeCommand());
 
 //    	addSequential(new DriveDistanceCommand(2));
 //    	addSequential(new TurnToDegreeCommand(270));

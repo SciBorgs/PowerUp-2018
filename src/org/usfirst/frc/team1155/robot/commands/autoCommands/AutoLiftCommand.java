@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1155.robot.commands.autoCommands;
 
 import org.usfirst.frc.team1155.robot.Robot;
-import org.usfirst.frc.team1155.robot.subsystems.LiftSubsystem;
 import org.usfirst.frc.team1155.robot.subsystems.LiftSubsystem.LiftTarget;
 
 import edu.wpi.first.wpilibj.command.Command;

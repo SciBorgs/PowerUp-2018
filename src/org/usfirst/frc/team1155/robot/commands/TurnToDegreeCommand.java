@@ -4,7 +4,6 @@ import org.usfirst.frc.team1155.robot.Robot;
 import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem.PIDMode;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnToDegreeCommand extends Command{
 

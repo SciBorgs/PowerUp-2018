@@ -7,11 +7,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -58,31 +55,27 @@ public class DriveSubsystem extends PIDSubsystem {
 		//P is 1.0, I is 0.0, D is 0.6
 		
 		frontLeftMotor = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
-		middleRightMotor = new TalonSRX(PortMap.DRIVE_MIDDLE_RIGHT_TALON);
-		frontRightMotor = new TalonSRX(PortMap.DRIVE_FRONT_RIGHT_TALON);
-		backLeftMotor = new TalonSRX(PortMap.DRIVE_BACK_LEFT_TALON);
 		middleLeftMotor = new TalonSRX(PortMap.DRIVE_MIDDLE_LEFT_TALON);
+		backLeftMotor = new TalonSRX(PortMap.DRIVE_BACK_LEFT_TALON);
+		
+		frontRightMotor = new TalonSRX(PortMap.DRIVE_FRONT_RIGHT_TALON);
+		middleRightMotor = new TalonSRX(PortMap.DRIVE_MIDDLE_RIGHT_TALON);
 		backRightMotor = new TalonSRX(PortMap.DRIVE_BACK_RIGHT_TALON);
 		
 		frontLeftMotor.setNeutralMode(NeutralMode.Brake);
-		middleRightMotor.setNeutralMode(NeutralMode.Brake);
-		frontRightMotor.setNeutralMode(NeutralMode.Brake);
+		middleLeftMotor.setNeutralMode(NeutralMode.Brake);
 		backLeftMotor.setNeutralMode(NeutralMode.Brake);
+
+		frontRightMotor.setNeutralMode(NeutralMode.Brake);
 		middleRightMotor.setNeutralMode(NeutralMode.Brake);
 		backRightMotor.setNeutralMode(NeutralMode.Brake);
 
-		
-		backRightMotor.set(ControlMode.Follower, frontRightMotor.getDeviceID());
-		backLeftMotor.set(ControlMode.Follower, frontLeftMotor.getDeviceID());
-		middleRightMotor.set(ControlMode.Follower, frontRightMotor.getDeviceID());
-		middleLeftMotor.set(ControlMode.Follower, frontLeftMotor.getDeviceID());
-		
-		frontLeftMotor.configOpenloopRamp(0.1, 0); //2 seconds from neutral to full
-		backLeftMotor.configOpenloopRamp(0.1, 0); //2 seconds from neutral to full
-		middleLeftMotor.configOpenloopRamp(0.1, 0); //2 seconds from neutral to full
-		middleRightMotor.configOpenloopRamp(0.1, 0); //2 seconds from neutral to full
-		frontRightMotor.configOpenloopRamp(0.1, 0); //2 seconds from neutral to full
-		backRightMotor.configOpenloopRamp(0.1, 0); //2 seconds from neutral to full	
+		frontLeftMotor.configOpenloopRamp(0.1, 50); //2 seconds from neutral to full
+		backLeftMotor.configOpenloopRamp(0.1, 50); //2 seconds from neutral to full
+		middleLeftMotor.configOpenloopRamp(0.1, 50); //2 seconds from neutral to full
+		middleRightMotor.configOpenloopRamp(0.1, 50); //2 seconds from neutral to full
+		frontRightMotor.configOpenloopRamp(0.1, 50); //2 seconds from neutral to full
+		backRightMotor.configOpenloopRamp(0.1, 50); //2 seconds from neutral to full	
 //	
 //		frontRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
 //		frontRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
@@ -114,7 +107,7 @@ public class DriveSubsystem extends PIDSubsystem {
 //		backLeftMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
 //		backLeftMotor.enableCurrentLimit(true);
 		
-		talonWithPigeon = new TalonSRX(5);
+		talonWithPigeon = new TalonSRX(2);
 		
 		gearShifter = new DoubleSolenoid(PortMap.GEAR_SHIFTER_SOLENOID[0], PortMap.GEAR_SHIFTER_SOLENOID[1]);
 		
@@ -206,7 +199,12 @@ public class DriveSubsystem extends PIDSubsystem {
 	
 	public void setSpeed(double leftSpeed, double rightSpeed) {
 		frontLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);
+		middleLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);
+		backLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);
+
 		frontRightMotor.set(ControlMode.PercentOutput, rightSpeed);
+		middleRightMotor.set(ControlMode.PercentOutput, rightSpeed);
+		backRightMotor.set(ControlMode.PercentOutput, rightSpeed);
 	}
  
 	public void correctSpeed(double offset) {
@@ -294,9 +292,9 @@ public class DriveSubsystem extends PIDSubsystem {
 		return angle;
 	}
 	
-	private double getMagnitude(double x1, double x2, double y1, double y2) {
-		return Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
-	}
+//	private double getMagnitude(double x1, double x2, double y1, double y2) {
+//		return Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
+//	}
 	
 	
 	public void endAdjustment() {

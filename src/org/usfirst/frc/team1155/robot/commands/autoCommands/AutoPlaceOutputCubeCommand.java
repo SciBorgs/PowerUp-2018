@@ -1,14 +1,12 @@
 package org.usfirst.frc.team1155.robot.commands.autoCommands;
 
 import org.usfirst.frc.team1155.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class AutoPlaceOutputCubeCommand extends Command {
 
+	int counter = 0;
+	
     public AutoPlaceOutputCubeCommand() {
         requires(Robot.intakeSubsystem);
     }
@@ -25,13 +23,14 @@ public class AutoPlaceOutputCubeCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		counter += 1;
 	}
 
 
     // Make this return true when this Command no longer needs to run execute()
 	@Override
     protected boolean isFinished() {
-        return true;//Robot.intakeSubsystem.ultrasonic.getRangeInches() >= Robot.intakeSubsystem.MAX_INCHES_FROM_ULTRA_TO_BOX;
+        return counter > 100;//false;//Robot.intakeSubsystem.ultrasonic.getRangeInches() >= Robot.intakeSubsystem.MAX_INCHES_FROM_ULTRA_TO_BOX;
     }
 
     // Called once after isFinished returns true

@@ -14,7 +14,6 @@ import org.usfirst.frc.team1155.robot.commands.*;
 import org.usfirst.frc.team1155.robot.commands.autoCommands.AutonomousCommandGroup;
 import org.usfirst.frc.team1155.robot.subsystems.*;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import api.AutonomousRoutine;
@@ -23,7 +22,6 @@ import api.Position;
 import api.positioning.PositioningHandler;
 //import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -50,7 +48,6 @@ public class Robot extends IterativeRobot {
 //	public static ADXRS450_Gyro Gyro;
 	public static File file;
 	public static AutonomousRoutine autonomousRoutine;
-	public static int PointTwoMeters[];
 	
 	public static PigeonIMU pigeon;
 	public static BuiltInAccelerometer accel;
@@ -77,7 +74,7 @@ public class Robot extends IterativeRobot {
 		liftSubsystem = new LiftSubsystem(1.0, 0.1, 0.1);
 		climbSubsystem = new ClimbSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
-		visionSubsystem = new VisionSubsystem();
+//		visionSubsystem = new VisionSubsystem();
 		autonomousSubsystem = new AutonomousSubsystem();
 		m_oi = new OI();
 		m_chooser.addDefault("Auto Position 1", 1);
@@ -85,7 +82,7 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("Auto Position 3", 3);
 		
 		pigeon = new PigeonIMU(driveSubsystem.talonWithPigeon);
-//		//System.out.println("entering calibration mode");
+//		System.out.println("entering calibration mode");
 		pigeon.setYaw(0.,0);
 
 		
@@ -114,10 +111,7 @@ public class Robot extends IterativeRobot {
 		*/ 
 		timer = new Timer();
 		accel = new BuiltInAccelerometer();
-		PointTwoMeters = new int[2];
 		shortArr = new short[3];
-		PointTwoMeters[0] = 0;
-		PointTwoMeters[1] = 80;
 		//pigeon.enterCalibrationMode(CalibrationMode.BootTareGyroAccel, 3000);
 		SmartDashboard.putNumber("Intake Speed", 0.45);
 	}
@@ -152,8 +146,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+//		int position = m_chooser.getSelected();
+		int position = 0; // left side
 
-		m_autonomousCommand = new AutonomousCommandGroup(gameData, m_chooser.getSelected());
+		System.out.println("Game Data: " + gameData);
+		
+		m_autonomousCommand = new AutonomousCommandGroup(gameData, position);
 		Robot.driveSubsystem.resetEncoders();
 		Robot.liftSubsystem.resetEncoders();
 		/*
@@ -166,7 +164,7 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			System.out.println("startinggg...");
-			m_autonomousCommand.start();
+//			m_autonomousCommand.start();
 		}
 	}
 
@@ -212,12 +210,12 @@ public class Robot extends IterativeRobot {
 		Robot.liftSubsystem.resetEncoders();
 		//System.out.println(position.getX() + ", " + position.getY());
 //		new WestCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
-		new DriveStraightCommand(OI.xbox).start();
+//		new DriveStraightCommand(OI.xbox).start();
 		new WestCoastDriveCommand(OI.xbox).start();
 		new PlaceCommand(OI.xbox).start();
-		new CascadeLiftCommand(OI.xbox).start();
+		new CascadeLiftCommand(OI.rightJoystick).start();
+//		new ChangeLiftHeightCommand(OI.rightJoystick).start();
 		new ClimbCommand().start();
-		new ChangeLiftHeightCommand(OI.xbox).start();
 	}
 
 	/**
@@ -232,7 +230,7 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("Yceleration", plane.getAy());
 //		SmartDashboard.putNumber("Xvelocity", plane.getVx());
 //		SmartDashboard.putNumber("Yvelocity", plane.getVy());
-		//System.out.println(driveSubsystem.getPigeonRoll());
+//		System.out.println(driveSubsystem.getPigeonRoll());
 //		System.out.println("Ultra dist: " + Robot.intakeSubsystem.getUltraPos());
 //		System.out.println("Is ultra enabled: " + Robot.intakeSubsystem.ultrasonic.isEnabled());
 //		System.out.println("Is ultra valid: " + Robot.intakeSubsystem.ultrasonic.isRangeValid());

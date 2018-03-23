@@ -1,12 +1,12 @@
 package api.positioning;
 
-import api.Position;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Talon;
 import org.usfirst.frc.team1155.robot.Robot;
 
-import java.io.IOException;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import api.Position;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Talon;
 
 public class PositioningHandler {
     // Encoder positioning

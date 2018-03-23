@@ -8,9 +8,6 @@ import org.usfirst.frc.team1155.robot.subsystems.LiftSubsystem.LiftTarget;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class ChangeLiftHeightCommand extends Command {
 
 	private GenericHID controller;

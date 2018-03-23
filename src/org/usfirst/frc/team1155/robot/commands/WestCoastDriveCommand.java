@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team1155.robot.commands;
 
-import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.PortMap;
 import org.usfirst.frc.team1155.robot.Robot;
 import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem.PIDMode;
@@ -73,8 +72,13 @@ public class WestCoastDriveCommand extends Command {
     	}else if (!OI.driveStraightButton.get() && Robot.driveSubsystem.getPIDController().isEnabled()) {
     		Robot.driveSubsystem.endAdjustment();
     	} */
-    	SmartDashboard.putNumber("Right Talon Current", Robot.driveSubsystem.frontRightMotor.getOutputCurrent());
-    	SmartDashboard.putNumber("Left Talon Current", Robot.driveSubsystem.frontLeftMotor.getOutputCurrent());
+    	SmartDashboard.putNumber("Front Right Talon Current", Robot.driveSubsystem.frontRightMotor.getOutputCurrent());
+    	SmartDashboard.putNumber("MiddleRight Talon Current", Robot.driveSubsystem.middleRightMotor.getOutputCurrent());
+    	SmartDashboard.putNumber("Back Right Talon Current", Robot.driveSubsystem.backRightMotor.getOutputCurrent());
+
+    	SmartDashboard.putNumber("Front Left Talon Current", Robot.driveSubsystem.frontLeftMotor.getOutputCurrent());
+    	SmartDashboard.putNumber("Middle Left Talon Current", Robot.driveSubsystem.middleLeftMotor.getOutputCurrent());
+    	SmartDashboard.putNumber("Back Left Talon Current 2", Robot.driveSubsystem.backLeftMotor.getOutputCurrent());
 
     }
 

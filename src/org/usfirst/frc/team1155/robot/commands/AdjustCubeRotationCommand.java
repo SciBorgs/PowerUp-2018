@@ -1,12 +1,8 @@
 package org.usfirst.frc.team1155.robot.commands;
 
 import org.usfirst.frc.team1155.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class AdjustCubeRotationCommand extends Command {
 
 	int counter = 0;

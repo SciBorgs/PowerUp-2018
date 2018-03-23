@@ -18,7 +18,14 @@ public class AutonomousSubsystem extends Subsystem {
 		try {	
 			//File myPath = new File("/home/lvuser/AutoRoutines/star.auto");
 			//System.out.println(myPath.getAbsolutePath());
-			AutonomousRoutine path = new AutonomousRoutine(new File("/home/lvuser/AutoRoutines/Test-Square.auto"));
+//			AutonomousRoutine path = new AutonomousRoutine(new File("/home/lvuser/AutoRoutines/Test-Square.auto"));
+			AutonomousRoutine path;
+			if(gameInfo.charAt(0) == 'L') {
+				path = new AutonomousRoutine(new File("/home/lvuser/AutoRoutines/Left-Left-Switch.auto"));
+			} else {
+				path = new AutonomousRoutine(new File("/home/lvuser/AutoRoutines/Left-Right-Switch.auto"));
+			}
+			
 			System.out.println(path);
 			return path;
 		} catch (IOException e1) {

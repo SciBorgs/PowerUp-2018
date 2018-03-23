@@ -1,6 +1,5 @@
-	package org.usfirst.frc.team1155.robot.commands;
+package org.usfirst.frc.team1155.robot.commands;
 
-import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.Robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -25,27 +24,29 @@ public class CascadeLiftCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if(OI.controllerType == OI.ControllerType.XBOX) {
-			if (controller.getPOV() == 0) {
-				if (controller.getRawButton(5)) {
-					Robot.liftSubsystem.setLeftSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
-				} else if (controller.getRawButton(6)) {
-					Robot.liftSubsystem.setRightSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
-				} else {
-					Robot.liftSubsystem.setSpeed(-Robot.liftSubsystem.LIFT_SPEED);
-				}
-			}
-			if (controller.getPOV() == 180) {
-				if (controller.getRawButton(5)) {
-					Robot.liftSubsystem.setLeftSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
-				} else if (controller.getRawButton(6)) {
-					Robot.liftSubsystem.setRightSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
-				} else {
-					Robot.liftSubsystem.setSpeed(Robot.liftSubsystem.LIFT_SPEED);
-				}
-	
-			}
-		}
+		Robot.liftSubsystem.setSpeed(controller.getY());
+//		if(OI.controllerType == OI.ControllerType.XBOX) {
+//			if (controller.getPOV() == 0) {
+//				if (controller.getRawButton(5)) {
+//					Robot.liftSubsystem.setLeftSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
+//				} else if (controller.getRawButton(6)) {
+//					Robot.liftSubsystem.setRightSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
+//				} else {
+//					Robot.liftSubsystem.setSpeed(-Robot.liftSubsystem.LIFT_SPEED);
+//				}
+//			}
+//			if (controller.getPOV() == 180) {
+//				if (controller.getRawButton(5)) {
+//					Robot.liftSubsystem.setLeftSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
+//				} else if (controller.getRawButton(6)) {
+//					Robot.liftSubsystem.setRightSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
+//				} else {
+//					Robot.liftSubsystem.setSpeed(Robot.liftSubsystem.LIFT_SPEED);
+//				}
+//	
+//			}
+//		}
+		
 /*		if (controller.getPOV() == 0) {
 
 			// If the difference between the encoders is too much
@@ -75,9 +76,9 @@ public class CascadeLiftCommand extends Command {
 				Robot.liftSubsystem.setSpeed(Robot.liftSubsystem.LIFT_SPEED);
 			}
 		} */
-		if (controller.getPOV() == -1) {
-			Robot.liftSubsystem.stop();
-		} 
+//		if (controller.getPOV() == -1) {
+//			Robot.liftSubsystem.stop();
+//		} 
 		
 		SmartDashboard.putNumber("Left lift enc val", Robot.liftSubsystem.getLeftEncPos());
 		SmartDashboard.putNumber("Right lift enc val", Robot.liftSubsystem.getRightEncPos());

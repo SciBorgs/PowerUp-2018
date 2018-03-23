@@ -4,8 +4,8 @@ public class PortMap {
 		
 	//*****************JOYSTICKS*****************//
 
-	public static final int JOYSTICK_LEFT = 0;
-	public static final int JOYSTICK_RIGHT = 1;
+	public static final int JOYSTICK_LEFT = 1;
+	public static final int JOYSTICK_RIGHT = 0;
 	
 	public static final int JOYSTICK_TRIGGER = 1;
 	public static final int JOYSTICK_CENTER_BUTTON = 2;
@@ -52,44 +52,47 @@ public class PortMap {
 	
 	//*******************DRIVE*******************//
 	
+	// Talon 1 is bad 3/22/18: Stuck on 0.00 current output
+	// Talon 2 is bad 3/22/18: Stuck on 0.125 current output
+	
 	public static final int DRIVE_FRONT_LEFT_TALON = 6;
 	public static final int DRIVE_MIDDLE_LEFT_TALON = 7;
 	public static final int DRIVE_BACK_LEFT_TALON = 8;
 	
-	public static final int DRIVE_FRONT_RIGHT_TALON = 14;
+	public static final int DRIVE_FRONT_RIGHT_TALON = 16;
 	public static final int DRIVE_MIDDLE_RIGHT_TALON = 15;
-	public static final int DRIVE_BACK_RIGHT_TALON = 16;
+	public static final int DRIVE_BACK_RIGHT_TALON = 14;
 	
-	public static final int[] GEAR_SHIFTER_SOLENOID = {5,7};
+	public static final int[] GEAR_SHIFTER_SOLENOID = {6,7};
 
 	//*******************LIFT********************//	
 	
-	public static final int LIFT_LEFT_TALON = 2;
-	public static final int LIFT_LEFT_ENCODER_TALON = 1;
+	public static final int LIFT_LEFT_TALON = 3;
+	public static final int LIFT_LEFT_ENCODER_TALON = 4;
 	
-	public static final int LIFT_RIGHT_TALON = 10;
-	public static final int LIFT_RIGHT_ENCODER_TALON = 9;
+	public static final int LIFT_RIGHT_TALON = 11;
+	public static final int LIFT_RIGHT_ENCODER_TALON = 10;
 	
 	//*****************INTAKE*******************//	
 	
 //	public static final int INTAKE_LEFT_TALON = 3;
 //	public static final int INTAKE_RIGHT_TALON = 11;
 	
-	public static final int INTAKE_ARM_LEFT_TALON = 3;
-	public static final int INTAKE_ARM_RIGHT_TALON = 11;
+	public static final int INTAKE_ARM_LEFT_TALON = 2;
+	public static final int INTAKE_ARM_RIGHT_TALON = 12;
 	
-	public static final int[] INTAKE_ARM_SOLENOID = {1,3};//{0, 1};
-	public static final int[] INTAKE_TILT_SOLENOID = {5,7};//{0, 1};
+	public static final int[] INTAKE_ARM_SOLENOID = {4,5};//{0, 1};
+	public static final int[] INTAKE_TILT_SOLENOID = {0,1};//{0, 1};
 	
 	public static final int[] INTAKE_ULTRASONIC = {1, 0}; //1 = input, 0 = output
 
 	
 	//*****************CLIMBER******************//	
 	
-	public static final int[] CLIMB_SOLENOID = {6, 4};
+	public static final int[] CLIMB_SOLENOID = {2, 3};
 	
-	public static final int LEFT_CLIMB_TALON = 4;
-	public static final int RIGHT_CLIMB_TALON = 5;
+	public static final int LEFT_CLIMB_TALON = 5;
+	public static final int RIGHT_CLIMB_TALON = 13;
 	public static final int TILT_CLIMB_SERVO_LEFT = 0;
 	public static final int TILT_CLIMB_SERVO_RIGHT = 1;
 
