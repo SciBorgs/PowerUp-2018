@@ -1,12 +1,6 @@
 package api;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -152,6 +146,14 @@ public class AutonomousRoutine implements Serializable {
         }
     }
 
+    public double[] getLastCoordinate() {
+        if (this.size() > 0) {
+            return getCoordinate(this.size() - 1);
+        } else {
+            return null;
+        }
+    }
+
     public AutonomousAction getAutonomousAction(int index) {
         if (index < autonomousActions.size() && index >= 0) {
             return autonomousActions.get(index);
@@ -162,6 +164,10 @@ public class AutonomousRoutine implements Serializable {
 
     public boolean hasAutonomousAction(int index) {
         return autonomousActions.get(index) != null;
+    }
+
+    public void setAutonomousAction(int index, AutonomousAction action) {
+        autonomousActions.set(index, action);
     }
 
     /**
@@ -220,26 +226,15 @@ public class AutonomousRoutine implements Serializable {
         if (file != null) {
             AutonomousRoutine autonomousRoutine;
             try {
-            	System.out.println("started load()");
-            	FileInputStream fis = new FileInputStream(file);
-            	System.out.println("fis");
-            	ObjectInputStream ois = new ObjectInputStream(fis);
-            	System.out.println("ois");
-
-            	System.out.println(ois.readLine());
-            	autonomousRoutine = (AutonomousRoutine)ois.readObject();
-            	System.out.println("casted");
-
-//                autonomousRoutine = (AutonomousRoutine)new ObjectInputStream(new FileInputStream(file)).readObject();
+                autonomousRoutine = (AutonomousRoutine)new ObjectInputStream(new FileInputStream(file)).readObject();
                 this.set(autonomousRoutine);
             } catch (Exception e) {
-            	System.out.println("could not cast");
-            	e.printStackTrace();
+                System.out.println("could not cast");
                 return false;
             }
             return true;
         } else {
-        	System.out.println("File is null");
+            System.out.println("File is null");
             return false;
         }
     }
