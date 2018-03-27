@@ -23,10 +23,14 @@ public class ClimbCommand extends Command {
 			//Robot.climbSubsystem.setExtensionSpeed(-.5);
 		
 		
-		if (OI.extendClimber.get()) {
+		if (OI.windClimber.get()) {
 			System.out.println("extending");
 			Robot.climbSubsystem.setExtensionSpeed(-.5);
-		}else if (OI.stopClimber.get()){
+		}else if (OI.stopClimbing.get()){
+			System.out.println("stopping");
+			Robot.climbSubsystem.setExtensionSpeed(0);
+
+		}else if (OI.unwindClimber.get()){
 			System.out.println("stopping");
 			Robot.climbSubsystem.setExtensionSpeed(.5);
 

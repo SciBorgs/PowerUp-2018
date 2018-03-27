@@ -11,57 +11,59 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ChangeLiftHeightCommand extends Command {
 
 	private GenericHID controller;
+	private String direction = "decreasing";
 	
-    public ChangeLiftHeightCommand(GenericHID controller) {
+    public ChangeLiftHeightCommand(String dir) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	this.controller = controller;
+    	direction = dir;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+		System.out.println("ChangeLiftHeightCommand start");
+		LiftTarget newTarget = LiftTarget.Bottom;
+    	
+    	if(direction == "down") {
+    		switch(Robot.liftSubsystem.liftTarget) {
+    		case Bottom:
+    			newTarget = LiftTarget.SwitchHeight;
+    			break;
+    		case SwitchHeight:
+    			newTarget = LiftTarget.ScaleHeight;
+    			break;
+    		case ScaleHeight:
+    			newTarget = LiftTarget.Bottom;
+    			break;
+    		}
+    	}else if(direction == "up") {
+    		switch(Robot.liftSubsystem.liftTarget) {
+    		case Bottom:
+    			newTarget = LiftTarget.ScaleHeight;
+    			break;
+    		case SwitchHeight:
+    			newTarget = LiftTarget.Bottom;
+    			break;
+    		case ScaleHeight:
+    			newTarget = LiftTarget.SwitchHeight;
+    			break;
+    		}
+    	}
+    	System.out.println("Starting autoliftCommand with target of " + newTarget);
+    	(new AutoLiftCommand(newTarget, false)).start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	LiftTarget newTarget = LiftTarget.Bottom;
     	
-    	if(OI.increaseLiftHeight.get()) {
-    		switch(Robot.liftSubsystem.liftTarget) {
-    		case Bottom:
-    			newTarget = LiftTarget.SwitchHeight;
-    			break;
-    		case SwitchHeight:
-    			newTarget = LiftTarget.ScaleHeight;
-    			break;
-    		case ScaleHeight:
-    			newTarget = LiftTarget.Bottom;
-    			break;
-    		}
-    	}
-    	
-    	if(OI.decreaseLiftHeight.get()) {
-    		switch(Robot.liftSubsystem.liftTarget) {
-    		case Bottom:
-    			newTarget = LiftTarget.ScaleHeight;
-    			break;
-    		case SwitchHeight:
-    			newTarget = LiftTarget.Bottom;
-    			break;
-    		case ScaleHeight:
-    			newTarget = LiftTarget.SwitchHeight;
-    			break;
-    		}
-    	}
-    	
-    	(new AutoLiftCommand(newTarget)).start();
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

@@ -3,6 +3,7 @@ package org.usfirst.frc.team1155.robot.subsystems;
 import org.usfirst.frc.team1155.robot.PortMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -21,6 +22,9 @@ public class ClimbSubsystem extends Subsystem {
 		leftClimbTalon = new TalonSRX(PortMap.LEFT_CLIMB_TALON);
 		rightClimbTalon = new TalonSRX(PortMap.RIGHT_CLIMB_TALON);
 		
+		leftClimbTalon.setNeutralMode(NeutralMode.Brake);
+		rightClimbTalon.setNeutralMode(NeutralMode.Brake);
+		
 		leftServo = new PWM(PortMap.TILT_CLIMB_SERVO_LEFT);
 		rightServo = new PWM(PortMap.TILT_CLIMB_SERVO_RIGHT);
 		leftServo.setBounds(2, 2, 1, 1, 1);
@@ -30,7 +34,9 @@ public class ClimbSubsystem extends Subsystem {
 	}
 	
 	public void setExtensionSpeed(double speed) {
-		leftClimbTalon.set(ControlMode.PercentOutput, -speed);
+//		System.out.println("Extension speed: " + speed);
+		
+		leftClimbTalon.set(ControlMode.PercentOutput, speed);
 		rightClimbTalon.set(ControlMode.PercentOutput, -speed);
 		System.out.println("current 1 " +  rightClimbTalon.getOutputCurrent());
 		System.out.println("current 2 "  + leftClimbTalon.getOutputCurrent());

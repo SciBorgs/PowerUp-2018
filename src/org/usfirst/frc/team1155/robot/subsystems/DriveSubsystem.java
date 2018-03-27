@@ -39,6 +39,8 @@ public class DriveSubsystem extends PIDSubsystem {
 	
 	public final double PID_TOLERANCE = .01;
 
+	double driveLiftingSpeedScale = .5;
+	
 	
 	public static enum PIDMode {
 		TurnDegree, DriveStraight, DriveDistance;
@@ -143,7 +145,7 @@ public class DriveSubsystem extends PIDSubsystem {
 
 	protected void usePIDOutput(double output) {
 		//System.out.println("PID output: " + output);
-
+//		System.out.println("PID Mode: " + pidMode);
 		switch (pidMode) {
 		// For reference, a CW gyro correction is positive by default
 		// TODO: Check if the robot goes in the right direction.
@@ -158,7 +160,11 @@ public class DriveSubsystem extends PIDSubsystem {
 			break;
 		case DriveDistance:
 			output *= 0.5;
-			driveDistSetSpeed(output, output);
+//			output = 0.5;
+//			System.out.println("output" + output);
+			setSpeed(output, output);
+			//driveDistSetSpeed(output, output);
+			break;
 		default:
 			setSpeed(0, 0);
 			break;
@@ -198,6 +204,14 @@ public class DriveSubsystem extends PIDSubsystem {
 	}
 	
 	public void setSpeed(double leftSpeed, double rightSpeed) {
+//		System.out.println("right Speed: " + rightSpeed);
+//		System.out.println("legft Speed: " + leftSpeed);
+		
+		if(Robot.liftSubsystem.isAboveMid()) {
+			leftSpeed *= driveLiftingSpeedScale;
+			rightSpeed *= driveLiftingSpeedScale;
+		}
+		
 		frontLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);
 		middleLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);
 		backLeftMotor.set(ControlMode.PercentOutput, -leftSpeed);

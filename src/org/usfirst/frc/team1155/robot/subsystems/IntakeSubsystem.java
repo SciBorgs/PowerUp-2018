@@ -23,7 +23,7 @@ public class IntakeSubsystem extends Subsystem{
 	public final double SECONDS_PER_EXECUTE = 0.02;
 	
 	public final double INTAKE_SPEED = 0.55;
-	public final double OUTPUT_SPEED = 0.8;
+	public final double OUTPUT_SPEED = 0.4;
 	
 	public void initDefaultCommand() {
 
@@ -42,7 +42,7 @@ public class IntakeSubsystem extends Subsystem{
 		//UNCOMMENT THE LINES ABOVE WHEN YOU PUT IN THE INTAKE
 		//UNCOMMENT THE LINES ABOVE WHEN YOU PUT IN THE INTAKE
 		
-		//armSolenoid = new DoubleSolenoid(PortMap.INTAKE_ARM_SOLENOID[0], PortMap.INTAKE_ARM_SOLENOID[1]);
+		armSolenoid = new DoubleSolenoid(PortMap.INTAKE_ARM_SOLENOID[0], PortMap.INTAKE_ARM_SOLENOID[1]);
 		
 		//ultrasonic = new Ultrasonic(PortMap.INTAKE_ULTRASONIC[0], PortMap.INTAKE_ULTRASONIC[1]);
 //		ultrasonic = new Ultrasonic()

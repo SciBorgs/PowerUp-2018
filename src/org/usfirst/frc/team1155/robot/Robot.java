@@ -22,6 +22,7 @@ import api.Position;
 import api.positioning.PositioningHandler;
 //import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -77,9 +78,9 @@ public class Robot extends IterativeRobot {
 //		visionSubsystem = new VisionSubsystem();
 		autonomousSubsystem = new AutonomousSubsystem();
 		m_oi = new OI();
-		m_chooser.addDefault("Auto Position 1", 1);
-		m_chooser.addObject("Auto Position 2", 2);
-		m_chooser.addObject("Auto Position 3", 3);
+		m_chooser.addDefault("Auto Position Left", 1);
+		m_chooser.addObject("Auto Position Middle", 2);
+		m_chooser.addObject("Auto Positiofn Right", 3);
 		
 		pigeon = new PigeonIMU(driveSubsystem.talonWithPigeon);
 //		System.out.println("entering calibration mode");
@@ -96,8 +97,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("D Value", 0.6);
 		SmartDashboard.putNumber("Dist To Drive", 0);
 		SmartDashboard.putNumber("AngleToTurn", 0);
-		//Gyro = new ADXRS450_Gyro();
-        try {
+
+		try {
             client = new Client();
         } catch (IOException e) {
             System.out.println("could not start client");
@@ -114,6 +115,13 @@ public class Robot extends IterativeRobot {
 		shortArr = new short[3];
 		//pigeon.enterCalibrationMode(CalibrationMode.BootTareGyroAccel, 3000);
 		SmartDashboard.putNumber("Intake Speed", 0.45);
+	}
+	
+	@Override
+	public void robotPeriodic() {
+		SmartDashboard.putNumber("Left lift enc val", Robot.liftSubsystem.getLeftEncPos());
+		SmartDashboard.putNumber("Right lift enc val", Robot.liftSubsystem.getRightEncPos());
+
 	}
 
 	/**
@@ -146,25 +154,21 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+		Robot.intakeSubsystem.armSolenoid.set(DoubleSolenoid.Value.kReverse); //Close the arms to keep the cube
+		Robot.driveSubsystem.gearShifter.set(DoubleSolenoid.Value.kForward); //Set drive to fast gear
+		pigeon.setYaw(0.,0);
+
 //		int position = m_chooser.getSelected();
-		int position = 0; // left side
+		int position = 2; // Test
 
 		System.out.println("Game Data: " + gameData);
 		
 		m_autonomousCommand = new AutonomousCommandGroup(gameData, position);
 		Robot.driveSubsystem.resetEncoders();
 		Robot.liftSubsystem.resetEncoders();
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
 
-		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
-			System.out.println("startinggg...");
-//			m_autonomousCommand.start();
+			m_autonomousCommand.start();
 		}
 	}
 
@@ -174,10 +178,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		//plane.updatePosition();
 
-		//System.out.println(plane.getX() + ", " + plane.getY());
-		
+		SmartDashboard.putNumber("PigeonAngle", Robot.driveSubsystem.getPigeonAngle());
+
 		SmartDashboard.putNumber("Left Encoder Feet", Robot.driveSubsystem.getLeftEncPosition());
 		SmartDashboard.putNumber("Left Encoder Ticks", Robot.driveSubsystem.getLeftEncPositionTicks());	
 		
@@ -194,28 +197,21 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		
+		
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		
-		/*DoubleSolenoid ds = new DoubleSolenoid(5, 7);
-		if(ds.get() == DoubleSolenoid.Value.kForward) {
-			ds.set(DoubleSolenoid.Value.kReverse);
-		}else if (ds.get() == DoubleSolenoid.Value.kReverse){
-			ds.set(DoubleSolenoid.Value.kForward);
-		}*/
-		
+				
 //		pigeon.setYaw(0.,0);
 		Robot.driveSubsystem.resetEncoders();
 		Robot.liftSubsystem.resetEncoders();
-		//System.out.println(position.getX() + ", " + position.getY());
-//		new WestCoastDriveCommand(OI.leftJoystick, OI.rightJoystick).start();
-//		new DriveStraightCommand(OI.xbox).start();
+
 		new WestCoastDriveCommand(OI.xbox).start();
 		new PlaceCommand(OI.xbox).start();
 		new CascadeLiftCommand(OI.rightJoystick).start();
-//		new ChangeLiftHeightCommand(OI.rightJoystick).start();
 		new ClimbCommand().start();
+//		new ChangeLiftHeightCommand(OI.xbox).start();
 	}
 
 	/**
@@ -224,6 +220,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
 //		pigeon.getYawPitchRoll(anglesYPR);
 //		positioningHandler.updatePosition();
 //		SmartDashboard.putNumber("Xceleration", plane.getAx());
@@ -243,7 +240,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putNumber("Avg. enc feet", Robot.driveSubsystem.getEncPosition());
 		
-		SmartDashboard.putNumber("PigeonRoll", Robot.driveSubsystem.getPigeonAngle());
+		SmartDashboard.putNumber("PigeonAngle", Robot.driveSubsystem.getPigeonAngle());
 	}
 
 	/**
@@ -251,6 +248,5 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		//System.out.println(position.getX() + ", " + position.getY());
 	}
 }

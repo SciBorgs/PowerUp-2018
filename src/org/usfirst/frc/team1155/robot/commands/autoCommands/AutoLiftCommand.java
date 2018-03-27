@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1155.robot.commands.autoCommands;
 
+import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.Robot;
+import org.usfirst.frc.team1155.robot.commands.CascadeLiftCommand;
 import org.usfirst.frc.team1155.robot.subsystems.LiftSubsystem.LiftTarget;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -12,11 +14,12 @@ public class AutoLiftCommand extends Command {
 
 	
 	LiftTarget target;
+	boolean isAuto;
 	
-	
-    public AutoLiftCommand(LiftTarget t) {
+    public AutoLiftCommand(LiftTarget t, boolean isAuto) {
         requires(Robot.liftSubsystem);
         target = t;
+        this.isAuto = isAuto;
     }
 
     // Called just before this Command runs the first time
@@ -39,12 +42,18 @@ public class AutoLiftCommand extends Command {
     protected void end() {
     	Robot.liftSubsystem.stop();
     	Robot.liftSubsystem.endAdjustment();
+    	
+    	if(!isAuto) {
+    		System.out.println("Starting cascade lift command from auto lift end");
+    		new CascadeLiftCommand(OI.rightJoystick).start();
+    	}
 
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	
     	end();
     }
 }

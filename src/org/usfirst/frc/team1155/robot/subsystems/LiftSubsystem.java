@@ -20,12 +20,13 @@ public class LiftSubsystem extends PIDSubsystem{
 	
 	public final double LIFT_SPEED = .6;
 	public final double LIFT_SPEED_ADJUST = .3;
-	public final double TICKS_TO_TOP = 58070;
-	public final double TICKS_TO_SWITCH_HEIGHT = 22420;
-	public final double TICKS_AT_BOTTOM = 400;
-	
+	public final double TICKS_TO_TOP = 45000;//58070;
+	public final double TICKS_TO_SWITCH_HEIGHT = 8500;//7986;//22420;
+	public final double TICKS_AT_BOTTOM = -9500;
+	public final double TICKS_AT_MID = 26000;
+
 	public final double MAX_TICK_DIFFERENCE = 200;
-	public LiftTarget liftTarget;
+	public LiftTarget liftTarget = LiftTarget.Bottom;
 	
 	public static enum LiftTarget {
 		Bottom, SwitchHeight, ScaleHeight;
@@ -50,7 +51,7 @@ public class LiftSubsystem extends PIDSubsystem{
 //		frontRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
 //		frontRightMotor.enableCurrentLimit(true);
 		
-		getPIDController().setInputRange(0, TICKS_TO_TOP);
+		getPIDController().setInputRange(TICKS_AT_BOTTOM, TICKS_TO_TOP);
 		getPIDController().setOutputRange(-0.8, 0.8);
 		getPIDController().setContinuous(false);
 		// Set the default command for a subsystem here.
@@ -95,7 +96,8 @@ public class LiftSubsystem extends PIDSubsystem{
 	}
 	
 	public void resetEncoders() {
-		rightLiftEncoderMotor.getSensorCollection().setQuadraturePosition(0, 0);
+		if(rightLiftEncoderMotor.getSensorCollection() != null)
+			rightLiftEncoderMotor.getSensorCollection().setQuadraturePosition(0, 0);
 		leftLiftEncoderMotor.getSensorCollection().setQuadraturePosition(0, 0);
 	}
 
@@ -107,6 +109,7 @@ public class LiftSubsystem extends PIDSubsystem{
 
 	@Override
 	protected void usePIDOutput(double output) {
+		output *= .5;
 		System.out.println("usee pid output: " + output);
 		setSpeed(-output);
 	}
@@ -126,6 +129,14 @@ public class LiftSubsystem extends PIDSubsystem{
 			break;
 		}
 		enable();
+	}
+	
+	public int getAvgEncPos() {
+		return (int) ((getLeftEncPos() + getRightEncPos()) / 2.);
+	}
+	
+	public boolean isAboveMid() {
+		return getAvgEncPos() > TICKS_AT_MID;
 	}
 	
 	public void endAdjustment() {

@@ -19,11 +19,13 @@ public class CascadeLiftCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		System.out.println("Starting cascade lift command");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		System.out.println(controller.getY());
 		Robot.liftSubsystem.setSpeed(controller.getY());
 //		if(OI.controllerType == OI.ControllerType.XBOX) {
 //			if (controller.getPOV() == 0) {
@@ -80,8 +82,6 @@ public class CascadeLiftCommand extends Command {
 //			Robot.liftSubsystem.stop();
 //		} 
 		
-		SmartDashboard.putNumber("Left lift enc val", Robot.liftSubsystem.getLeftEncPos());
-		SmartDashboard.putNumber("Right lift enc val", Robot.liftSubsystem.getRightEncPos());
 
 	}
 

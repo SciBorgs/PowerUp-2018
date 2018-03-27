@@ -92,7 +92,7 @@ public class PortMap {
 	public static final int[] CLIMB_SOLENOID = {2, 3};
 	
 	public static final int LEFT_CLIMB_TALON = 5;
-	public static final int RIGHT_CLIMB_TALON = 13;
+	public static final int RIGHT_CLIMB_TALON = 1;
 	public static final int TILT_CLIMB_SERVO_LEFT = 0;
 	public static final int TILT_CLIMB_SERVO_RIGHT = 1;
 

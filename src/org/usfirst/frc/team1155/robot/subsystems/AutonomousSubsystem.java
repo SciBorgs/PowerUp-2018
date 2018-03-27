@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class AutonomousSubsystem extends Subsystem {
 
 	
-	
+	public final double DIST_TO_BASELINE = 12.41;
+//	public final double DIST_PAST_SWITCH = 18.8;
+//	public final double DIST_TO_SCALE = 18;
 	
 	public AutonomousRoutine configurePath(String gameInfo, int pos){
 		try {	
