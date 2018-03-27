@@ -39,10 +39,10 @@ public class OI {
 
 		if (controllerType == ControllerType.XBOX) {
 			actuateIntake.toggleWhenPressed(new ToggleArmCommand());
-			shiftGear.toggleWhenActive(new ToggleGearCommand());
+			shiftGear.toggleWhenActive(new GearShiftCommand());
 			tiltIntake.whenPressed(new TiltIntakeCommand());
 
-			tiltClimber.toggleWhenActive(new ToggleClimbCommand());
+			tiltClimber.toggleWhenActive(new ExtendClimbServosCommand());
 			deployClimber.toggleWhenActive(new DeployClimberCommand());
 			increaseLiftHeight.whenPressed(new ChangeLiftHeightCommand("up"));
 

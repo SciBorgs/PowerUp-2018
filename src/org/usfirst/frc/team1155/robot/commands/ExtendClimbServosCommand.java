@@ -4,11 +4,11 @@ import org.usfirst.frc.team1155.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ToggleClimbCommand extends Command{
+public class ExtendClimbServosCommand extends Command{
 	
 	private final double E_MARGIN = 0.02;
 	
-	public ToggleClimbCommand() {
+	public ExtendClimbServosCommand() {
 		// Use requires() here to declare subsystem dependencies
 		//requires(Robot.intakeSubsystem);
 	}

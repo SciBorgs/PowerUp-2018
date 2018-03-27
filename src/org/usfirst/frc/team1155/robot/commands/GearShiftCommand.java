@@ -4,8 +4,8 @@ import org.usfirst.frc.team1155.robot.Robot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ToggleGearCommand extends Command{
-	public ToggleGearCommand() {
+public class GearShiftCommand extends Command{
+	public GearShiftCommand() {
 		// Use requires() here to declare subsystem dependencies
 		//requires(Robot.intakeSubsystem);
 	}

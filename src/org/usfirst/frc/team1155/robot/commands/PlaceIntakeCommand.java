@@ -11,7 +11,6 @@ public class PlaceIntakeCommand extends Command{
 	private double speed;
 	
 	public PlaceIntakeCommand(GenericHID controller, double speed) {
-		// Use requires() here to declare subsystem dependencies
 		requires(Robot.intakeSubsystem);
 		this.controller = controller;
 		this.speed = speed;

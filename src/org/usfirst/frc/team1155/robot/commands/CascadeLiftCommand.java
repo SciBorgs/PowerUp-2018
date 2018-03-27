@@ -27,61 +27,6 @@ public class CascadeLiftCommand extends Command {
 	protected void execute() {
 		System.out.println(controller.getY());
 		Robot.liftSubsystem.setSpeed(controller.getY());
-//		if(OI.controllerType == OI.ControllerType.XBOX) {
-//			if (controller.getPOV() == 0) {
-//				if (controller.getRawButton(5)) {
-//					Robot.liftSubsystem.setLeftSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
-//				} else if (controller.getRawButton(6)) {
-//					Robot.liftSubsystem.setRightSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
-//				} else {
-//					Robot.liftSubsystem.setSpeed(-Robot.liftSubsystem.LIFT_SPEED);
-//				}
-//			}
-//			if (controller.getPOV() == 180) {
-//				if (controller.getRawButton(5)) {
-//					Robot.liftSubsystem.setLeftSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
-//				} else if (controller.getRawButton(6)) {
-//					Robot.liftSubsystem.setRightSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
-//				} else {
-//					Robot.liftSubsystem.setSpeed(Robot.liftSubsystem.LIFT_SPEED);
-//				}
-//	
-//			}
-//		}
-		
-/*		if (controller.getPOV() == 0) {
-
-			// If the difference between the encoders is too much
-			// make the side that is higher go slower so the other one
-			// can catch up
-
-			if (Robot.liftSubsystem.getEncoderDifference() < -Robot.liftSubsystem.MAX_TICK_DIFFERENCE) {
-				Robot.liftSubsystem.setLeftSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
-				Robot.liftSubsystem.setRightSideSpeed(-Robot.liftSubsystem.LIFT_SPEED_ADJUST);
-			} else if (Robot.liftSubsystem.getEncoderDifference() > Robot.liftSubsystem.MAX_TICK_DIFFERENCE) {
-				Robot.liftSubsystem.setLeftSideSpeed(-Robot.liftSubsystem.LIFT_SPEED_ADJUST);
-				Robot.liftSubsystem.setRightSideSpeed(-Robot.liftSubsystem.LIFT_SPEED);
-			} else {
-				Robot.liftSubsystem.setSpeed(-Robot.liftSubsystem.LIFT_SPEED);
-			}
-
-		}
-
-		if (controller.getPOV() == 180) {
-			if (Robot.liftSubsystem.getEncoderDifference() < -Robot.liftSubsystem.MAX_TICK_DIFFERENCE) {
-				Robot.liftSubsystem.setLeftSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
-				Robot.liftSubsystem.setRightSideSpeed(Robot.liftSubsystem.LIFT_SPEED_ADJUST);
-			} else if (Robot.liftSubsystem.getEncoderDifference() > Robot.liftSubsystem.MAX_TICK_DIFFERENCE) {
-				Robot.liftSubsystem.setLeftSideSpeed(Robot.liftSubsystem.LIFT_SPEED_ADJUST);
-				Robot.liftSubsystem.setRightSideSpeed(Robot.liftSubsystem.LIFT_SPEED);
-			} else {
-				Robot.liftSubsystem.setSpeed(Robot.liftSubsystem.LIFT_SPEED);
-			}
-		} */
-//		if (controller.getPOV() == -1) {
-//			Robot.liftSubsystem.stop();
-//		} 
-		
 
 	}
 

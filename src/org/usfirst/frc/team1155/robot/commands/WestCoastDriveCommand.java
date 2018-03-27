@@ -41,12 +41,6 @@ public class WestCoastDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-/*    	SmartDashboard.putNumber("GyroValue", Robot.driveSubsystem.getPigeonRoll());
-    	Robot.driveSubsystem.setSpeed(-left.getY(), -right.getY());
-    	if(OI.driveStraightButton.get() && !Robot.driveSubsystem.getPIDController().isEnabled())
-    		Robot.driveSubsystem.startAdjustment(0, Robot.driveSubsystem.getPigeonRoll());
-    	else if (!OI.driveStraightButton.get() && Robot.driveSubsystem.getPIDController().isEnabled())
-    		Robot.driveSubsystem.endAdjustment(); */
     	if(joystick) {
     		rawLeft = -left.getY();
     		rawRight = -right.getY();
@@ -60,18 +54,8 @@ public class WestCoastDriveCommand extends Command {
     	double leftSpeed = Robot.driveSubsystem.applyDriveCurve(rawLeft);
     	double rightSpeed = Robot.driveSubsystem.applyDriveCurve(rawRight);
     	
-//    	leftSpeed /= 2;
-//    	rightSpeed /= 2;
-//    	//Robot.driveSubsystem.setSpeed(rawLeft, rawRight);
     	Robot.driveSubsystem.setSpeed(leftSpeed, rightSpeed);
-   /* 	if(OI.driveStraightButton.get())
-    		Robot.driveSubsystem.setSpeed(rawLeft, rawLeft);
-    	if(OI.driveStraightButton.get() && !Robot.driveSubsystem.getPIDController().isEnabled()) {
-    		Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonAngle(), Robot.driveSubsystem.getPigeonAngle());
-    	
-    	}else if (!OI.driveStraightButton.get() && Robot.driveSubsystem.getPIDController().isEnabled()) {
-    		Robot.driveSubsystem.endAdjustment();
-    	} */
+
     	SmartDashboard.putNumber("Front Right Talon Current", Robot.driveSubsystem.frontRightMotor.getOutputCurrent());
     	SmartDashboard.putNumber("MiddleRight Talon Current", Robot.driveSubsystem.middleRightMotor.getOutputCurrent());
     	SmartDashboard.putNumber("Back Right Talon Current", Robot.driveSubsystem.backRightMotor.getOutputCurrent());
