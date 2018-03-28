@@ -73,6 +73,8 @@ public class PortMap {
 	public static final int LIFT_RIGHT_TALON = 11;
 	public static final int LIFT_RIGHT_ENCODER_TALON = 10;
 	
+	public static final int LIMIT_SWITCH = 7;
+	
 	//*****************INTAKE*******************//	
 	
 //	public static final int INTAKE_LEFT_TALON = 3;

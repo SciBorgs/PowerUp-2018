@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class LiftSubsystem extends PIDSubsystem{
@@ -17,6 +18,8 @@ public class LiftSubsystem extends PIDSubsystem{
 
 	public TalonSRX leftLiftMotor, rightLiftMotor, leftLiftEncoderMotor, rightLiftEncoderMotor;
 	public TalonSRX[] allTalons;
+	
+	public DigitalInput limitSwitch; 
 	
 	public final double LIFT_SPEED = .6;
 	public final double LIFT_SPEED_ADJUST = .3;
@@ -41,6 +44,8 @@ public class LiftSubsystem extends PIDSubsystem{
 		
 		allTalons = new TalonSRX[] {leftLiftMotor, rightLiftMotor, leftLiftEncoderMotor, rightLiftEncoderMotor};
 
+		limitSwitch = new DigitalInput(PortMap.LIMIT_SWITCH);
+		
 		leftLiftMotor.setNeutralMode(NeutralMode.Brake);
 		rightLiftMotor.setNeutralMode(NeutralMode.Brake);
 		leftLiftEncoderMotor.setNeutralMode(NeutralMode.Brake);
@@ -141,5 +146,9 @@ public class LiftSubsystem extends PIDSubsystem{
 	
 	public void endAdjustment() {
 		getPIDController().disable();
+	}
+	
+	public boolean getLimit() {
+		return limitSwitch.get();
 	}
 }

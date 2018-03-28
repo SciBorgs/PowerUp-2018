@@ -27,7 +27,9 @@ public class CascadeLiftCommand extends Command {
 	protected void execute() {
 		System.out.println(controller.getY());
 		Robot.liftSubsystem.setSpeed(controller.getY());
-
+		if(controller.getY() < 0 && Robot.liftSubsystem.getLimit()) {
+			Robot.liftSubsystem.stop();
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
