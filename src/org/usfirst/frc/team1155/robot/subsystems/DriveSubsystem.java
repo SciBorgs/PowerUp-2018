@@ -38,7 +38,10 @@ public class DriveSubsystem extends PIDSubsystem {
 	public final double[] TURN_PID = {0.1, 0.01, .7};
 	
 	public final double PID_TOLERANCE = .01;
-
+	public final double SHIFT_SPEED = 5.; //shift the gear at 5 feet per second
+	public DoubleSolenoid.Value lowGearValue = DoubleSolenoid.Value.kForward;
+	public DoubleSolenoid.Value highGearValue = DoubleSolenoid.Value.kReverse;
+	
 	double driveLiftingSpeedScale = .5;
 	
 	
@@ -371,6 +374,23 @@ public class DriveSubsystem extends PIDSubsystem {
 		double wheelRotations = feet / (2 * Math.PI * WHEEL_RADIUS);
 		double encTicks = wheelRotations / ENC_WHEEL_RATIO;
 		return encTicks;
+	}
+	
+	public double getEncVelocity(String side){
+		double velTicks = 0;
+		switch(side){
+		case "Left":
+			velTicks = middleLeftMotor.getSensorCollection().getQuadratureVelocity();
+			break;
+		case "Right":
+			velTicks = middleRightMotor.getSensorCollection().getQuadratureVelocity();
+			break;
+		case "Average":
+			return (getEncVelocity("Left") + getEncVelocity("Right") / 2);
+		}
+		velTicks /= 10.;
+		velTicks *= ENC_WHEEL_RATIO;
+		return velTicks;
 	}
 	
 	public double applyDriveCurve(double raw) {	
