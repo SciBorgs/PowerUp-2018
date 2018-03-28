@@ -65,6 +65,7 @@ public class Robot extends IterativeRobot {
 	
 	Command m_autonomousCommand;
 	SendableChooser<Integer> m_chooser = new SendableChooser<>();
+	SendableChooser<String> priorityChooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -82,6 +83,10 @@ public class Robot extends IterativeRobot {
 		m_chooser.addDefault("Auto Position Left", 1);
 		m_chooser.addObject("Auto Position Middle", 2);
 		m_chooser.addObject("Auto Positiofn Right", 3);
+		
+		priorityChooser.addDefault("Priority Switch", "Switch");
+		priorityChooser.addObject("Priority Scale", "Scale");
+		priorityChooser.addObject("Priority Either", "Either");
 		
 		pigeon = new PigeonIMU(driveSubsystem.talonWithPigeon);
 //		System.out.println("entering calibration mode");
@@ -161,10 +166,12 @@ public class Robot extends IterativeRobot {
 
 //		int position = m_chooser.getSelected();
 		int position = 2; // Test
+		
+		String priority = priorityChooser.getSelected();
 
 		System.out.println("Game Data: " + gameData);
 		
-		m_autonomousCommand = new AutonomousCommandGroup(gameData, position);
+		m_autonomousCommand = new AutonomousCommandGroup(gameData, position, priority);
 		Robot.driveSubsystem.resetEncoders();
 		Robot.liftSubsystem.resetEncoders();
 
