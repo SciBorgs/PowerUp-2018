@@ -24,7 +24,7 @@ public class OI {
 	public static Button windClimber = new JoystickButton(xbox, PortMap.XBOX_X);
 	public static Button unwindClimber = new JoystickButton(xbox, PortMap.XBOX_BACK);
 	public static Button stopClimbing = new JoystickButton(xbox, PortMap.XBOX_B);
-		
+
 	public static Button tiltClimber = new JoystickButton(xbox, PortMap.XBOX_A);
 	public static Button deployClimber = new JoystickButton(xbox, PortMap.XBOX_START);
 
@@ -47,7 +47,6 @@ public class OI {
 			increaseLiftHeight.whenPressed(new ChangeLiftHeightCommand("up"));
 
 			decreaseLiftHeight.whenPressed(new ChangeLiftHeightCommand("down"));
-			
 
 		}
 	}
