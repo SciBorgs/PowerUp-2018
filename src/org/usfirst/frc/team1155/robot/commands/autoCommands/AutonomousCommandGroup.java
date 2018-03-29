@@ -13,138 +13,53 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutonomousCommandGroup extends CommandGroup {
 
-    public AutonomousCommandGroup(String gameInfo, int pos) {
+    public AutonomousCommandGroup(String gameInfo, int pos, String priority) {
 		System.out.println("~~ AUTONOMOUS STARTING ~~");
-
-		switch(pos) {
-    	case 0: // Robot Starting on Left side of field
-			System.out.println("!! SELECTED POSITION - Left !!");
-
-    		
-    		if(gameInfo.charAt(0) == 'L') {
-    			System.out.println("!! ROUTINE - Switch - Left !!");
-//    			addSequential(new DriveDistanceCommand(Robot.autonomousSubsystem.DIST_TO_BASELINE));
-    			addSequential(new DriveTimeCommand(2));
-    			addSequential(new TurnToDegreeCommand(270));
-				addSequential(new AutoLiftCommand(LiftTarget.SwitchHeight, true));
-				addSequential(new DriveTimeCommand(0.5));
-		    	addSequential(new AutoOutputCubeCommand());
-
-//    		}else if(gameInfo.charAt(0) == 'R' && gameInfo.charAt(1) == 'L') {
-//    			addSequential(new DriveDistanceCommand(Robot.autonomousSubsystem.DIST_TO_SCALE));
-//    			addSequential(new TurnToDegreeCommand(285));
-//				addSequential(new AutoLiftCommand(LiftTarget.ScaleHeight));
-//		    	addSequential(new AutoPlaceOutputCubeCommand());
-    		}else {
-    			System.out.println("!! ROUTINE - Baseline !!");
-    			//addSequential(new DriveDistanceCommand(Robot.autonomousSubsystem.DIST_TO_BASELINE));
-    			addSequential(new DriveTimeCommand(2));
-//    			addSequential(new DriveDistanceCommand(Robot.autonomousSubsystem.DIST_PAST_SWITCH));
-//    			addSequential(new TurnToDegreeCommand(90));
-//    			addSequential(new DriveDistanceCommand(11));
-//    			addSequential(new TurnToDegreeCommand(180));
-//				addSequential(new AutoLiftCommand(LiftTarget.SwitchHeight));
-//		    	addSequential(new AutoPlaceOutputCubeCommand());
-    			
-
-    		}
-    		
-    		break;
-    	case 1: // Robot Starting on Right side of field
-			System.out.println("!! SELECTED POSITION - Right !!");
-
-    		if(gameInfo.charAt(0) == 'R') {
-    			System.out.println("!! ROUTINE - Switch - Right !!");
-    			// addSequential(new DriveDistanceCommand(Robot.autonomousSubsystem.DIST_TO_BASELINE));
-    			addSequential(new DriveTimeCommand(2));
-    			addSequential(new TurnToDegreeCommand(90));
-				addSequential(new AutoLiftCommand(LiftTarget.SwitchHeight, true));
-				addSequential(new DriveTimeCommand(0.5));
-		    	addSequential(new AutoOutputCubeCommand());
-//
-//    		}else if(gameInfo.charAt(0) == 'L' && gameInfo.charAt(1) == 'R') {
-//    			
-//    			
-//    			addSequential(new DriveDistanceCommand(Robot.autonomousSubsystem.DIST_TO_SCALE));
-//    			addSequential(new TurnToDegreeCommand(75));
-//				addSequential(new AutoLiftCommand(LiftTarget.ScaleHeight));
-//		    	addSequential(new AutoPlaceOutputCubeCommand());
-////
-////    			
-////    			
-//////    			addSequential(new TurnToDegreeCommand(270));
-//////    			addSequential(new DriveDistanceCommand(11));
-//////    			addSequential(new TurnToDegreeCommand(180));
-//////				addSequential(new AutoLiftCommand(LiftTarget.SwitchHeight));
-//////		    	addSequential(new AutoPlaceOutputCubeCommand());
-//
-    		}else {
-    			System.out.println("!! ROUTINE - Baseline !!");
-    			addSequential(new DriveTimeCommand(2));
-    			// addSequential(new DriveDistanceCommand(Robot.autonomousSubsystem.DIST_TO_BASELINE));
-
-    		}
-    		
-    		break;
-    	case 2: // test
-    		
-			addSequential(new AutoLiftCommand(LiftTarget.ScaleHeight, true));
-			addSequential(new DelayCommand(.7));
-	    	addSequential(new AutoOutputCubeCommand());
-    		break;
-    	default:
-    		break;
-    	}
-    	
-//    	AutonomousRoutine path = Robot.autonomousSubsystem.configurePath(gameInfo, pos);
-//    	int pathSize = path.size();
-//    	//double initialX = path.getCoordinate(0)[0];
-//    	//double initialY = path.getCoordinate(0)[1];
-//    	for(int i = 1; i < pathSize; i++){
-//    		//if(i != pathSize - 1){
-//    			System.out.println("Step:" + i);
-//	    		double angle = Robot.driveSubsystem.calculatesAngleToTurnTo(path.getCoordinate(i-1), path.getCoordinate(i));
-//	    		addSequential(new TurnToDegreeCommand(angle));
-//	    		System.out.println("Adding angle of " + angle);
-//	    		
-//	    		if (i == pathSize - 1) {
-//	    			double distance = (path.getDistance(i-1, i) / 24.);
-//	    			addSequential(new DriveDistanceCommand(distance));
-//	    			System.out.println("Adding distance of " + distance);
-//	    		}
-//
-//    		//}
-//    		if(path.hasAutonomousAction(i)){
-//    			switch(path.getAutonomousAction(i)){
-//    			case PLACE_CUBE_ON_SWITCH:
-//    				addSequential(new AutoLiftCommand(LiftTarget.SwitchHeight));
-//    				addSequential(new AutoPlaceOutputCubeCommand());
-//    				addSequential(new AutoLiftCommand(LiftTarget.Bottom));
-//    				break;
-//    			case PLACE_CUBE_ON_SCALE:
-//    				addSequential(new AutoLiftCommand(LiftTarget.ScaleHeight));
-//    				addSequential(new AutoShootCubeCommand());
-//    				addSequential(new AutoLiftCommand(LiftTarget.Bottom));
-//    				break;
-//    			case PICKUP_CUBE:
-//    				addSequential(new AlignToCubeCommand());
-//    				addSequential(new AutoIntakeCubeCommand());
-//    				break;
-//    			}
-//    		}
-//		}
-//    	
-//    	addSequential(new AutoPlaceOutputCubeCommand());
-
-//    	addSequential(new DriveDistanceCommand(2));
-//    	addSequential(new TurnToDegreeCommand(270));
-//    	addSequential(new DriveDistanceCommand(2));
-//    	addSequential(new TurnToDegreeCommand(180));
-//    	addSequential(new DriveDistanceCommand(2));
-//    	addSequential(new TurnToDegreeCommand(90));
-//    	addSequential(new DriveDistanceCommand(2));
-//    	addSequential(new TurnToDegreeCommand(0));
-//    	addSequential(new DriveDistanceCommand(2));
-
+		
+		AutonomousRoutine path = Robot.autonomousSubsystem.configurePath(gameInfo, pos, priority);
+		System.out.println("Chosen path: " + path.toString());
+		int pathLength = path.size();
+		double prevAngle = 0;
+		for(int i = 1; i < pathLength; i++){
+			double[] p1 = path.getCoordinate(i - 1);
+			double[] p2 = path.getCoordinate(i);
+			
+			double[] relativePoint = {p2[0] - p1[0], p2[1] - p1[1]};
+		    double absoluteAngle = Math.atan2(relativePoint[1], relativePoint[0]);
+		    double relativeAngle = absoluteAngle - prevAngle;
+		    prevAngle = absoluteAngle;
+		    
+		    System.out.println("Adding relative angle of " + relativeAngle);
+		    addSequential(new TurnToDegreeCommand(relativeAngle));
+		    
+		    if(i != pathLength - 1){
+		    	double distance = distanceFromOrigin(relativePoint[0], relativePoint[1]);
+		    	System.out.println("Adding distance of " + distance);
+		    	addSequential(new DriveDistanceCommand(distance));
+		    }
+		    
+		    if(path.hasAutonomousAction(i)){
+		    	switch(path.getAutonomousAction(i)){
+		    	case PICKUP_CUBE:
+		    		addSequential(new AutoIntakeCubeCommand());
+		    		break;
+		    	case PLACE_CUBE_ON_SCALE:
+		    		addSequential(new AutoLiftCommand(LiftTarget.ScaleHeight, true));
+		    		addSequential(new AutoOutputCubeCommand());
+		    		break;
+		    	case PLACE_CUBE_ON_SWITCH:
+		    		addSequential(new AutoLiftCommand(LiftTarget.SwitchHeight, true));
+		    		addSequential(new AutoOutputCubeCommand());
+		    		break;
+		    	}
+		    	System.out.println("Adding Autonomous Action of " + path.getAutonomousAction(i));
+		    }
+		    
+		    
+		}
+    }
+    
+    public double distanceFromOrigin(double x, double y){
+    	return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     }
 }
