@@ -84,9 +84,9 @@ public class Robot extends IterativeRobot {
 		// visionSubsystem = new VisionSubsystem();
 		autonomousSubsystem = new AutonomousSubsystem();
 		m_oi = new OI();
-		m_chooser.addDefault("Auto Position Left", 1);
-		m_chooser.addObject("Auto Position Middle", 2);
-		m_chooser.addObject("Auto Positiofn Right", 3);
+		m_chooser.addDefault("Auto Position Left", 0);
+		m_chooser.addObject("Auto Position Middle", 1);
+		m_chooser.addObject("Auto Positiofn Right", 2);
     
 		priorityChooser.addDefault("Priority Switch", "Switch");
 		priorityChooser.addObject("Priority Scale", "Scale");
@@ -95,7 +95,8 @@ public class Robot extends IterativeRobot {
 		pigeon.setYaw(0., 0);
 
 		SmartDashboard.putNumber("angleToTurn", 90);
-		SmartDashboard.putData("Auto mode", m_chooser);
+		SmartDashboard.putData("Robot Position", m_chooser);
+		SmartDashboard.putData("Auto priority", priorityChooser);
 		SmartDashboard.putNumber("P Value", P_VALUE);
 		SmartDashboard.putNumber("I Value", I_VALUE);
 		SmartDashboard.putNumber("D Value", D_VALUE);
@@ -156,12 +157,12 @@ public class Robot extends IterativeRobot {
 		Robot.driveSubsystem.gearShifter.set(DoubleSolenoid.Value.kForward); // Set drive to fast gear
 		pigeon.setYaw(0., 0);
 
-		// int position = m_chooser.getSelected();
-		int position = 2; // Test
-		
+		int position = (int)m_chooser.getSelected();		
 		String priority = priorityChooser.getSelected();
 
 		System.out.println("Game Data: " + gameData);
+		System.out.println("Position: " + position);
+		System.out.println("Priority: " + priority);
     
 		m_autonomousCommand = new AutonomousCommandGroup(gameData, position, priority);
 		Robot.driveSubsystem.resetEncoders();
