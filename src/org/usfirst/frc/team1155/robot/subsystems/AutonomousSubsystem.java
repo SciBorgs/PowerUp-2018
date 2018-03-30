@@ -103,16 +103,19 @@ public class AutonomousSubsystem extends Subsystem {
 			path.add(13.791666666666666, 6.166666666666667, null);
 			path.add(13.791666666666666, 7.458333333333333, null);
 			path.add(13.791666666666666, 8.333333333333334, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SWITCH);
+			break;
 		case "LeftPos-LeftScale":
 			path.add(1.0416666666666667, 6.291666666666667, null);
 			path.add(26.875, 6.208333333333333, null);
 			path.add(26.875, 7.125, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SCALE);
+			break;
 		case "LeftPos-RightSwitch":
 			path.add(1.0416666666666667, 6.291666666666667, null);
 			path.add(19.291666666666668, 6.25, null);
 			path.add(19.416666666666668, 20.083333333333332, null);
 			path.add(17.791666666666668, 20.083333333333332, null);
 			path.add(16.25, 20.083333333333332, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SWITCH);
+			break;
 		case "LeftPos-RightScale":
 			path.add(1.0416666666666667, 6.291666666666667, null);
 			path.add(19.333333333333332, 6.291666666666667, null);
@@ -120,54 +123,64 @@ public class AutonomousSubsystem extends Subsystem {
 			path.add(26.875, 23.916666666666668, null);
 			path.add(26.875, 23.208333333333332, null);
 			path.add(26.875, 21.875, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SCALE);
+			break;
 		case "RightPos-RightSwitch":
 			path.add(1.75, 23.5, null);
 			path.add(13.958333333333334, 23.458333333333332, null);
 			path.add(13.958333333333334, 22.25, null);
 			path.add(13.958333333333334, 20.916666666666668, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SWITCH);
+			break;
 		case "RightPos-RightScale":
 			path.add(1.7083333333333333, 23.541666666666668, null);
 			path.add(27.041666666666668, 23.5, null);
 			path.add(27.083333333333332, 21.875, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SCALE);
+			break;
 		case "RightPos-LeftSwitch":
 			path.add(1.7083333333333333, 23.5, null);
 			path.add(19.791666666666668, 23.5, null);
 			path.add(19.833333333333332, 9.958333333333334, null);
 			path.add(17.916666666666668, 9.958333333333334, null);
 			path.add(15.791666666666666, 9.958333333333334, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SWITCH);
+			break;
 		case "RightPos-LeftScale":
 			path.add(1.75, 23.541666666666668, null);
 			path.add(19.75, 23.541666666666668, null);
 			path.add(19.875, 5.166666666666667, null);
 			path.add(26.916666666666668, 5.25, null);
 			path.add(27.0, 7.958333333333333, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SCALE);
+			break;
 		case "MiddlePos-LeftSwitch":
-			path.add(1.2916666666666667, 14.916666666666666, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SWITCH);
+			path.add(1.2916666666666667, 14.916666666666666, null);
 			path.add(5.916666666666667, 14.916666666666666, null);
 			path.add(5.958333333333333, 10.083333333333334, null);
 			path.add(10.083333333333334, 10.041666666666666, null);
-			path.add(12.208333333333334, 10.0, null);
+			path.add(12.208333333333334, 10.0, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SWITCH);
+			break;
 		case "MiddlePos-RightSwitch":
 			path.add(1.2916666666666667, 14.958333333333334, null);
 			path.add(5.875, 14.916666666666666, null);
 			path.add(5.916666666666667, 19.5, null);
 			path.add(10.166666666666666, 19.541666666666668, null);
 			path.add(12.708333333333334, 19.458333333333332, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SWITCH);
+			break;
 		case "MiddlePos-LeftScale":
 			path.add(1.4166666666666667, 14.791666666666666, null);
 			path.add(5.541666666666667, 14.791666666666666, null);
 			path.add(5.583333333333333, 5.208333333333333, null);
 			path.add(26.875, 5.708333333333333, null);
 			path.add(26.875, 8.375, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SCALE);
+			break;
 		case "MiddlePos-RightScale":
 			path.add(1.375, 14.791666666666666, null);
 			path.add(5.541666666666667, 14.791666666666666, null);
 			path.add(5.75, 23.708333333333332, null);
 			path.add(26.958333333333332, 23.75, null);
 			path.add(26.791666666666668, 21.208333333333332, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SCALE);
+			break;
 		default:
 			path.add(1.4166666666666667, 14.833333333333334, null);
 			path.add(10.083333333333334, 14.791666666666666, null);
+			break;
 		}
 		
 		return path;
