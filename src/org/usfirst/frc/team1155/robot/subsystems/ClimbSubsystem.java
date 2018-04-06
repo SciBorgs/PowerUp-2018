@@ -38,9 +38,7 @@ public class ClimbSubsystem extends Subsystem {
 		
 		leftClimbTalon.set(ControlMode.PercentOutput, speed);
 		rightClimbTalon.set(ControlMode.PercentOutput, -speed);
-		System.out.println("current 1 " +  rightClimbTalon.getOutputCurrent());
-		System.out.println("current 2 "  + leftClimbTalon.getOutputCurrent());
-		
+
 	}
 	
 	public void retract() {

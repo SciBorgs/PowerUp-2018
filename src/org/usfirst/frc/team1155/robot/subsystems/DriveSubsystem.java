@@ -24,9 +24,9 @@ public class DriveSubsystem extends PIDSubsystem {
 	public final double WHEEL_RADIUS = 3./12.; //(0.25) 3 inches over 12 inches is wheel radius in feet
 	public final double ENC_WHEEL_RATIO = (4./25.) * (1./1.2); //(0.16) 4 rotations of the wheel is 25 rotations of the encoder
 	
-	public final int CONTCURRENTLIMIT = 1; //amps
-	public final int PEAKCURRENTLIMIT = 2;
-	public final int PEAKCURRENTDURATION = 0; //ms
+	public final int CONTCURRENTLIMIT = 12; //amps
+	public final int PEAKCURRENTLIMIT = 16;
+	public final int PEAKCURRENTDURATION = 250; //ms
 	
 	public final double PIXEL_TO_FEET = 0.127/12.;
 	public double currentAngle = 0;
@@ -38,9 +38,13 @@ public class DriveSubsystem extends PIDSubsystem {
 	public final double[] TURN_PID = {0.1, 0.01, .7};
 	
 	public final double PID_TOLERANCE = .01;
-
+	public final double SHIFT_SPEED = 5.; //shift the gear at 5 feet per second
+	public DoubleSolenoid.Value lowGearValue = DoubleSolenoid.Value.kForward;
+	public DoubleSolenoid.Value highGearValue = DoubleSolenoid.Value.kReverse;
+	
 	double driveLiftingSpeedScale = .5;
 	
+	static double encOffset = 0;
 	
 	public static enum PIDMode {
 		TurnDegree, DriveStraight, DriveDistance;
@@ -72,12 +76,12 @@ public class DriveSubsystem extends PIDSubsystem {
 		middleRightMotor.setNeutralMode(NeutralMode.Brake);
 		backRightMotor.setNeutralMode(NeutralMode.Brake);
 
-		frontLeftMotor.configOpenloopRamp(0.1, 50); //2 seconds from neutral to full
-		backLeftMotor.configOpenloopRamp(0.1, 50); //2 seconds from neutral to full
-		middleLeftMotor.configOpenloopRamp(0.1, 50); //2 seconds from neutral to full
-		middleRightMotor.configOpenloopRamp(0.1, 50); //2 seconds from neutral to full
-		frontRightMotor.configOpenloopRamp(0.1, 50); //2 seconds from neutral to full
-		backRightMotor.configOpenloopRamp(0.1, 50); //2 seconds from neutral to full	
+		frontLeftMotor.configOpenloopRamp(0.1, 50); 
+		backLeftMotor.configOpenloopRamp(0.1, 50); 
+		middleLeftMotor.configOpenloopRamp(0.1, 50); 
+		middleRightMotor.configOpenloopRamp(0.1, 50);
+		frontRightMotor.configOpenloopRamp(0.1, 50); 
+		backRightMotor.configOpenloopRamp(0.1, 50);
 //	
 //		frontRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
 //		frontRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
@@ -114,6 +118,7 @@ public class DriveSubsystem extends PIDSubsystem {
 		gearShifter = new DoubleSolenoid(PortMap.GEAR_SHIFTER_SOLENOID[0], PortMap.GEAR_SHIFTER_SOLENOID[1]);
 		
 		getPIDController().setContinuous(false);
+		
 
 	//	gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
 	//	gyro.reset();
@@ -371,6 +376,23 @@ public class DriveSubsystem extends PIDSubsystem {
 		double wheelRotations = feet / (2 * Math.PI * WHEEL_RADIUS);
 		double encTicks = wheelRotations / ENC_WHEEL_RATIO;
 		return encTicks;
+	}
+	
+	public double getEncVelocity(String side){
+		double velTicks = 0;
+		switch(side){
+		case "Left":
+			velTicks = middleLeftMotor.getSensorCollection().getQuadratureVelocity();
+			break;
+		case "Right":
+			velTicks = middleRightMotor.getSensorCollection().getQuadratureVelocity();
+			break;
+		case "Average":
+			return (getEncVelocity("Left") + getEncVelocity("Right") / 2);
+		}
+		velTicks /= 10.;
+		velTicks *= ENC_WHEEL_RATIO;
+		return velTicks;
 	}
 	
 	public double applyDriveCurve(double raw) {	

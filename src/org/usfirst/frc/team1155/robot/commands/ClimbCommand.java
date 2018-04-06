@@ -1,39 +1,37 @@
 package org.usfirst.frc.team1155.robot.commands;
 
-import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.Robot;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimbCommand extends Command {
-	public ClimbCommand() {
+	
+	private XboxController xbox;
+	
+	public ClimbCommand(XboxController xbox) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.climbSubsystem);
+		this.xbox = xbox;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-
 		Robot.climbSubsystem.setExtensionSpeed(0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-
-		if (OI.windClimber.get()) {
-			System.out.println("extending");
-			Robot.climbSubsystem.setExtensionSpeed(-.5);
-		} else if (OI.stopClimbing.get()) {
-			System.out.println("stopping");
+		if(xbox.getXButton()) {
+			Robot.climbSubsystem.setExtensionSpeed(-0.5);
+		} else if (xbox.getBButton()) {
+			Robot.climbSubsystem.setExtensionSpeed(0.5);
+		} else {
 			Robot.climbSubsystem.setExtensionSpeed(0);
-
-		} else if (OI.unwindClimber.get()) {
-			System.out.println("stopping");
-			Robot.climbSubsystem.setExtensionSpeed(.5);
-
 		}
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

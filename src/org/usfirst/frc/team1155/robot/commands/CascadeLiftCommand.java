@@ -25,10 +25,15 @@ public class CascadeLiftCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		System.out.println(controller.getY());
-		Robot.liftSubsystem.setSpeed(controller.getY());
-		if(controller.getY() < 0 && Robot.liftSubsystem.getLimit()) {
-			Robot.liftSubsystem.stop();
+		if (Robot.liftSubsystem.getLimit()) {
+			Robot.liftSubsystem.zeroEncoders(Robot.liftSubsystem.TICKS_TO_TOP);
+		}
+		if(Robot.liftSubsystem.getAvgEncPos() <= Robot.liftSubsystem.TICKS_AT_BOTTOM && controller.getY() > 0) {
+			Robot.liftSubsystem.setSpeed(0);
+		}else if(Robot.intakeSubsystem.isTilted && Robot.liftSubsystem.getAvgEncPos() <= Robot.liftSubsystem.TICKS_AT_MID && controller.getY() > 0){
+			Robot.liftSubsystem.setSpeed(0);
+		}else {
+			Robot.liftSubsystem.setSpeed(controller.getY());
 		}
 	}
 

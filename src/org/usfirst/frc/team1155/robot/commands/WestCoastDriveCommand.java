@@ -48,22 +48,29 @@ public class WestCoastDriveCommand extends Command {
     		rawLeft = -xbox.getRawAxis(PortMap.XBOX_LEFT_JOY_Y);
     		rawRight = -xbox.getRawAxis(PortMap.XBOX_RIGHT_JOY_Y);
     	}
-    	SmartDashboard.putNumber("Left Y-Axis", rawLeft);
-    	SmartDashboard.putNumber("Right Y-Axis", rawRight);
-    	
+
     	double leftSpeed = Robot.driveSubsystem.applyDriveCurve(rawLeft);
     	double rightSpeed = Robot.driveSubsystem.applyDriveCurve(rawRight);
     	
     	Robot.driveSubsystem.setSpeed(leftSpeed, rightSpeed);
+    	
+    	double leftVel = Robot.driveSubsystem.getEncVelocity("Left");
+    	double rightVel = Robot.driveSubsystem.getEncVelocity("Right");
 
-    	SmartDashboard.putNumber("Front Right Talon Current", Robot.driveSubsystem.frontRightMotor.getOutputCurrent());
-    	SmartDashboard.putNumber("MiddleRight Talon Current", Robot.driveSubsystem.middleRightMotor.getOutputCurrent());
-    	SmartDashboard.putNumber("Back Right Talon Current", Robot.driveSubsystem.backRightMotor.getOutputCurrent());
-
-    	SmartDashboard.putNumber("Front Left Talon Current", Robot.driveSubsystem.frontLeftMotor.getOutputCurrent());
-    	SmartDashboard.putNumber("Middle Left Talon Current", Robot.driveSubsystem.middleLeftMotor.getOutputCurrent());
-    	SmartDashboard.putNumber("Back Left Talon Current 2", Robot.driveSubsystem.backLeftMotor.getOutputCurrent());
-
+    	SmartDashboard.putNumber("Left Velocity", leftVel);
+    	SmartDashboard.putNumber("Right Velocity", rightVel);
+    	
+    	//Automatic gear shifting
+    	if(leftVel > Robot.driveSubsystem.SHIFT_SPEED && rightVel > Robot.driveSubsystem.SHIFT_SPEED){ //if both wheels are more than the shift speed
+    		if(Robot.driveSubsystem.gearShifter.get() != Robot.driveSubsystem.lowGearValue){		   //Check if the gear is wrong
+    			Robot.driveSubsystem.gearShifter.set(Robot.driveSubsystem.lowGearValue);			   //if it is, change the gear
+    		}
+    	}else if(leftVel < Robot.driveSubsystem.SHIFT_SPEED && rightVel < Robot.driveSubsystem.SHIFT_SPEED){ //if both wheels are less than the shift speed
+    		if(Robot.driveSubsystem.gearShifter.get() != Robot.driveSubsystem.highGearValue){				 //Check if the gear is wrong
+    			Robot.driveSubsystem.gearShifter.set(Robot.driveSubsystem.highGearValue);					 //if it is, change the gear
+    		}
+    	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

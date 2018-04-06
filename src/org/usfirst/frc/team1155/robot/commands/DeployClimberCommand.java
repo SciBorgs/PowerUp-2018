@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1155.robot.commands;
 
+import org.usfirst.frc.team1155.robot.OI;
 import org.usfirst.frc.team1155.robot.Robot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -31,11 +32,14 @@ public class DeployClimberCommand extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
+    	System.out.println("<< Toggle Climb Pistons >> Ending");
+		new ClimbCommand(OI.xbox).start();
+
 	}
 
 	// Called when another command which requires one or more of the same

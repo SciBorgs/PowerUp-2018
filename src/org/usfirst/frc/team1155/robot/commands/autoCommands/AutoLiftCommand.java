@@ -40,7 +40,7 @@ public class AutoLiftCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.liftSubsystem.stop();
+    	Robot.liftSubsystem.stopMovement();
     	Robot.liftSubsystem.endAdjustment();
     	
     	if(!isAuto) {

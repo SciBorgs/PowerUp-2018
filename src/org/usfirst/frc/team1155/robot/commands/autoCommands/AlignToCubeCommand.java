@@ -11,15 +11,15 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AlignToCubeCommand extends Command {
 
     public AlignToCubeCommand() {
-        requires(Robot.visionSubsystem);
+//        requires(Robot.visionSubsystem);
         requires(Robot.driveSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveSubsystem.pidMode = PIDMode.TurnDegree;
-    	double angleToCube = Robot.visionSubsystem.getAngleToCube();
-		Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonAngle(), Robot.driveSubsystem.getPigeonAngle() + angleToCube);
+//    	double angleToCube = Robot.visionSubsystem.getAngleToCube();
+//		Robot.driveSubsystem.startAdjustment(Robot.driveSubsystem.getPigeonAngle(), Robot.driveSubsystem.getPigeonAngle() + angleToCube);
     }
 
     // Called repeatedly when this Command is scheduled to run

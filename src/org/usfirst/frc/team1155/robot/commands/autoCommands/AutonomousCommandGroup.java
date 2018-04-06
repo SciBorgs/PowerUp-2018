@@ -25,8 +25,11 @@ public class AutonomousCommandGroup extends CommandGroup {
 			double[] p2 = path.getCoordinate(i);
 			
 			double[] relativePoint = {p2[0] - p1[0], p2[1] - p1[1]};
-		    double absoluteAngle = Math.atan2(relativePoint[1], relativePoint[0]);
+			relativePoint[1] *= -1; //Accounts for the fact that the origin in alejandro's gui is the top left
+			
+		    double absoluteAngle = Math.toDegrees(Math.atan2(relativePoint[1], relativePoint[0]));
 		    double relativeAngle = absoluteAngle - prevAngle;
+		    relativeAngle = ((relativeAngle % 360 + 360) % 360);
 		    prevAngle = absoluteAngle;
 		    
 		    System.out.println("Adding relative angle of " + relativeAngle);

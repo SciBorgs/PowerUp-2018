@@ -11,8 +11,9 @@ public class TiltIntakeCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-
-		Robot.intakeSubsystem.toggleTilt();
+		if(Robot.liftSubsystem.isAboveMid()) {
+			Robot.intakeSubsystem.toggleTilt();
+		}
 	}
 
 	// Called repeatedly when this Command is scheduled to run

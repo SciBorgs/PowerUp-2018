@@ -28,7 +28,6 @@ public class DriveDistanceCommand extends Command {
     	System.out.println("Distance to Drive to: " + (distanceToDrive + Robot.driveSubsystem.getEncPosition()));
     	
     	Robot.driveSubsystem.resetEncoders();
-
     	//distanceToDrive = SmartDashboard.getNumber("Dist To Drive", 0);
 
     	Robot.driveSubsystem.pidMode = PIDMode.DriveDistance;
@@ -49,7 +48,7 @@ public class DriveDistanceCommand extends Command {
     	//SmartDashboard.putNumber("EncoderValue", Robot.driveSubsystem.getEncPosition());
     	//System.out.println("PID Error: " + Robot.driveSubsystem.getPIDController().getError());
     	SmartDashboard.putNumber("Pid Error: ", Robot.driveSubsystem.getPIDController().getError());
-    	SmartDashboard.putNumber("Talon Current: ", Robot.driveSubsystem.frontLeftMotor.getOutputCurrent());
+    	System.out.println("PID error: " + Robot.driveSubsystem.getPIDController().getError());
     }
 
     // Make this return true when this Command no longer needs to run execute()
