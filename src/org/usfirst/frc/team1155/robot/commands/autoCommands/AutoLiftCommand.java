@@ -24,9 +24,9 @@ public class AutoLiftCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("-- Auto Lift -- Starting");
     	Robot.liftSubsystem.liftTarget = target;
     	Robot.liftSubsystem.startAdjustment();
-    	System.out.println("Starting..");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -35,6 +35,7 @@ public class AutoLiftCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	
         return Robot.liftSubsystem.onTarget();
     }
 
@@ -47,13 +48,16 @@ public class AutoLiftCommand extends Command {
     		System.out.println("Starting cascade lift command from auto lift end");
     		new CascadeLiftCommand(OI.rightJoystick).start();
     	}
+    	
+    	System.out.println("<< Auto Lift >> Ending");
+
 
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	
+    	System.out.println("** Auto Lift ** INTERRUPTED");
     	end();
     }
 }

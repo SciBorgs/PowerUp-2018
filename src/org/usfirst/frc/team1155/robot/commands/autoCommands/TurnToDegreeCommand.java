@@ -57,6 +57,9 @@ public class TurnToDegreeCommand extends Command{
 
 	@Override
 	protected boolean isFinished() {
+		if(timer.get() > 3) {
+        	System.out.println("** Turn to Angle ** STOPPED DUE TO TIMER");
+		}
 		return Robot.driveSubsystem.getPIDController().onTarget() || timer.get() > 3; 
     	//return Math.abs(Robot.driveSubsystem.getPigeonAngle() - angleToTurn ) < 1;//Robot.driveSubsystem.getPIDController().getError() < 1;//(Robot.driveSubsystem.getPIDController().getError() / angleToTurn) < 0.03;
 	}

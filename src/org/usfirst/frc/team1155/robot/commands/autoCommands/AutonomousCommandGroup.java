@@ -20,6 +20,7 @@ public class AutonomousCommandGroup extends CommandGroup {
 		System.out.println("Chosen path: " + path.toString());
 		int pathLength = path.size();
 		double prevAngle = 0;
+		addParallel(new AutoLiftCommand(LiftTarget.SwitchHeight, true));
 		for(int i = 1; i < pathLength; i++){
 			double[] p1 = path.getCoordinate(i - 1);
 			double[] p2 = path.getCoordinate(i);
@@ -51,7 +52,7 @@ public class AutonomousCommandGroup extends CommandGroup {
 		    		addSequential(new AutoOutputCubeCommand());
 		    		break;
 		    	case PLACE_CUBE_ON_SWITCH:
-		    		addSequential(new AutoLiftCommand(LiftTarget.SwitchHeight, true));
+//		    		addSequential(new AutoLiftCommand(LiftTarget.SwitchHeight, true));
 		    		addSequential(new AutoOutputCubeCommand());
 		    		break;
 		    	}

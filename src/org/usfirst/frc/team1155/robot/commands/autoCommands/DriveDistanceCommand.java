@@ -3,6 +3,7 @@ package org.usfirst.frc.team1155.robot.commands.autoCommands;
 import org.usfirst.frc.team1155.robot.Robot;
 import org.usfirst.frc.team1155.robot.subsystems.DriveSubsystem.PIDMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -12,13 +13,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveDistanceCommand extends Command {
 
 	double distanceToDrive;
+	private Timer timer;
+	private double timeTillStop = 4.5;
+	private boolean considerTime = false;
 	
     public DriveDistanceCommand(double dist) {
     	requires(Robot.driveSubsystem);
     	setInterruptible(true);
     	System.out.println("Distance Set: " + dist);
-    	distanceToDrive = dist;
-    	//distanceToDrive = SmartDashboard.getNumber("Dist To Drive", 0);
+    	distanceToDrive = dist * .7;
+    }
+    
+    public DriveDistanceCommand(double dist, double time) {
+    	requires(Robot.driveSubsystem);
+    	setInterruptible(true);
+    	System.out.println("Distance Set: " + dist);
+    	distanceToDrive = dist * .7;
+    	timeTillStop = time;
+    	considerTime = true;
     }
 
     // Called just before this Command runs the first time
@@ -27,8 +39,14 @@ public class DriveDistanceCommand extends Command {
     	System.out.println("Drive Enc Pos: " + Robot.driveSubsystem.getEncPosition());
     	System.out.println("Distance to Drive to: " + (distanceToDrive + Robot.driveSubsystem.getEncPosition()));
     	
+    	timer = new Timer();
+		timer.start();
+//    	if(considerTime) {
+//    		timer.start();
+//    	}
+    	
+    	
     	Robot.driveSubsystem.resetEncoders();
-    	//distanceToDrive = SmartDashboard.getNumber("Dist To Drive", 0);
 
     	Robot.driveSubsystem.pidMode = PIDMode.DriveDistance;
     	double[] drivePids = Robot.driveSubsystem.DRIVE_PID;
@@ -48,13 +66,30 @@ public class DriveDistanceCommand extends Command {
     	//SmartDashboard.putNumber("EncoderValue", Robot.driveSubsystem.getEncPosition());
     	//System.out.println("PID Error: " + Robot.driveSubsystem.getPIDController().getError());
     	SmartDashboard.putNumber("Pid Error: ", Robot.driveSubsystem.getPIDController().getError());
-    	System.out.println("PID error: " + Robot.driveSubsystem.getPIDController().getError());
+  
+		System.out.println("Timer time: " + timer.get());
+//    	if (considerTime) {
+//    		System.out.println("Timer time: " + timer.get());
+//    	}
+    	
+//    	System.out.println("PID error: " + Robot.driveSubsystem.getPIDController().getError());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Robot.driveSubsystem.getPIDController().onTarget();
-//    	return (Robot.driveSubsystem.getPIDController().getError() / distanceToDrive) < 0.03;
+    	
+    	if(timer.get() > timeTillStop) {
+        	System.out.println("** Distance Drive ** STOPPED DUE TO TIMER");
+    	}
+    	return Robot.driveSubsystem.getPIDController().onTarget() || (timer.get() > timeTillStop);
+//    	if(considerTime) {
+//	    	if(timer.get() > timeTillStop) {
+//	        	System.out.println("** Distance Drive ** STOPPED DUE TO TIMER");
+//	    	}
+//	    	return Robot.driveSubsystem.getPIDController().onTarget() || (timer.get() > timeTillStop);
+//    	} else {
+//    		return Robot.driveSubsystem.getPIDController().onTarget();
+//    	}
     }
 
     // Called once after isFinished returns true

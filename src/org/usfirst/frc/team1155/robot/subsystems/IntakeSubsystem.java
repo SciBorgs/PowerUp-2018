@@ -25,8 +25,7 @@ public class IntakeSubsystem extends Subsystem{
 	public final double INTAKE_SPEED = 0.55;
 	public final double OUTPUT_SPEED = 0.4;
 	
-	public void initDefaultCommand() {
-
+	public IntakeSubsystem() {
 //		leftIntakeMotor = new TalonSRX(PortMap.INTAKE_LEFT_TALON);
 //		rightIntakeMotor = new TalonSRX(PortMap.INTAKE_RIGHT_TALON);
 		
@@ -52,6 +51,9 @@ public class IntakeSubsystem extends Subsystem{
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 		stop();
+	}
+	
+	public void initDefaultCommand() {
 	}	
 	
 	public void stop() {
@@ -108,11 +110,11 @@ public class IntakeSubsystem extends Subsystem{
 	}	
 	
 	public void toggleTilt() {
-		isTilted = !isTilted;
 		if(tiltSolenoid.get() == DoubleSolenoid.Value.kForward) {
 			tiltSolenoid.set(DoubleSolenoid.Value.kReverse);
 		}else {
 			tiltSolenoid.set(DoubleSolenoid.Value.kForward);
+
 
 		}
 	}

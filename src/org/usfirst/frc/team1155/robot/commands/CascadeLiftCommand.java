@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1155.robot.commands;
 
+import org.usfirst.frc.team1155.robot.PortMap;
 import org.usfirst.frc.team1155.robot.Robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -9,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class CascadeLiftCommand extends Command {
 
 	private GenericHID controller;
-
+	
 	public CascadeLiftCommand(GenericHID controller) {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.liftSubsystem);
@@ -25,14 +26,11 @@ public class CascadeLiftCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.liftSubsystem.getLimit()) {
-			Robot.liftSubsystem.zeroEncoders(Robot.liftSubsystem.TICKS_TO_TOP);
-		}
-		if(Robot.liftSubsystem.getAvgEncPos() <= Robot.liftSubsystem.TICKS_AT_BOTTOM && controller.getY() > 0) {
+		if(Robot.liftSubsystem.getAvgEncPos() <= Robot.liftSubsystem.TICKS_AT_BOTTOM && controller.getY() > 0 && !controller.getRawButton(PortMap.JOYSTICK_CENTER_BUTTON)) {
 			Robot.liftSubsystem.setSpeed(0);
-		}else if(Robot.intakeSubsystem.isTilted && Robot.liftSubsystem.getAvgEncPos() <= Robot.liftSubsystem.TICKS_AT_MID && controller.getY() > 0){
+		} else if (Robot.liftSubsystem.getAvgEncPos() >= Robot.liftSubsystem.TICKS_TO_TOP && controller.getY() < 0 && !controller.getRawButton(PortMap.JOYSTICK_CENTER_BUTTON)) {
 			Robot.liftSubsystem.setSpeed(0);
-		}else {
+		} else {
 			Robot.liftSubsystem.setSpeed(controller.getY());
 		}
 	}

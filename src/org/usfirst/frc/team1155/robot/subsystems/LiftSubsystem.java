@@ -13,29 +13,6 @@ public class LiftSubsystem extends PIDSubsystem {
 
 	public LiftSubsystem(double p, double i, double d) {
 		super("Lift", p, i, d);
-		// TODO Auto-generated constructor stub
-	}
-
-	public TalonSRX leftLiftMotor, rightLiftMotor, leftLiftEncoderMotor, rightLiftEncoderMotor;
-	public TalonSRX[] allTalons;
-
-	public DigitalInput limitSwitch;
-
-	public final double LIFT_SPEED = .6;
-	public final double LIFT_SPEED_ADJUST = .3;
-	public final int TICKS_TO_TOP = 45000;// 58070;
-	public final int TICKS_TO_SWITCH_HEIGHT = 8500;// 7986;//22420;
-	public final int TICKS_AT_BOTTOM = -9500;
-	public final int TICKS_AT_MID = 26000;
-
-	public final double MAX_TICK_DIFFERENCE = 200;
-	public LiftTarget liftTarget = LiftTarget.Bottom;
-
-	public static enum LiftTarget {
-		Bottom, SwitchHeight, ScaleHeight;
-	}
-
-	public void initDefaultCommand() {
 
 		leftLiftMotor = new TalonSRX(PortMap.LIFT_LEFT_TALON);
 		rightLiftMotor = new TalonSRX(PortMap.LIFT_RIGHT_TALON);
@@ -51,6 +28,9 @@ public class LiftSubsystem extends PIDSubsystem {
 		leftLiftEncoderMotor.setNeutralMode(NeutralMode.Brake);
 		rightLiftEncoderMotor.setNeutralMode(NeutralMode.Brake);
 
+		leftLiftMotor.configOpenloopRamp(0.5, 50);
+		rightLiftMotor.configOpenloopRamp(0.5, 50);
+
 		// frontRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
 		// frontRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
 		// frontRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
@@ -64,6 +44,29 @@ public class LiftSubsystem extends PIDSubsystem {
 		stopMovement();
 	}
 
+	public TalonSRX leftLiftMotor, rightLiftMotor, leftLiftEncoderMotor, rightLiftEncoderMotor;
+	public TalonSRX[] allTalons;
+
+	public DigitalInput limitSwitch;
+
+	public final double LIFT_SPEED = .6;
+	public final double LIFT_SPEED_ADJUST = .3;
+	public final int TICKS_TO_TOP = 45000;// 58070;
+	public final int TICKS_TO_SWITCH_HEIGHT = 9500;// 7986;//22420;
+	public final int TICKS_AT_BOTTOM = -9500;
+	public final int TICKS_AT_MID = 26000;
+
+	public final double MAX_TICK_DIFFERENCE = 200;
+	public LiftTarget liftTarget = LiftTarget.Bottom;
+
+	public static enum LiftTarget {
+		Bottom, SwitchHeight, ScaleHeight;
+	}
+	
+	public void initDefaultCommand() {
+
+	}
+
 	public void stopMovement() {
 		leftLiftMotor.set(ControlMode.PercentOutput, 0);
 		rightLiftMotor.set(ControlMode.PercentOutput, 0);
@@ -71,7 +74,7 @@ public class LiftSubsystem extends PIDSubsystem {
 		rightLiftEncoderMotor.set(ControlMode.PercentOutput, 0);
 	}
 
-	public void setSpeed(double speed) {
+	public void setSpeed(double speed) {		
 		leftLiftMotor.set(ControlMode.PercentOutput, -speed);
 		leftLiftEncoderMotor.set(ControlMode.PercentOutput, -speed);
 		rightLiftMotor.set(ControlMode.PercentOutput, speed);
@@ -93,17 +96,36 @@ public class LiftSubsystem extends PIDSubsystem {
 	}
 
 	public int getLeftEncPos() {
-		return leftLiftEncoderMotor.getSensorCollection().getQuadraturePosition();
+		try {
+			return leftLiftEncoderMotor.getSensorCollection().getQuadraturePosition();
+		} catch (NullPointerException e) {
+			System.out.println("LiftSubsystem - resetEncoders - YOU HAVE A NULL POINTER WITH ONE OF THE LIFT MOTORS");
+			System.out.println(e);
+		}
+		return 0;
 	}
 
 	public int getRightEncPos() {
-		return -rightLiftEncoderMotor.getSensorCollection().getQuadraturePosition();
+		try {
+			return -rightLiftEncoderMotor.getSensorCollection().getQuadraturePosition();
+		} catch (NullPointerException e) {
+			System.out.println("LiftSubsystem - resetEncoders - YOU HAVE A NULL POINTER WITH ONE OF THE LIFT MOTORS");
+			System.out.println(e);
+		}
+		return 0;
+
 	}
 
 	public void resetEncoders() {
-		if (rightLiftEncoderMotor.getSensorCollection() != null)
-			rightLiftEncoderMotor.getSensorCollection().setQuadraturePosition(0, 0);
-		leftLiftEncoderMotor.getSensorCollection().setQuadraturePosition(0, 0);
+		try {
+			if (rightLiftEncoderMotor.getSensorCollection() != null)
+				rightLiftEncoderMotor.getSensorCollection().setQuadraturePosition(0, 0);
+			leftLiftEncoderMotor.getSensorCollection().setQuadraturePosition(0, 0);
+		} catch (NullPointerException e) {
+			System.out.println("LiftSubsystem - resetEncoders - YOU HAVE A NULL POINTER WITH ONE OF THE LIFT MOTORS");
+			System.out.println(e);
+		}
+
 	}
 
 	@Override

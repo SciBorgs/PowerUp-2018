@@ -51,7 +51,7 @@ public class ChangeLiftHeightCommand extends Command {
 			}
 		}
 		System.out.println("Starting autoliftCommand with target of " + newTarget);
-		(new AutoLiftCommand(newTarget, false)).start();
+		new AutoLiftCommand(newTarget, false).start();
 	}
 
 	// Called repeatedly when this Command is scheduled to run

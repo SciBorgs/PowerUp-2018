@@ -156,7 +156,7 @@ public class DriveSubsystem extends PIDSubsystem {
 		// TODO: Check if the robot goes in the right direction.
 		// If it doesn't, flip the negations on the outputs.
 		case TurnDegree:
-			output *= -0.5;
+			output *= -0.4;
 			setSpeed(output, -output);
 			break;
 		case DriveStraight:
@@ -382,7 +382,7 @@ public class DriveSubsystem extends PIDSubsystem {
 		double velTicks = 0;
 		switch(side){
 		case "Left":
-			velTicks = middleLeftMotor.getSensorCollection().getQuadratureVelocity();
+			velTicks = -middleLeftMotor.getSensorCollection().getQuadratureVelocity();
 			break;
 		case "Right":
 			velTicks = middleRightMotor.getSensorCollection().getQuadratureVelocity();
@@ -392,6 +392,7 @@ public class DriveSubsystem extends PIDSubsystem {
 		}
 		velTicks /= 10.;
 		velTicks *= ENC_WHEEL_RATIO;
+		
 		return velTicks;
 	}
 	

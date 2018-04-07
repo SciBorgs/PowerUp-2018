@@ -132,17 +132,17 @@ public class Robot extends IterativeRobot {
 	public void robotPeriodic() {
 		SmartDashboard.putNumber("Left lift enc val", Robot.liftSubsystem.getLeftEncPos());
 		SmartDashboard.putNumber("Right lift enc val", Robot.liftSubsystem.getRightEncPos());
-		SmartDashboard.putNumber("Total Amp Draw", pdp.getTotalCurrent());
-		
-		SmartDashboard.putNumber("Motor 6 Amp Draw", pdp.getCurrent(5));
-		SmartDashboard.putNumber("Motor 7 Amp Draw", pdp.getCurrent(6));
-		SmartDashboard.putNumber("Motor 8 Amp Draw", pdp.getCurrent(7));
-		SmartDashboard.putNumber("Average Left Draw", (pdp.getCurrent(5) + pdp.getCurrent(6) + pdp.getCurrent(7)) / 3);
-		
-		SmartDashboard.putNumber("Motor 14 Amp Draw", pdp.getCurrent(13));
-		SmartDashboard.putNumber("Motor 15 Amp Draw", pdp.getCurrent(14));
-		SmartDashboard.putNumber("Motor 16 Amp Draw", pdp.getCurrent(15));
-		SmartDashboard.putNumber("Average Right Draw", (pdp.getCurrent(13) + pdp.getCurrent(14) + pdp.getCurrent(15)) / 3);
+//		SmartDashboard.putNumber("Total Amp Draw", pdp.getTotalCurrent());
+//		
+//		SmartDashboard.putNumber("Motor 6 Amp Draw", pdp.getCurrent(5));
+//		SmartDashboard.putNumber("Motor 7 Amp Draw", pdp.getCurrent(6));
+//		SmartDashboard.putNumber("Motor 8 Amp Draw", pdp.getCurrent(7));
+//		SmartDashboard.putNumber("Average Left Draw", (pdp.getCurrent(5) + pdp.getCurrent(6) + pdp.getCurrent(7)) / 3);
+//		
+//		SmartDashboard.putNumber("Motor 14 Amp Draw", pdp.getCurrent(13));
+//		SmartDashboard.putNumber("Motor 15 Amp Draw", pdp.getCurrent(14));
+//		SmartDashboard.putNumber("Motor 16 Amp Draw", pdp.getCurrent(15));
+//		SmartDashboard.putNumber("Average Right Draw", (pdp.getCurrent(13) + pdp.getCurrent(14) + pdp.getCurrent(15)) / 3);
 		
 		SmartDashboard.putNumber("Left Encoder Feet", Robot.driveSubsystem.getLeftEncPosition());
 		SmartDashboard.putNumber("Left Encoder Ticks", Robot.driveSubsystem.getLeftEncPositionTicks());
@@ -150,6 +150,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Encoder Feet", Robot.driveSubsystem.getRightEncPosition());
 		SmartDashboard.putNumber("Right Encoder Ticks", Robot.driveSubsystem.getRightEncPosition());
 
+		SmartDashboard.putNumber("Average Encoder Velocity", Robot.driveSubsystem.getEncVelocity("Average"));
+		
 		SmartDashboard.putNumber("Avg. enc feet", Robot.driveSubsystem.getEncPosition());
 
 		SmartDashboard.putNumber("PigeonAngle", Robot.driveSubsystem.getPigeonAngle());
@@ -211,7 +213,7 @@ public class Robot extends IterativeRobot {
 		System.out.println("Position: " + position);
 		System.out.println("Priority: " + priority);
 		
-		
+//		new DriveDistanceComma
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}

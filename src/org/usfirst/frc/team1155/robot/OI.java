@@ -21,6 +21,7 @@ public class OI {
 	public static Joystick rightJoystick = new Joystick(PortMap.JOYSTICK_RIGHT);
 	public static XboxController xbox = new XboxController(PortMap.XBOX);
 
+	// These three instantiations are deprecated 4/7/18
 	public static Button windClimber = new JoystickButton(xbox, PortMap.XBOX_X);
 	public static Button unwindClimber = new JoystickButton(xbox, PortMap.XBOX_BACK);
 	public static Button stopClimbing = new JoystickButton(xbox, PortMap.XBOX_B);

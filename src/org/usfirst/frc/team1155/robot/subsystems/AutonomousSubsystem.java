@@ -151,17 +151,17 @@ public class AutonomousSubsystem extends Subsystem {
 				break;
 			case "MiddlePos-LeftSwitch":
 				path.add(1.2916666666666667, 14.916666666666666, null);
-				path.add(5.916666666666667, 14.916666666666666, null);
-				path.add(5.958333333333333, 10.083333333333334, null);
-				path.add(10.083333333333334, 10.041666666666666, null);
-				path.add(12.208333333333334, 10.0, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SWITCH);
+				path.add(5.5, 14.916666666666666, null);
+				path.add(5.958333333333333, 11.083333333333334, null);
+				path.add(10.083333333333334, 11.041666666666666, null);
+				path.add(12.208333333333334, 11.0, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SWITCH);
 				break;
 			case "MiddlePos-RightSwitch":
 				path.add(1.2916666666666667, 14.958333333333334, null);
-				path.add(5.875, 14.916666666666666, null);
-				path.add(5.916666666666667, 19.5, null);
-				path.add(10.166666666666666, 19.541666666666668, null);
-				path.add(12.708333333333334, 19.458333333333332, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SWITCH);
+				path.add(5.5, 14.916666666666666, null);
+				path.add(5.916666666666667, 18.5, null);
+				path.add(10.166666666666666, 18.541666666666668, null);
+				path.add(12.708333333333334, 18.458333333333332, AutonomousRoutine.AutonomousAction.PLACE_CUBE_ON_SWITCH);
 				break;
 			case "MiddlePos-LeftScale":
 				path.add(1.4166666666666667, 14.791666666666666, null);

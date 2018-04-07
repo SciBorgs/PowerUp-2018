@@ -25,9 +25,9 @@ public class ClimbCommand extends Command {
 	@Override
 	protected void execute() {
 		if(xbox.getXButton()) {
-			Robot.climbSubsystem.setExtensionSpeed(-0.5);
+			Robot.climbSubsystem.setExtensionSpeed(-0.75);
 		} else if (xbox.getBButton()) {
-			Robot.climbSubsystem.setExtensionSpeed(0.5);
+			Robot.climbSubsystem.setExtensionSpeed(0.75);
 		} else {
 			Robot.climbSubsystem.setExtensionSpeed(0);
 		}
