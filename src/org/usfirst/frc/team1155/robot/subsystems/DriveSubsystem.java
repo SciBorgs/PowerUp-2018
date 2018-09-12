@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveSubsystem extends PIDSubsystem {
 
 	public TalonSRX frontLeftMotor, middleLeftMotor, frontRightMotor, backLeftMotor, middleRightMotor, backRightMotor;
-	//public Gyro gyro;
 	public DoubleSolenoid gearShifter;
 	public TalonSRX talonWithPigeon;
 	public final double TICKS_PER_ROTATION = 4096;
@@ -54,11 +53,11 @@ public class DriveSubsystem extends PIDSubsystem {
 
 	// Initialize your subsystem here
 	public DriveSubsystem() {
-		//super("Drive", 0.1, 0.01, 0.1);
 		super("Drive", 1.0, 0, 0.6);
 		pidMode = PIDMode.TurnDegree;
 
 		//P is 1.0, I is 0.0, D is 0.6
+		
 		
 		frontLeftMotor = new TalonSRX(PortMap.DRIVE_FRONT_LEFT_TALON);
 		middleLeftMotor = new TalonSRX(PortMap.DRIVE_MIDDLE_LEFT_TALON);
@@ -68,6 +67,8 @@ public class DriveSubsystem extends PIDSubsystem {
 		middleRightMotor = new TalonSRX(PortMap.DRIVE_MIDDLE_RIGHT_TALON);
 		backRightMotor = new TalonSRX(PortMap.DRIVE_BACK_RIGHT_TALON);
 		
+		
+		//Set default mode of wheels to be stopped
 		frontLeftMotor.setNeutralMode(NeutralMode.Brake);
 		middleLeftMotor.setNeutralMode(NeutralMode.Brake);
 		backLeftMotor.setNeutralMode(NeutralMode.Brake);
@@ -76,53 +77,25 @@ public class DriveSubsystem extends PIDSubsystem {
 		middleRightMotor.setNeutralMode(NeutralMode.Brake);
 		backRightMotor.setNeutralMode(NeutralMode.Brake);
 
+		//Voltage Ramping
 		frontLeftMotor.configOpenloopRamp(0.1, 50); 
 		backLeftMotor.configOpenloopRamp(0.1, 50); 
 		middleLeftMotor.configOpenloopRamp(0.1, 50); 
 		middleRightMotor.configOpenloopRamp(0.1, 50);
 		frontRightMotor.configOpenloopRamp(0.1, 50); 
 		backRightMotor.configOpenloopRamp(0.1, 50);
-//	
-//		frontRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
-//		frontRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
-//		frontRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
-//		frontRightMotor.enableCurrentLimit(true);
-//		
-//		middleRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
-//		middleRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
-//		middleRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
-//		middleRightMotor.enableCurrentLimit(true);
-//		
-//		backRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
-//		backRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
-//		backRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
-//		backRightMotor.enableCurrentLimit(true);
-//		
-//		frontLeftMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
-//		frontLeftMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
-//		frontLeftMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
-//		frontLeftMotor.enableCurrentLimit(true);
-//		
-//		middleLeftMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
-//		middleLeftMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
-//		middleLeftMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
-//		middleLeftMotor.enableCurrentLimit(true);
-//		
-//		backLeftMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
-//		backLeftMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
-//		backLeftMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
-//		backLeftMotor.enableCurrentLimit(true);
+
 		
 		talonWithPigeon = new TalonSRX(2);
 		
 		gearShifter = new DoubleSolenoid(PortMap.GEAR_SHIFTER_SOLENOID[0], PortMap.GEAR_SHIFTER_SOLENOID[1]);
 		
+		
 		getPIDController().setContinuous(false);
 		
 
-	//	gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
-	//	gyro.reset();
 	}
+	
 	
 	public void shiftDown() {
 		gearShifter.set(DoubleSolenoid.Value.kReverse);
@@ -148,9 +121,8 @@ public class DriveSubsystem extends PIDSubsystem {
 		}
 	}
 
+	//Uses output from PID libraries as control outputs
 	protected void usePIDOutput(double output) {
-		//System.out.println("PID output: " + output);
-//		System.out.println("PID Mode: " + pidMode);
 		switch (pidMode) {
 		// For reference, a CW gyro correction is positive by default
 		// TODO: Check if the robot goes in the right direction.
@@ -165,10 +137,7 @@ public class DriveSubsystem extends PIDSubsystem {
 			break;
 		case DriveDistance:
 			output *= 0.5;
-//			output = 0.5;
-//			System.out.println("output" + output);
 			setSpeed(output, output);
-			//driveDistSetSpeed(output, output);
 			break;
 		default:
 			setSpeed(0, 0);
@@ -176,11 +145,9 @@ public class DriveSubsystem extends PIDSubsystem {
 		}
 	}
 
+	//Sets speed for distance drive mode
 	public void driveDistSetSpeed(double leftSpeed, double rightSpeed) {
-		
-		
 		double deviance = getPigeonAngle() - currentAngle;
-		
 		if(Math.abs(deviance) > ANGLE_BUFFER) {
 			if(deviance > 0) {
 				if(rightSpeed < 0) {
@@ -209,9 +176,6 @@ public class DriveSubsystem extends PIDSubsystem {
 	}
 	
 	public void setSpeed(double leftSpeed, double rightSpeed) {
-//		System.out.println("right Speed: " + rightSpeed);
-//		System.out.println("legft Speed: " + leftSpeed);
-		
 		if(Robot.liftSubsystem.isAboveMid()) {
 			leftSpeed *= driveLiftingSpeedScale;
 			rightSpeed *= driveLiftingSpeedScale;
@@ -226,6 +190,7 @@ public class DriveSubsystem extends PIDSubsystem {
 		backRightMotor.set(ControlMode.PercentOutput, rightSpeed);
 	}
  
+	//Corrects left motor speeds to equal right motor speeds based on offset
 	public void correctSpeed(double offset) {
 		double rightOutput = frontRightMotor.getMotorOutputPercent();
 		double leftOutput = frontLeftMotor.getMotorOutputPercent();
@@ -235,8 +200,8 @@ public class DriveSubsystem extends PIDSubsystem {
 
 	}
 
+	//Starts PID adjustment
 	public void startAdjustment(double current, double setPoint) {
-		//updatePID();
 		getPIDController().setContinuous(false);
 		switch (pidMode) {
 		case TurnDegree:
@@ -266,21 +231,6 @@ public class DriveSubsystem extends PIDSubsystem {
 	 * the gyro
 	 */
 	public double calculatesAngleToTurnTo(double[] currentPoint, double[] destPoint) {
-//		double x = Robot.positioningHandler.position.getX();
-//		double y = Robot.positioningHandler.position.getY();
-//		double nextX = 0.0127 * coordArr[0] - x;
-//		double nextY = 0.0127 * coordArr[1] - y;
-//		if (nextX > 0 && nextY > 0) {
-//			return Math.toDegrees(Math.atan(nextY/nextX));
-//		} else if (nextX > 0 && nextY < 0) {
-//			return 90 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
-//		} else if (nextX < 0 && nextY < 0) {
-//			return 180 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
-//		} else if (nextX < 0 && nextY > 0) {
-//			return 270 + Math.abs(Math.toDegrees(Math.atan(nextY/nextX)));
-//		} else {
-//			return 0;
-//		}
 		
 		double x1 = currentPoint[0];
 		double y1 = currentPoint[1];
@@ -294,7 +244,6 @@ public class DriveSubsystem extends PIDSubsystem {
 		System.out.println("calculating angle...");
 		
 		System.out.println("p1(" + x1 + ", " + y1 + ")");
-		System.out.println("p1(" + x1 + ", " + y1 + ")");
 		
 		System.out.println("relativeX" + relativeX);
 		System.out.println("relativeY" + relativeY);
@@ -302,39 +251,29 @@ public class DriveSubsystem extends PIDSubsystem {
 		double angle = Math.toDegrees(Math.atan2(relativeY, relativeX));
 		System.out.println("Finished with angle of " + angle);
 
-		//double angle = 90 - Math.toDegrees(Math.atan2(y2-y1, x2-x1));
-		
-//		double angle = Math.toDegrees(Math.acos((x1*(x2-x1) + y1*(y2-y1))/(getMagnitude(x1, x2, y1, y2)*getMagnitude(x1, x2, y1, y2))));
-	//	double angle = 90 - Math.toDegrees(Math.atan((y2 - y1) / (x2-x1)));
 		
 		
 		return angle;
 	}
-	
-//	private double getMagnitude(double x1, double x2, double y1, double y2) {
-//		return Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
-//	}
 	
 	
 	public void endAdjustment() {
 		getPIDController().disable();
 	}
 	
-	public void resetGyro() {
-//		gyro.reset();
-	}
-	
+	//Get the yaw angle of robot
 	public double getPigeonAngle(){
 		double[] yawPitchRoll = new double[3];
 		Robot.pigeon.getYawPitchRoll(yawPitchRoll);
-		//System.out.println("yaw: " + yawPitchRoll[0] + " pitch: " + yawPitchRoll[1] + " roll: " + yawPitchRoll[2]);
 		return yawPitchRoll[0] % 360.;
 	}
 	
+	///Get avg encoder position
 	public double getEncPosition() {
 		return (getLeftEncPosition() + getRightEncPosition()) / 2.;
 	}
 	
+	//Set PID gains based on SmartDashboard input
 	public void updatePID() {
 		getPIDController().setP(SmartDashboard.getNumber("P Value", 1.0));
 		getPIDController().setI(SmartDashboard.getNumber("I Value", 0.1));
@@ -345,6 +284,7 @@ public class DriveSubsystem extends PIDSubsystem {
 		middleRightMotor.getSensorCollection().setQuadraturePosition(0, 0);
 		middleLeftMotor.getSensorCollection().setQuadraturePosition(0, 0);
 	}
+	
 	
 	public double getEncPositionTicks() {
 		return (middleRightMotor.getSensorCollection().getQuadraturePosition() - middleLeftMotor.getSensorCollection().getQuadraturePosition()) / 2.;
@@ -397,16 +337,8 @@ public class DriveSubsystem extends PIDSubsystem {
 	}
 	
 	public double applyDriveCurve(double raw) {	
-/*		if(raw <= -0.5)
-			return -Math.sqrt(.25 - (raw + 1) * (raw + 1)) - 0.5;
-		else if(raw > -0.5 && raw <= 0)
-			return Math.sqrt(.25 - raw * raw) - 0.5;
-		else if(raw > 0 && raw <= 0.5)
-			return -Math.sqrt(.25 - raw * raw) + 0.5;
-		else
-			return Math.sqrt(.25 - (raw - 1) * (raw - 1)) + 0.5; */	
 		if(raw < 0) {
-			return -Math.pow(-raw, 2.4);
+			return -Math.pow(raw, 2.4);
 		}
 		return Math.pow(raw, 2.4);
 	}

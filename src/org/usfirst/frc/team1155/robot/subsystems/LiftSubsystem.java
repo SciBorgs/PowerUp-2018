@@ -21,29 +21,24 @@ public class LiftSubsystem extends PIDSubsystem {
 
 		allTalons = new TalonSRX[] { leftLiftMotor, rightLiftMotor, leftLiftEncoderMotor, rightLiftEncoderMotor };
 
-		// limitSwitch = new DigitalInput(PortMap.LIMIT_SWITCH);
-
+		//Sets default mode of motors to be braked
 		leftLiftMotor.setNeutralMode(NeutralMode.Brake);
 		rightLiftMotor.setNeutralMode(NeutralMode.Brake);
 		leftLiftEncoderMotor.setNeutralMode(NeutralMode.Brake);
 		rightLiftEncoderMotor.setNeutralMode(NeutralMode.Brake);
 
+		//Voltage Ramping
 		leftLiftMotor.configOpenloopRamp(0.5, 50);
 		rightLiftMotor.configOpenloopRamp(0.5, 50);
 
-		// frontRightMotor.configContinuousCurrentLimit(CONTCURRENTLIMIT, 0);
-		// frontRightMotor.configPeakCurrentLimit(PEAKCURRENTLIMIT, 0);
-		// frontRightMotor.configPeakCurrentDuration(PEAKCURRENTDURATION, 0);
-		// frontRightMotor.enableCurrentLimit(true);
-
+		//Sets bounds for PID values
 		getPIDController().setInputRange(TICKS_AT_BOTTOM, TICKS_TO_TOP);
 		getPIDController().setOutputRange(-0.8, 0.8);
 		getPIDController().setContinuous(false);
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
 		stopMovement();
 	}
 
+	
 	public TalonSRX leftLiftMotor, rightLiftMotor, leftLiftEncoderMotor, rightLiftEncoderMotor;
 	public TalonSRX[] allTalons;
 
@@ -128,9 +123,9 @@ public class LiftSubsystem extends PIDSubsystem {
 
 	}
 
+	
 	@Override
 	protected double returnPIDInput() {
-		// System.out.println( (getLeftEncPos() + getRightEncPos()) / 2.);
 		return (getLeftEncPos() + getRightEncPos()) / 2.;
 	}
 
@@ -141,6 +136,7 @@ public class LiftSubsystem extends PIDSubsystem {
 		setSpeed(-output);
 	}
 
+	
 	public void startAdjustment() {
 		getPIDController().setPercentTolerance(10.0);
 		switch (liftTarget) {
@@ -162,6 +158,7 @@ public class LiftSubsystem extends PIDSubsystem {
 		return (int) ((getLeftEncPos() + getRightEncPos()) / 2.);
 	}
 
+	//Checks if lift is extending
 	public boolean isAboveMid() {
 		return getAvgEncPos() > TICKS_AT_MID;
 	}
@@ -171,7 +168,6 @@ public class LiftSubsystem extends PIDSubsystem {
 	}
 
 	public boolean getLimit() {
-		 //return limitSwitch.get();
 		return false;
 	}
 
