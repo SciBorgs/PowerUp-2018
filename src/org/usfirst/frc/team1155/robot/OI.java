@@ -22,34 +22,62 @@ public class OI {
 	public static XboxController xbox = new XboxController(PortMap.XBOX);
 
 	// These three instantiations are deprecated 4/7/18
-	public static Button windClimber = new JoystickButton(xbox, PortMap.XBOX_X);
-	public static Button unwindClimber = new JoystickButton(xbox, PortMap.XBOX_BACK);
-	public static Button stopClimbing = new JoystickButton(xbox, PortMap.XBOX_B);
+	public static Button xboxWindClimber = new JoystickButton(xbox, PortMap.XBOX_X);
+	public static Button xboxUnwindClimber = new JoystickButton(xbox, PortMap.XBOX_BACK);
+	public static Button xboxStopClimbing = new JoystickButton(xbox, PortMap.XBOX_B);
 
-	public static Button tiltClimber = new JoystickButton(xbox, PortMap.XBOX_A);
-	public static Button deployClimber = new JoystickButton(xbox, PortMap.XBOX_START);
+	// XBOX CONTROLS	
+	public static Button xboxTiltClimber = new JoystickButton(xbox, PortMap.XBOX_A);
+	public static Button xboxDeployClimber = new JoystickButton(xbox, PortMap.XBOX_START);
 
-	public static Button shiftGear = new JoystickButton(xbox, PortMap.XBOX_STICK_RIGHT_BUTTON);
+	public static Button xboxShiftGear = new JoystickButton(xbox, PortMap.XBOX_STICK_RIGHT_BUTTON);
 
-	public static Button actuateIntake = new JoystickButton(xbox, PortMap.XBOX_BUMPER_RIGHT);
-	public static Button tiltIntake = new JoystickButton(rightJoystick, PortMap.JOYSTICK_TRIGGER);
-	public static Button increaseLiftHeight = new JoystickButton(rightJoystick, PortMap.JOYSTICK_LEFT_BUTTON);
-	public static Button decreaseLiftHeight = new JoystickButton(rightJoystick, PortMap.JOYSTICK_RIGHT_BUTTON);
+	public static Button xboxActuateIntake = new JoystickButton(xbox, PortMap.XBOX_BUMPER_RIGHT);
+	public static Button joystickTiltIntake = new JoystickButton(xbox, PortMap.XBOX_SOMETHING);
+	public static Button joystickIncreaseLiftHeight = new JoystickButton(xbox, PortMap.XBOX_SOMETHING);
+	public static Button joystickDecreaseLiftHeight = new JoystickButton(xbox, PortMap.XBOX_SOMETHING);
+	
+	// JOYSTICK CONTROLS
+	public static Button joystickTiltClimber = new JoystickButton(rightJoystick, PortMap.JOYSTICK_RIGHT_BUTTON);
+	public static Button joystickDeployClimber = new JoystickButton(leftJoystick, PortMap.JOYSTICK_LEFT_BUTTON);
 
+	public static Button joystickShiftGear = new JoystickButton(leftJoystick, PortMap.JOYSTICK_LEFT);
+
+	public static Button joystickActuateIntake = new JoystickButton(rightJoystick, PortMap.JOYSTICK_CENTER_BUTTON);
+	public static Button joystickTiltIntake = new JoystickButton(leftJoystick PortMap.JOYSTICK_TRIGGER);
+	public static Button joystickIncreaseLiftHeight = new JoystickButton(rightJoystick, PortMap.JOYSTICK_LEFT_BUTTON);
+		public static Button joystickDecreaseLiftHeight = new JoystickButton(leftJoystick, PortMap.JOYSTICK_RIGHT_BUTTON);
+
+	
 	public OI() {
 
 		if (controllerType == ControllerType.XBOX) {
-			actuateIntake.toggleWhenPressed(new ToggleArmCommand());
-			shiftGear.toggleWhenActive(new GearShiftCommand());
-			tiltIntake.whenPressed(new TiltIntakeCommand());
+			xboxActuateIntake.toggleWhenPressed(new ToggleArmCommand());
+			xboxShiftGear.toggleWhenActive(new GearShiftCommand());
+			joystickTiltIntake.whenPressed(new TiltIntakeCommand());
 
-			tiltClimber.toggleWhenActive(new ExtendClimbServosCommand());
-			deployClimber.toggleWhenActive(new DeployClimberCommand());
-			increaseLiftHeight.whenPressed(new ChangeLiftHeightCommand("up"));
+			xboxTiltClimber.toggleWhenActive(new ExtendClimbServosCommand());
+			xboxDeployClimber.toggleWhenActive(new DeployClimberCommand());
+			joystickIncreaseLiftHeight.whenPressed(new ChangeLiftHeightCommand("up"));
 
-			decreaseLiftHeight.whenPressed(new ChangeLiftHeightCommand("down"));
+			joystickDecreaseLiftHeight.whenPressed(new ChangeLiftHeightCommand("down"));
 
+		}
+		else if (controllerType == ControllerType.JOYSTICK) {
+			joystickActuateIntake.toggleWhenPressed(new ToggleArmCommand());
+			joystickShiftGear.toggleWhenActive(new GearShiftCommand());
+			joystickTiltIntake.whenPressed(new TiltIntakeCommand());
+
+			joysticktiltClimber.toggleWhenActive(new ExtendClimbServosCommand());
+			joystickDeployClimber.toggleWhenActive(new DeployClimberCommand());
+			joystickIncreaseLiftHeight.whenPressed(new ChangeLiftHeightCommand("up"));
+
+			joystickDecreaseLiftHeight.whenPressed(new ChangeLiftHeightCommand("down"));	
 		}
 	}
 
 }
+
+
+
+
